@@ -3,13 +3,13 @@ import { Link } from 'gatsby';
 
 import { Layout, Brand } from '../components';
 
-const About = () => (
+const News = () => (
   <Layout>
     <Brand />
     <hr />
-    <h2>About</h2>
+    <h2>News</h2>
     <Link to="/">Home</Link>
   </Layout>
 );
 
-export default About;
+export default News;

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import Layout from '../components/Layout';
-import Header from '../components/Header';
+import { Layout, Brand } from '../components';
 
 const NotFound = () => (
   <Layout>
-    <Header />
+    <Brand />
     <hr />
-    <h2>404</h2>
+    <h2>NotFound</h2>
     <Link to="/">Home</Link>
   </Layout>
 );

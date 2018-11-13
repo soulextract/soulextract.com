@@ -1,9 +1,6 @@
-const theme = require('./src/theme');
+const theme = require('./src/settings/theme');
 
 module.exports = {
-  siteMetadata: {
-    title: 'SoulExtract'
-  },
   plugins: [
     {
       resolve: 'gatsby-plugin-jss',
@@ -13,13 +10,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'SoulExtract',
-        short_name: 'SoulExtract',
+        name: 'Soul Extract',
+        short_name: 'Soul Extract',
         start_url: '/',
         background_color: theme.color.primary.main,
         theme_color: theme.color.primary.main,
         display: 'minimal-ui',
-        icon: 'src/images/soulextract.png'
+        icon: 'src/images/favicon.png'
       }
     },
     'gatsby-plugin-offline'

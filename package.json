@@ -5,27 +5,30 @@
   "license": "GNUv3",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop --host=0.0.0.0",
     "format": "prettier --write '**/*.js'"
   },
   "dependencies": {
-    "eslint": "^5.6.1",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-prettier": "^2.7.0",
-    "eslint-plugin-react": "^7.11.1",
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-jss": "^2.0.2",
-    "gatsby-plugin-manifest": "^2.0.2",
-    "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "polished": "^2.1.1",
-    "prettier-eslint": "^8.8.2",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
+    "classnames": "^2.2.6",
+    "gatsby": "^2.0.64",
+    "gatsby-plugin-jss": "^2.0.5",
+    "gatsby-plugin-manifest": "^2.0.11",
+    "gatsby-plugin-offline": "^2.0.19",
+    "gatsby-plugin-react-helmet": "^3.0.4",
+    "polished": "^2.3.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "react-transition-group": "^2.5.1"
   },
   "devDependencies": {
-    "prettier": "^1.14.3"
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^2.7.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.15.3",
+    "prettier-eslint": "^8.8.2"
   }
 }
