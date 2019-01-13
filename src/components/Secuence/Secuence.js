@@ -26,7 +26,7 @@ export class Component extends React.PureComponent {
     this.timeouts = {};
 
     this.state = {
-      childrenStatuses: children.map(() => getAnimationState(initialStatus))
+      childrenStatuses: children.map(() => initialStatus)
     };
   }
 
@@ -123,7 +123,7 @@ export class Component extends React.PureComponent {
   performStatus(key, status, callback) {
     const childrenStatuses = this.state.childrenStatuses.map((item, index) => {
       if (key === 'all' || index === key) {
-        return getAnimationState(status);
+        return status;
       }
 
       return item;
@@ -136,7 +136,10 @@ export class Component extends React.PureComponent {
     const { children } = this.props;
     const { childrenStatuses } = this.state;
 
-    return children.map((item, index) => item(childrenStatuses[index]));
+    return children.map((item, index) => {
+      const animationState = getAnimationState(childrenStatuses[index]);
+      return item(animationState);
+    });
   }
 }
 

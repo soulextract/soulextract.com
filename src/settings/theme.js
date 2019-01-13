@@ -26,7 +26,7 @@ module.exports = {
       main: '#050608'
     }
   },
-  anim: {
+  animation: {
     time: 1000,
     stagger: 500
   }

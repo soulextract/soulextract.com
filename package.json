@@ -15,13 +15,13 @@
     "gatsby-plugin-manifest": "^2.0.11",
     "gatsby-plugin-offline": "^2.0.19",
     "gatsby-plugin-react-helmet": "^3.0.4",
+    "hoist-non-react-statics": "^3.2.1",
     "polished": "^2.3.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
-    "react-jss": "^8.6.1",
-    "react-transition-group": "^2.5.1"
+    "react-jss": "^8.6.1"
   },
   "devDependencies": {
     "eslint": "^5.10.0",

@@ -1,43 +1,119 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
-import TransitionComponent from 'react-transition-group/Transition';
+import { isNumber } from '../../tools';
 
-export const getStatuses = status => ({
-  entering: status === 'entering',
-  entered: status === 'entered',
-  exiting: status === 'exiting',
-  exited: status === 'exited'
+export const ENTERING = 'entering';
+export const ENTERED = 'entered';
+export const EXITING = 'exiting';
+export const EXITED = 'exited';
+
+export const getAnimationState = status => ({
+  status,
+  [ENTERING]: status === ENTERING,
+  [ENTERED]: status === ENTERED,
+  [EXITING]: status === EXITING,
+  [EXITED]: status === EXITED
 });
 
-export const Component = ({
-  Transition,
-  theme,
-  classes, // eslint-disable-line no-unused-vars
-  animate,
-  show,
-  appear,
-  duration,
-  children,
-  ...rest
-}) => {
-  const transitionDuration = duration || theme.anim.time;
-  return (
-    <Transition
-      appear={animate ? appear : false}
-      timeout={animate ? transitionDuration : 0}
-      in={show}
-      {...rest}
-    >
-      {status =>
-        children(animate ? { status, ...getStatuses(status) } : { status: '' })
+export class Component extends React.PureComponent {
+  constructor() {
+    super(...arguments);
+
+    const { animate, show, appear } = this.props;
+    const initialStatus = animate && appear ? EXITED : ENTERED;
+
+    this.timeout = null;
+
+    this.state = { status: initialStatus };
+  }
+
+  componentDidMount() {
+    const { animate, show, appear } = this.props;
+
+    if (animate && show && appear) {
+      this.enter();
+    }
+  }
+
+  componentWillUnmount() {
+    this.unschedule();
+  }
+
+  componentDidUpdate(prevState) {
+    const { animate, show } = this.props;
+
+    if (animate && show !== prevState.show) {
+      if (show) {
+        this.enter();
+      } else {
+        this.exit();
       }
-    </Transition>
-  );
-};
+    }
+  }
+
+  schedule(time, callback) {
+    this.unschedule();
+    this.timeout = setTimeout(callback, time);
+  }
+
+  unschedule() {
+    clearTimeout(this.timeout);
+  }
+
+  getDurations() {
+    const { theme, animate, duration } = this.props;
+    const time = animate ? duration || theme.animation.time : 0;
+
+    if (isNumber(time)) {
+      return { enter: time, exit: time };
+    }
+
+    return time;
+  }
+
+  enter() {
+    const { status } = this.state;
+
+    if (status === ENTERING || status === ENTERED) {
+      return;
+    }
+
+    const { enter: enterTime } = this.getDurations();
+
+    this.setState({ status: ENTERING }, () => {
+      this.schedule(enterTime, () => {
+        this.setState({ status: ENTERED });
+      });
+    });
+  }
+
+  exit() {
+    const { status } = this.state;
+
+    if (status === EXITING || status === EXITED) {
+      return;
+    }
+
+    const { exit: exitTime } = this.getDurations();
+
+    this.setState({ status: EXITING }, () => {
+      this.schedule(exitTime, () => {
+        this.setState({ status: EXITED });
+      });
+    });
+  }
+
+  render() {
+    const { status } = this.state;
+    const { children } = this.props;
+    const animationState = getAnimationState(status);
+
+    return children(animationState);
+  }
+}
 
 Component.propTypes = {
-  Transition: PropTypes.any.isRequired,
   theme: PropTypes.any.isRequired,
   classes: PropTypes.any.isRequired,
   animate: PropTypes.bool,
@@ -54,7 +130,6 @@ Component.propTypes = {
 };
 
 Component.defaultProps = {
-  Transition: TransitionComponent,
   animate: true,
   show: true,
   appear: true

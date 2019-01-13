@@ -48,7 +48,7 @@ export const styles = theme => ({
       textDecoration: 'none',
       color: theme.color.link.main,
       outline: 'none',
-      transition: `all ${theme.anim.time}ms ease-out`,
+      transition: `all ${theme.animation.time}ms ease-out`,
       '&:focus': {
         outline: 'none'
       },
