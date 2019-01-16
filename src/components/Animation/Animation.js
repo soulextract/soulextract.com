@@ -23,9 +23,10 @@ export class Component extends React.PureComponent {
     const { animate, show, appear } = this.props;
     const initialStatus = animate && appear ? EXITED : ENTERED;
 
+    this.status = initialStatus;
     this.timeout = null;
 
-    this.state = { status: initialStatus };
+    this.state = { executedStatus: this.status };
   }
 
   componentDidMount() {
@@ -52,9 +53,17 @@ export class Component extends React.PureComponent {
     }
   }
 
+  updateStatus(status) {
+    this.status = status;
+
+    if (this.state.executedStatus !== status) {
+      this.setState({ executedStatus: status });
+    }
+  }
+
   schedule(time, callback) {
     this.unschedule();
-    this.timeout = setTimeout(callback, time);
+    this.timeout = setTimeout(() => callback(), time);
   }
 
   unschedule() {
@@ -73,41 +82,33 @@ export class Component extends React.PureComponent {
   }
 
   enter() {
-    const { status } = this.state;
-
-    if (status === ENTERING || status === ENTERED) {
+    if (this.status === ENTERING && this.status === ENTERED) {
       return;
     }
 
     const { enter: enterTime } = this.getDurations();
 
-    this.setState({ status: ENTERING }, () => {
-      this.schedule(enterTime, () => {
-        this.setState({ status: ENTERED });
-      });
-    });
+    this.updateStatus(ENTERING);
+
+    this.schedule(enterTime, () => this.updateStatus(ENTERED));
   }
 
   exit() {
-    const { status } = this.state;
-
-    if (status === EXITING || status === EXITED) {
+    if (this.status === EXITING && this.status === EXITED) {
       return;
     }
 
     const { exit: exitTime } = this.getDurations();
 
-    this.setState({ status: EXITING }, () => {
-      this.schedule(exitTime, () => {
-        this.setState({ status: EXITED });
-      });
-    });
+    this.updateStatus(EXITING);
+
+    this.schedule(exitTime, () => this.updateStatus(EXITED));
   }
 
   render() {
-    const { status } = this.state;
+    const { executedStatus } = this.state;
     const { children } = this.props;
-    const animationState = getAnimationState(status);
+    const animationState = getAnimationState(executedStatus);
 
     return children(animationState);
   }
