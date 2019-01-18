@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
+
 import { isNumber } from '../../tools';
 
 export const ENTERING = 'entering';
@@ -8,7 +9,7 @@ export const ENTERED = 'entered';
 export const EXITING = 'exiting';
 export const EXITED = 'exited';
 
-export const getAnimationState = status => ({
+export const getAnimationStatusState = status => ({
   status,
   [ENTERING]: status === ENTERING,
   [ENTERED]: status === ENTERED,
@@ -16,36 +17,38 @@ export const getAnimationState = status => ({
   [EXITED]: status === EXITED
 });
 
+export const AnimationContext = React.createContext(null);
+
 export class Component extends React.PureComponent {
-  constructor() {
+  constructor () {
     super(...arguments);
 
-    const { animate, show, appear } = this.props;
-    const initialStatus = animate && appear ? EXITED : ENTERED;
+    const initialStatus = this.props.animate ? EXITED : ENTERED;
 
+    this.show = this.canShow();
     this.status = initialStatus;
     this.timeout = null;
-
     this.state = { executedStatus: this.status };
   }
 
-  componentDidMount() {
-    const { animate, show, appear } = this.props;
-
-    if (animate && show && appear) {
+  componentDidMount () {
+    if (this.props.animate && this.show) {
       this.enter();
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.unschedule();
   }
 
-  componentDidUpdate(prevState) {
-    const { animate, show } = this.props;
+  componentDidUpdate () {
+    const { animate } = this.props;
+    const show = this.canShow();
 
-    if (animate && show !== prevState.show) {
-      if (show) {
+    if (animate && show !== this.show) {
+      this.show = show;
+
+      if (this.show) {
         this.enter();
       } else {
         this.exit();
@@ -53,7 +56,16 @@ export class Component extends React.PureComponent {
     }
   }
 
-  updateStatus(status) {
+  canShow () {
+    const parentStatus = this.context;
+    const { independent } = this.props;
+    const show =
+      independent || !parentStatus ? this.props.show : parentStatus === ENTERED;
+
+    return show;
+  }
+
+  updateStatus (status) {
     this.status = status;
 
     if (this.state.executedStatus !== status) {
@@ -61,16 +73,16 @@ export class Component extends React.PureComponent {
     }
   }
 
-  schedule(time, callback) {
+  schedule (time, callback) {
     this.unschedule();
     this.timeout = setTimeout(() => callback(), time);
   }
 
-  unschedule() {
+  unschedule () {
     clearTimeout(this.timeout);
   }
 
-  getDurations() {
+  getDurations () {
     const { theme, animate, duration } = this.props;
     const time = animate ? duration || theme.animation.time : 0;
 
@@ -81,45 +93,47 @@ export class Component extends React.PureComponent {
     return time;
   }
 
-  enter() {
+  enter () {
     if (this.status === ENTERING && this.status === ENTERED) {
       return;
     }
 
-    const { enter: enterTime } = this.getDurations();
+    const durations = this.getDurations();
 
     this.updateStatus(ENTERING);
 
-    this.schedule(enterTime, () => this.updateStatus(ENTERED));
+    this.schedule(durations.enter, () => this.updateStatus(ENTERED));
   }
 
-  exit() {
+  exit () {
     if (this.status === EXITING && this.status === EXITED) {
       return;
     }
 
-    const { exit: exitTime } = this.getDurations();
+    const durations = this.getDurations();
 
     this.updateStatus(EXITING);
 
-    this.schedule(exitTime, () => this.updateStatus(EXITED));
+    this.schedule(durations.exit, () => this.updateStatus(EXITED));
   }
 
-  render() {
+  render () {
     const { executedStatus } = this.state;
     const { children } = this.props;
-    const animationState = getAnimationState(executedStatus);
 
-    return children(animationState);
+    return (
+      <AnimationContext.Provider value={executedStatus}>
+        {children}
+      </AnimationContext.Provider>
+    );
   }
 }
 
 Component.propTypes = {
   theme: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired,
   animate: PropTypes.bool,
   show: PropTypes.bool,
-  appear: PropTypes.bool,
+  independent: PropTypes.bool,
   duration: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
@@ -127,13 +141,14 @@ Component.propTypes = {
       exit: PropTypes.number
     })
   ]),
-  children: PropTypes.func.isRequired
+  children: PropTypes.any
 };
 
 Component.defaultProps = {
   animate: true,
-  show: true,
-  appear: true
+  show: true
 };
 
-export const Animation = withStyles(() => ({}))(Component);
+Component.contextType = AnimationContext;
+
+export const Animation = withStyles(() => ({}))(props => <Component {...props} />);

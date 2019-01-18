@@ -2,25 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import { isFn } from '../general';
-import { Animation } from '../../components/Animation';
+import {
+  Animation,
+  AnimationContext,
+  getAnimationStatusState
+} from '../../components/Animation';
 
-export function withAnimation() {
+export function withAnimation () {
   return Inner => {
-    const WithAnimation = props => {
-      const { animate, show, ...etc } = props;
-      const createChild = anim => ({ children }) =>
-        isFn(children) ? children(anim) : children;
+    class InsideAnimation extends React.PureComponent {
+      render () {
+        const status = this.context;
+        const anim = getAnimationStatusState(status);
+        return <Inner anim={anim} {...this.props} />;
+      }
+    }
 
-      return (
-        <Animation {...{ animate, show }}>
-          {anim => <Inner anim={anim} Anim={createChild(anim)} {...etc} />}
-        </Animation>
-      );
+    InsideAnimation.contextType = AnimationContext;
+
+    const WithAnimation = ({ animation, ...etc }) => (
+      <Animation {...animation}>
+        <InsideAnimation {...etc} />
+      </Animation>
+    );
+
+    const displayName = Inner.displayName || Inner.name || 'Component';
+    WithAnimation.displayName = 'Animation(' + displayName + ')';
+
+    WithAnimation.propTypes = {
+      animation: PropTypes.any
     };
-
-    WithAnimation.displayName =
-      'Animation(' + (Inner.displayName || Inner.name || 'Component') + ')';
     WithAnimation.defaultProps = { ...Inner.defaultProps };
 
     return hoistNonReactStatics(WithAnimation, Inner);
