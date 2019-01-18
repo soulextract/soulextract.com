@@ -8,7 +8,7 @@ const NotFound = () => (
     <Brand />
     <hr />
     <h2>NotFound</h2>
-    <Link to="/">Home</Link>
+    <Link to='/'>Home</Link>
   </Layout>
 );
 

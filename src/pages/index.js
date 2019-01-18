@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 import { rgba } from 'polished';
 
@@ -59,7 +60,7 @@ const styles = theme => {
 };
 
 class Component extends React.Component {
-  render() {
+  render () {
     const { classes } = this.props;
     return (
       <Layout>
@@ -78,5 +79,9 @@ class Component extends React.Component {
     );
   }
 }
+
+Component.propTypes = {
+  classes: PropTypes.any.isRequired
+};
 
 export default withStyles(styles)(Component);

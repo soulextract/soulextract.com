@@ -1,7 +1,7 @@
 {
   "extends": [
-    "prettier",
-    "prettier/react"
+    "standard",
+    "standard-react"
   ],
 
   "parser": "babel-eslint",
@@ -12,17 +12,12 @@
   },
 
   "env": {
+    "es6": true,
     "browser": true,
-    "node": true,
-    "es6": true
+    "node": true
   },
 
-  "plugins": [
-    "prettier",
-    "react"
-  ],
-
   "rules": {
-    "prettier/prettier": "error"
+    "semi": ["error", "always"]
   }
 }

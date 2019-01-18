@@ -6,28 +6,25 @@ import withStyles from 'react-jss';
 import { withAnimation } from '../../tools';
 
 export const styles = theme => ({
-  root: {}
+  root: {
+    marginLeft: 20
+  }
 });
 
 export class Component extends React.Component {
-  constructor() {
-    super(...arguments);
-  }
-
-  render() {
+  render () {
     const {
-      theme, // eslint-disable-line no-unused-vars
+      theme,
       classes,
+      anim,
       className,
-      anim, // eslint-disable-line no-unused-vars
-      Anim,
       children,
       ...rest
     } = this.props;
 
     return (
       <div className={cx(classes.root, className)} {...rest}>
-        <Anim>{children}</Anim>
+        {children}
       </div>
     );
   }
@@ -37,7 +34,8 @@ Component.propTypes = {
   theme: PropTypes.any.isRequired,
   classes: PropTypes.any.isRequired,
   anim: PropTypes.any.isRequired,
-  Anim: PropTypes.any.isRequired
+  className: PropTypes.any,
+  children: PropTypes.any
 };
 
 export const Frame = withStyles(styles)(withAnimation()(Component));

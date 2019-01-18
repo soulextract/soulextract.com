@@ -8,7 +8,7 @@ const Music = () => (
     <Brand />
     <hr />
     <h2>Music</h2>
-    <Link to="/">Home</Link>
+    <Link to='/'>Home</Link>
   </Layout>
 );
 

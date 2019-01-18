@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 import cx from 'classnames';
 
@@ -43,5 +44,11 @@ export const Component = ({ classes, className, children }) => (
     <div className={classes.content}>{children}</div>
   </div>
 );
+
+Component.propTypes = {
+  classes: PropTypes.any.isRequired,
+  className: PropTypes.any,
+  children: PropTypes.any
+};
 
 export const Background = withStyles(styles)(Component);

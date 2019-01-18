@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 import { Link } from 'gatsby';
 import cx from 'classnames';
@@ -21,9 +22,14 @@ export const styles = () => ({
 });
 
 export const Component = ({ classes, className }) => (
-  <Link className={cx(classes.root, className)} to="/">
+  <Link className={cx(classes.root, className)} to='/'>
     <img className={classes.image} src={brandURL} />
   </Link>
 );
+
+Component.propTypes = {
+  classes: PropTypes.any,
+  className: PropTypes.any
+};
 
 export const Brand = withStyles(styles)(Component);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 import cx from 'classnames';
 
@@ -24,28 +25,33 @@ export const styles = theme => ({
 
 export const Component = ({ classes, className }) => (
   <div className={cx(classes.root, className)}>
-    <a className={classes.item} href="#" target="youtube">
-      <span className="mdi mdi-youtube" />
+    <a className={classes.item} href='#' target='youtube'>
+      <span className='mdi mdi-youtube' />
     </a>
-    <a className={classes.item} href="#" target="spotify">
-      <span className="mdi mdi-spotify" />
+    <a className={classes.item} href='#' target='spotify'>
+      <span className='mdi mdi-spotify' />
     </a>
-    <a className={classes.item} href="#" target="soundcloud">
-      <span className="mdi mdi-soundcloud" />
+    <a className={classes.item} href='#' target='soundcloud'>
+      <span className='mdi mdi-soundcloud' />
     </a>
-    <a className={classes.item} href="#" target="facebook">
-      <span className="mdi mdi-facebook" />
+    <a className={classes.item} href='#' target='facebook'>
+      <span className='mdi mdi-facebook' />
     </a>
-    <a className={classes.item} href="#" target="twitter">
-      <span className="mdi mdi-twitter" />
+    <a className={classes.item} href='#' target='twitter'>
+      <span className='mdi mdi-twitter' />
     </a>
-    <a className={classes.item} href="#" target="instagram">
-      <span className="mdi mdi-instagram" />
+    <a className={classes.item} href='#' target='instagram'>
+      <span className='mdi mdi-instagram' />
     </a>
-    <a className={classes.item} href="#" target="email">
-      <span className="mdi mdi-email-outline" />
+    <a className={classes.item} href='#' target='email'>
+      <span className='mdi mdi-email-outline' />
     </a>
   </div>
 );
+
+Component.propTypes = {
+  classes: PropTypes.any.isRequired,
+  className: PropTypes.any
+};
 
 export const SocialLinks = withStyles(styles)(Component);

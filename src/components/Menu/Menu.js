@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 import { Link } from 'gatsby';
 import cx from 'classnames';
@@ -39,22 +40,27 @@ export const styles = theme => ({
 
 export const Component = ({ classes, className }) => (
   <nav className={cx(classes.root, className)}>
-    <Link className={classes.item} to="/news">
+    <Link className={classes.item} to='/news'>
       News
     </Link>
     <span className={cx(classes.item, classes.divisor)}>|</span>
-    <Link className={classes.item} to="/music">
+    <Link className={classes.item} to='/music'>
       Music
     </Link>
     <span className={cx(classes.item, classes.divisor)}>|</span>
-    <Link className={classes.item} to="/charity">
+    <Link className={classes.item} to='/charity'>
       Charity
     </Link>
     <span className={cx(classes.item, classes.divisor)}>|</span>
-    <Link className={classes.item} to="/about">
+    <Link className={classes.item} to='/about'>
       About
     </Link>
   </nav>
 );
+
+Component.propTypes = {
+  classes: PropTypes.any.isRequired,
+  className: PropTypes.any
+};
 
 export const Menu = withStyles(styles)(Component);

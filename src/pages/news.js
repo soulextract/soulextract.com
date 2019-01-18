@@ -8,7 +8,7 @@ const News = () => (
     <Brand />
     <hr />
     <h2>News</h2>
-    <Link to="/">Home</Link>
+    <Link to='/'>Home</Link>
   </Layout>
 );
 

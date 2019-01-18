@@ -8,7 +8,7 @@ export const ENTERED = 'entered';
 export const EXITING = 'exiting';
 export const EXITED = 'exited';
 
-export const getAnimationState = status => ({
+export const getAnimationStatusState = status => ({
   status,
   [ENTERING]: status === ENTERING,
   [ENTERED]: status === ENTERED,
@@ -17,10 +17,10 @@ export const getAnimationState = status => ({
 });
 
 export class Component extends React.PureComponent {
-  constructor() {
+  constructor () {
     super(...arguments);
 
-    const { animate, show, appear, children } = this.props;
+    const { animate, appear, children } = this.props;
     const initialStatus = animate && appear ? EXITED : ENTERED;
 
     this.timeouts = {};
@@ -30,7 +30,7 @@ export class Component extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { children, animate, show } = this.props;
 
     if (children.length && animate && show) {
@@ -38,12 +38,12 @@ export class Component extends React.PureComponent {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.resetTimeouts();
   }
 
-  componentDidUpdate(prevProps) {
-    const { children, animate, show } = this.props;
+  componentDidUpdate (prevProps) {
+    const { animate, show } = this.props;
 
     if (animate && show !== prevProps.show) {
       if (show) {
@@ -54,20 +54,20 @@ export class Component extends React.PureComponent {
     }
   }
 
-  resetTimeouts() {
+  resetTimeouts () {
     Object.values(this.timeouts).forEach(clearTimeout);
   }
 
-  schedule(key, time, callback) {
+  schedule (key, time, callback) {
     this.unschedule(key);
     this.timeouts[key] = setTimeout(callback, time);
   }
 
-  unschedule(key) {
+  unschedule (key) {
     clearTimeout(this.timeouts[key]);
   }
 
-  enter() {
+  enter () {
     const { theme, stagger, children } = this.props;
     const staggerTime = theme.animation.stagger;
 
@@ -84,12 +84,12 @@ export class Component extends React.PureComponent {
     }
   }
 
-  exit() {
+  exit () {
     this.resetTimeouts();
     this.performExiting('all');
   }
 
-  performEntering(key) {
+  performEntering (key) {
     const { theme, stagger } = this.props;
     const duration = theme.animation.time;
 
@@ -104,11 +104,11 @@ export class Component extends React.PureComponent {
     });
   }
 
-  performEntered(key) {
+  performEntered (key) {
     this.performStatus(key, ENTERED);
   }
 
-  performExiting(key) {
+  performExiting (key) {
     const duration = this.props.theme.animation.time;
 
     this.performStatus(key, EXITING, () => {
@@ -116,11 +116,11 @@ export class Component extends React.PureComponent {
     });
   }
 
-  performExited(key) {
+  performExited (key) {
     this.performStatus(key, EXITED);
   }
 
-  performStatus(key, status, callback) {
+  performStatus (key, status, callback) {
     const childrenStatuses = this.state.childrenStatuses.map((item, index) => {
       if (key === 'all' || index === key) {
         return status;
@@ -132,12 +132,12 @@ export class Component extends React.PureComponent {
     this.setState(() => ({ childrenStatuses }), callback);
   }
 
-  render() {
+  render () {
     const { children } = this.props;
     const { childrenStatuses } = this.state;
 
     return children.map((item, index) => {
-      const animationState = getAnimationState(childrenStatuses[index]);
+      const animationState = getAnimationStatusState(childrenStatuses[index]);
       return item(animationState);
     });
   }
@@ -145,11 +145,11 @@ export class Component extends React.PureComponent {
 
 Component.propTypes = {
   theme: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired,
   animate: PropTypes.bool,
   show: PropTypes.bool,
   appear: PropTypes.bool,
-  stagger: PropTypes.bool
+  stagger: PropTypes.bool,
+  children: PropTypes.array.isRequired
 };
 
 Component.defaultProps = {
