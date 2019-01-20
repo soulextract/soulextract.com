@@ -9,6 +9,7 @@
     "lint": "eslint ./src"
   },
   "dependencies": {
+    "animejs": "^3.0.1",
     "classnames": "^2.2.6",
     "gatsby": "^2.0.91",
     "gatsby-plugin-jss": "^2.0.5",
