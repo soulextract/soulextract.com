@@ -45,6 +45,8 @@ export const Component = ({ classes, className, children }) => (
   </div>
 );
 
+Component.displayName = 'Background';
+
 Component.propTypes = {
   classes: PropTypes.any.isRequired,
   className: PropTypes.any,

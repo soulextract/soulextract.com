@@ -17,6 +17,23 @@ export const getAnimationStatusState = status => ({
 });
 
 export class Component extends React.PureComponent {
+  static displayName = 'Secuence';
+
+  static propTypes = {
+    theme: PropTypes.any.isRequired,
+    animate: PropTypes.bool,
+    show: PropTypes.bool,
+    appear: PropTypes.bool,
+    stagger: PropTypes.bool,
+    children: PropTypes.array.isRequired
+  };
+
+  static defaultProps = {
+    animate: true,
+    show: true,
+    appear: true
+  };
+
   constructor () {
     super(...arguments);
 
@@ -142,20 +159,5 @@ export class Component extends React.PureComponent {
     });
   }
 }
-
-Component.propTypes = {
-  theme: PropTypes.any.isRequired,
-  animate: PropTypes.bool,
-  show: PropTypes.bool,
-  appear: PropTypes.bool,
-  stagger: PropTypes.bool,
-  children: PropTypes.array.isRequired
-};
-
-Component.defaultProps = {
-  animate: true,
-  show: true,
-  appear: true
-};
 
 export const Secuence = withStyles(() => {})(Component);

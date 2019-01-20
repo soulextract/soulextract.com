@@ -11,7 +11,17 @@ export const styles = theme => ({
   }
 });
 
-export class Component extends React.Component {
+export class Component extends React.PureComponent {
+  static displayName = 'Frame';
+
+  static propTypes = {
+    theme: PropTypes.any.isRequired,
+    classes: PropTypes.any.isRequired,
+    anim: PropTypes.any.isRequired,
+    className: PropTypes.any,
+    children: PropTypes.any
+  };
+
   render () {
     const {
       theme,
@@ -24,18 +34,11 @@ export class Component extends React.Component {
 
     return (
       <div className={cx(classes.root, className)} {...rest}>
+        <div>{anim.status}</div>
         {children}
       </div>
     );
   }
 }
-
-Component.propTypes = {
-  theme: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired,
-  anim: PropTypes.any.isRequired,
-  className: PropTypes.any,
-  children: PropTypes.any
-};
 
 export const Frame = withStyles(styles)(withAnimation()(Component));

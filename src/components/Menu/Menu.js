@@ -58,6 +58,8 @@ export const Component = ({ classes, className }) => (
   </nav>
 );
 
+Component.displayName = 'Menu';
+
 Component.propTypes = {
   classes: PropTypes.any.isRequired,
   className: PropTypes.any

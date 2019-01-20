@@ -117,6 +117,8 @@ export const Component = ({ children }) => (
   </>
 );
 
+Component.displayName = 'Layout';
+
 Component.propTypes = {
   children: PropTypes.node.isRequired
 };

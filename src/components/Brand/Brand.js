@@ -27,6 +27,8 @@ export const Component = ({ classes, className }) => (
   </Link>
 );
 
+Component.displayName = 'Brand';
+
 Component.propTypes = {
   classes: PropTypes.any,
   className: PropTypes.any

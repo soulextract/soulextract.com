@@ -49,6 +49,8 @@ export const Component = ({ classes, className }) => (
   </div>
 );
 
+Component.displayName = 'SocialLinks';
+
 Component.propTypes = {
   classes: PropTypes.any.isRequired,
   className: PropTypes.any

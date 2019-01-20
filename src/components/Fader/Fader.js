@@ -12,8 +12,21 @@ export const styles = theme => ({
   }
 });
 
-export class Component extends React.Component {
+export class Component extends React.PureComponent {
   static displayName = 'Fader';
+
+  static propTypes = {
+    theme: PropTypes.any.isRequired,
+    classes: PropTypes.any.isRequired,
+    anim: PropTypes.any.isRequired,
+    className: PropTypes.any,
+    children: PropTypes.any,
+    node: PropTypes.string
+  };
+
+  static defaultProps = {
+    node: 'span'
+  };
 
   componentDidMount () {
     this.flow();
@@ -102,18 +115,5 @@ export class Component extends React.Component {
     );
   }
 }
-
-Component.propTypes = {
-  theme: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired,
-  anim: PropTypes.any.isRequired,
-  className: PropTypes.any,
-  children: PropTypes.any,
-  node: PropTypes.string
-};
-
-Component.defaultProps = {
-  node: 'span'
-};
 
 export const Fader = withAnimation()(withStyles(styles)(Component));

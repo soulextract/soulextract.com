@@ -20,6 +20,30 @@ export const getAnimationStatusState = status => ({
 export const AnimationContext = React.createContext(null);
 
 export class Component extends React.PureComponent {
+  static displayName = 'Animation';
+
+  static propTypes = {
+    theme: PropTypes.any.isRequired,
+    animate: PropTypes.bool,
+    show: PropTypes.bool,
+    independent: PropTypes.bool,
+    duration: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        enter: PropTypes.number,
+        exit: PropTypes.number
+      })
+    ]),
+    children: PropTypes.any
+  };
+
+  static defaultProps = {
+    animate: true,
+    show: true
+  };
+
+  static contextType = AnimationContext;
+
   constructor () {
     super(...arguments);
 
@@ -128,27 +152,5 @@ export class Component extends React.PureComponent {
     );
   }
 }
-
-Component.propTypes = {
-  theme: PropTypes.any.isRequired,
-  animate: PropTypes.bool,
-  show: PropTypes.bool,
-  independent: PropTypes.bool,
-  duration: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({
-      enter: PropTypes.number,
-      exit: PropTypes.number
-    })
-  ]),
-  children: PropTypes.any
-};
-
-Component.defaultProps = {
-  animate: true,
-  show: true
-};
-
-Component.contextType = AnimationContext;
 
 export const Animation = withStyles(() => ({}))(props => <Component {...props} />);
