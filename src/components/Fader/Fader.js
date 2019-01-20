@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import withStyles from 'react-jss';
 import anime from 'animejs';
 
-import { withAnimation } from '../../tools';
-
-export const styles = theme => ({
-  root: {
-    opacity: props => props.anim.entered ? 1 : 0
-  }
-});
-
-export class Component extends React.PureComponent {
+class Component extends React.PureComponent {
   static displayName = 'Fader';
 
   static propTypes = {
@@ -116,4 +107,4 @@ export class Component extends React.PureComponent {
   }
 }
 
-export const Fader = withAnimation()(withStyles(styles)(Component));
+export { Component };

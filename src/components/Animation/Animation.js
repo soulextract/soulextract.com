@@ -1,25 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'react-jss';
 
-import { isNumber } from '../../tools';
+import { isNumber, ENTERING, ENTERED, EXITING, EXITED } from '../../tools';
+import { AnimationContext } from '../AnimationContext';
 
-export const ENTERING = 'entering';
-export const ENTERED = 'entered';
-export const EXITING = 'exiting';
-export const EXITED = 'exited';
-
-export const getAnimationStatusState = status => ({
-  status,
-  [ENTERING]: status === ENTERING,
-  [ENTERED]: status === ENTERED,
-  [EXITING]: status === EXITING,
-  [EXITED]: status === EXITED
-});
-
-export const AnimationContext = React.createContext(null);
-
-export class Component extends React.PureComponent {
+class Component extends React.PureComponent {
   static displayName = 'Animation';
 
   static propTypes = {
@@ -153,4 +138,4 @@ export class Component extends React.PureComponent {
   }
 }
 
-export const Animation = withStyles(() => ({}))(props => <Component {...props} />);
+export { Component };

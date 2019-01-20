@@ -1,4 +1,5 @@
-export { Animation, AnimationContext } from './Animation';
+export { Animation } from './Animation';
+export { AnimationContext } from './AnimationContext';
 export { Secuence } from './Secuence';
 export { Layout } from './Layout';
 export { Background } from './Background';

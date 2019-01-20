@@ -1,17 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import withStyles from 'react-jss';
 
-import { withAnimation } from '../../tools';
-
-export const styles = theme => ({
-  root: {
-    marginLeft: 20
-  }
-});
-
-export class Component extends React.PureComponent {
+class Component extends React.PureComponent {
   static displayName = 'Frame';
 
   static propTypes = {
@@ -41,4 +32,4 @@ export class Component extends React.PureComponent {
   }
 }
 
-export const Frame = withStyles(styles)(withAnimation()(Component));
+export { Component };

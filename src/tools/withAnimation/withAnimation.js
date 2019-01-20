@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import {
-  Animation,
-  AnimationContext,
-  getAnimationStatusState
-} from '../../components/Animation';
+import { Animation } from '../../components/Animation';
+import { AnimationContext } from '../../components/AnimationContext';
+import { getAnimationStatusState } from '../animationStatus';
 
 export function withAnimation () {
   return Inner => {
