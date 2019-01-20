@@ -7,3 +7,4 @@ export { SocialLinks } from './SocialLinks';
 export { Menu } from './Menu';
 export { Legal } from './Legal';
 export { Frame } from './Frame';
+export { Fader } from './Fader';
