@@ -8,16 +8,20 @@ class Component extends React.PureComponent {
   static propTypes = {
     theme: PropTypes.any.isRequired,
     classes: PropTypes.any.isRequired,
-    anim: PropTypes.any.isRequired,
+    energy: PropTypes.any.isRequired,
     className: PropTypes.any,
     children: PropTypes.any
   };
+
+  enter () {}
+
+  exit () {}
 
   render () {
     const {
       theme,
       classes,
-      anim,
+      energy,
       className,
       children,
       ...rest
@@ -25,7 +29,6 @@ class Component extends React.PureComponent {
 
     return (
       <div className={cx(classes.root, className)} {...rest}>
-        <div>{anim.status}</div>
         {children}
       </div>
     );

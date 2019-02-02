@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { isNumber, ENTERING, ENTERED, EXITING, EXITED } from '../../tools';
+import {
+  isNumber,
+  ENTERING,
+  ENTERED,
+  EXITING,
+  EXITED,
+  getAnimationStatusState
+} from '../../tools';
 import { AnimationContext } from '../AnimationContext';
 
 class Component extends React.PureComponent {
@@ -24,7 +31,8 @@ class Component extends React.PureComponent {
 
   static defaultProps = {
     animate: true,
-    show: true
+    show: true,
+    independent: false
   };
 
   static contextType = AnimationContext;
@@ -37,7 +45,10 @@ class Component extends React.PureComponent {
     this.show = this.canShow();
     this.status = initialStatus;
     this.timeout = null;
-    this.state = { executedStatus: this.status };
+    this.state = {
+      executedStatus: this.status,
+      energy: this.getEnergyState(this.status)
+    };
   }
 
   componentDidMount () {
@@ -66,19 +77,36 @@ class Component extends React.PureComponent {
   }
 
   canShow () {
-    const parentStatus = this.context;
+    const parentEnergy = this.context;
     const { independent } = this.props;
     const show =
-      independent || !parentStatus ? this.props.show : parentStatus === ENTERED;
+      independent || !parentEnergy ? this.props.show : parentEnergy.status === ENTERED;
 
     return show;
+  }
+
+  getEnergyState (status) {
+    const { animate, show, independent } = this.props;
+    const animationStatusState = getAnimationStatusState(status);
+    const duration = this.getDurations();
+
+    return {
+      animate,
+      show,
+      independent,
+      duration,
+      ...animationStatusState
+    };
   }
 
   updateStatus (status) {
     this.status = status;
 
     if (this.state.executedStatus !== status) {
-      this.setState({ executedStatus: status });
+      this.setState({
+        executedStatus: status,
+        energy: this.getEnergyState(status)
+      });
     }
   }
 
@@ -127,11 +155,11 @@ class Component extends React.PureComponent {
   }
 
   render () {
-    const { executedStatus } = this.state;
+    const { energy } = this.state;
     const { children } = this.props;
 
     return (
-      <AnimationContext.Provider value={executedStatus}>
+      <AnimationContext.Provider value={energy}>
         {children}
       </AnimationContext.Provider>
     );

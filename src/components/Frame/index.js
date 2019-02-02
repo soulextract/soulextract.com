@@ -1,8 +1,7 @@
-import withStyles from 'react-jss';
-import { withAnimation } from '../../tools';
+import { withAnimation, withStyles } from '../../tools';
 import { Component } from './Frame';
 import { styles } from './Frame.styles';
 
-const Frame = withStyles(styles)(withAnimation()(Component));
+const Frame = withAnimation()(withStyles(styles)(Component));
 
 export { Frame };

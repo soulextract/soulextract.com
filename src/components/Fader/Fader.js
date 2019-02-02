@@ -9,7 +9,7 @@ class Component extends React.PureComponent {
   static propTypes = {
     theme: PropTypes.any.isRequired,
     classes: PropTypes.any.isRequired,
-    anim: PropTypes.any.isRequired,
+    energy: PropTypes.any.isRequired,
     className: PropTypes.any,
     children: PropTypes.any,
     node: PropTypes.string
@@ -19,31 +19,8 @@ class Component extends React.PureComponent {
     node: 'span'
   };
 
-  componentDidMount () {
-    this.flow();
-  }
-
   componentWillUnmount () {
     this.unanimate();
-  }
-
-  componentDidUpdate (prevProps) {
-    const prevStatus = prevProps.anim.status;
-    const { status } = this.props.anim;
-
-    if (prevStatus !== status) {
-      this.flow();
-    }
-  }
-
-  flow () {
-    const { anim } = this.props;
-
-    if (anim.entering) {
-      this.enter();
-    } else if (anim.exiting) {
-      this.exit();
-    }
   }
 
   enter () {
@@ -88,7 +65,7 @@ class Component extends React.PureComponent {
     const {
       theme,
       classes,
-      anim,
+      energy,
       className,
       children,
       node,

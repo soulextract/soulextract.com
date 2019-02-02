@@ -4,34 +4,96 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import { Animation } from '../../components/Animation';
 import { AnimationContext } from '../../components/AnimationContext';
-import { getAnimationStatusState } from '../animationStatus';
 
-export function withAnimation () {
+function withAnimation () {
   return Inner => {
     class InsideAnimation extends React.PureComponent {
+      static propTypes = {
+        forwardedRef: PropTypes.any
+      };
+
+      static contextType = AnimationContext;
+
+      constructor () {
+        super(...arguments);
+
+        this.prevContext = this.context;
+      }
+
+      componentDidMount () {
+        this.flow();
+      }
+
+      componentDidUpdate () {
+        const prevStatus = this.prevContext.status;
+        const currentStatus = this.context.status;
+
+        if (prevStatus !== currentStatus) {
+          this.flow();
+        }
+
+        this.prevContext = this.context;
+      }
+
+      flow () {
+        const energy = this.context;
+
+        if (energy.entering) {
+          this.inner.enter();
+        } else if (energy.exiting) {
+          this.inner.exit();
+        }
+      }
+
+      onRef = ref => {
+        const { forwardedRef } = this.props;
+
+        this.inner = ref;
+
+        if (forwardedRef) {
+          forwardedRef(ref);
+        }
+      }
+
       render () {
-        const status = this.context;
-        const anim = getAnimationStatusState(status);
-        return <Inner anim={anim} {...this.props} />;
+        const energy = this.context;
+        const { forwardedRef, ...etc } = this.props;
+        return (
+          <Inner
+            {...etc}
+            ref={this.onRef}
+            energy={energy}
+          />
+        );
       }
     }
 
-    InsideAnimation.contextType = AnimationContext;
+    class WithAnimationInside extends React.PureComponent {
+      static displayName =
+        'Animation(' +
+        (Inner.displayName || Inner.name || 'Component') +
+        ')';
 
-    const WithAnimation = ({ animation, ...etc }) => (
-      <Animation {...animation}>
-        <InsideAnimation {...etc} />
-      </Animation>
-    );
+      static propTypes = {
+        animation: PropTypes.any
+      };
 
-    const displayName = Inner.displayName || Inner.name || 'Component';
-    WithAnimation.displayName = 'Animation(' + displayName + ')';
+      render () {
+        const { animation, ...etc } = this.props;
+        return (
+          <Animation {...animation}>
+            <InsideAnimation {...etc} />
+          </Animation>
+        );
+      }
+    }
 
-    WithAnimation.propTypes = {
-      animation: PropTypes.any
-    };
-    WithAnimation.defaultProps = { ...Inner.defaultProps };
+    const WithAnimation = React.forwardRef((props, ref) => {
+      return <WithAnimationInside {...props} forwardedRef={ref} />;
+    });
 
     return hoistNonReactStatics(WithAnimation, Inner);
   };
 }
+
+export { withAnimation };
