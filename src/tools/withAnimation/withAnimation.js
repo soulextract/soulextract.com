@@ -5,7 +5,12 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { Animation } from '../../components/Animation';
 import { AnimationContext } from '../../components/AnimationContext';
 
-function withAnimation () {
+function withAnimation (providedOptions) {
+  const options = {
+    flow: true,
+    ...providedOptions
+  };
+
   return Inner => {
     class InsideAnimation extends React.PureComponent {
       static propTypes = {
@@ -37,6 +42,10 @@ function withAnimation () {
 
       flow () {
         const energy = this.context;
+
+        if (!options.flow) {
+          return;
+        }
 
         if (energy.entering) {
           this.inner.enter();
