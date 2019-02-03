@@ -9,3 +9,4 @@ export { Menu } from './Menu';
 export { Legal } from './Legal';
 export { Frame } from './Frame';
 export { Fader } from './Fader';
+export { Text } from './Text';

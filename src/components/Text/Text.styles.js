@@ -1,12 +1,12 @@
-const styles = theme => ({
+const styles = () => ({
   root: {
     position: 'relative',
     display: 'inline-block'
   },
-  children: {
+  actualText: {
     display: 'inline-block'
   },
-  text: {
+  overlay: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -15,6 +15,7 @@ const styles = theme => ({
     display: 'inline-block',
     opacity: 0
   },
+  overlayText: {},
   blink: {
     position: 'relative',
     width: 0,
@@ -22,14 +23,14 @@ const styles = theme => ({
     display: 'inline-block',
     animation: 'text-blink 200ms step-end infinite'
   },
-  hide: {
+  hidden: {
     opacity: 0
   },
   animating: {
-    '& $children': {
+    '& $actualText': {
       opacity: 0
     },
-    '& $text': {
+    '& $overlay': {
       opacity: 1
     }
   },

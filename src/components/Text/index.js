@@ -1,5 +1,4 @@
-import withStyles from 'react-jss';
-import { withAnimation } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './Text';
 import { styles } from './Text.styles';
 

@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { getRandomCharacters, createAnimationTick } from '../../tools';
+
+const SCHEME_TRANSITION = 'transition';
+const SCHEME_TRANSFORM = 'transform';
+const RANDOM_CHARACTERS = '$#%&!()=/*-_.             abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
 class Component extends React.PureComponent {
   static displayName = 'Text';
 
@@ -10,95 +16,40 @@ class Component extends React.PureComponent {
     classes: PropTypes.any.isRequired,
     energy: PropTypes.any.isRequired,
     className: PropTypes.any,
-    children: PropTypes.string.isRequired
+    children: PropTypes.string.isRequired,
+    scheme: PropTypes.oneOf([SCHEME_TRANSITION, SCHEME_TRANSFORM]),
+    randomCharacters: PropTypes.string,
+    stableTime: PropTypes.bool
   };
 
   static defaultProps = {
-    children: ''
+    children: '',
+    scheme: SCHEME_TRANSITION,
+    randomCharacters: RANDOM_CHARACTERS,
+    stableTime: false
   };
 
-  constructor () {
-    super(...arguments);
-
-    this.state = { text: '' };
-  }
-
-  componentDidMount () {
-    this.flow();
-  }
-
-  componentDidUpdate (prevProps) {
-    const prevStatus = prevProps.energy.status;
-    const { status } = this.props.energy;
-
-    if (prevStatus !== status) {
-      this.flow();
-    }
-  }
-
-  flow () {
-    const { energy } = this.props;
-
-    if (energy.entering) {
-      this.enter();
-    } else if (energy.exiting) {
-      this.exit();
-    }
-  }
-
   componentWillUnmount () {
-    this.stopAnimation();
-  }
-
-  render () {
-    const { text } = this.state;
-    const { theme, classes, energy, className, children, ...etc } = this.props;
-
-    const animating = energy.entering || energy.exiting;
-
-    const cls = cx(
-      classes.root,
-      {
-        [classes.hide]: energy.animate && !energy.show && !animating,
-        [classes.animating]: animating
-      },
-      className
-    );
-
-    return (
-      <span className={cx(cls)} {...etc}>
-        <span className={classes.children}>{children}</span>
-        {animating && (
-          <span className={classes.text}>
-            {text}
-            <span className={classes.blink}>&#9611;</span>
-          </span>
-        )}
-      </span>
-    );
+    this.cancelAnimate();
   }
 
   enter () {
-    this.cancelNextAnimation();
-    this.startAnimation(true);
+    this.animate(true);
   }
 
   exit () {
-    this.cancelNextAnimation();
-    this.startAnimation(false);
+    this.animate(false);
   }
 
-  stopAnimation () {
-    this.cancelNextAnimation();
-    this.setState({ animating: false });
+  cancelAnimate () {
+    if (this.animationTick) {
+      this.animationTick.cancel();
+      this.animationTick = null;
+    }
   }
 
-  cancelNextAnimation () {
-    window.cancelAnimationFrame(this.currentAnimationFrame);
-  }
-
-  startAnimation (isIn) {
-    const { theme, children } = this.props;
+  animate (isEntering) {
+    const { children, scheme } = this.props;
 
     if (children.length === 0) {
       return;
@@ -108,57 +59,136 @@ class Component extends React.PureComponent {
     //  sounds.typing && sounds.typing.play();
     // }
 
-    // 1s / frames per second (FPS)
-    // 60 FPS are the default in requestAnimationFrame
+    this.cancelAnimate();
+
+    if (scheme === SCHEME_TRANSITION) {
+      this.animateTransition(isEntering);
+    } else {
+      this.animateTransform(isEntering);
+    }
+  }
+
+  getDuration () {
+    const { theme, children, stableTime } = this.props;
+
+    if (stableTime) {
+      return theme.animation.time;
+    }
+
+    // 1s / frames per second (FPS).
+    // 60 FPS are the default in requestAnimationFrame.
     const interval = 1000 / 60;
 
-    // The time it will take to add/remove a character per frame
+    // The time it will take to add/remove a character per frame for
+    // the actual text.
     const realDuration = interval * children.length;
 
-    const timeout = theme.animation.time;
-    const duration = Math.min(realDuration, timeout);
+    // Animation duration will be at most the animation time setting.
+    const duration = Math.min(realDuration, theme.animation.time);
 
-    this.cancelNextAnimation();
+    return duration;
+  }
 
-    this.setState({
-      animating: true,
-      text: isIn ? '' : children
-    });
+  animateTransition (isEntering) {
+    const { children } = this.props;
+    const duration = this.getDuration();
+    const isInverted = !isEntering;
 
-    const length = children.length;
-    let start = performance.now();
-    let progress = null;
+    this.setOverlayText(isEntering ? '' : children);
 
-    const nextAnimation = timestamp => {
-      if (!start) {
-        start = timestamp;
-      }
+    const onCall = ({ timeProgress }) => {
+      // If:
+      // progressLength(n) = progressDuration(ms)
+      // totalLength(n) = totalDuration(ms)
+      // Then:
+      const newLength = Math.round((timeProgress * children.length) / duration);
 
-      progress = Math.max(timestamp - start, 0);
-      if (!isIn) {
-        progress = duration - progress;
-      }
+      const newText = children.substring(0, newLength);
+      this.setOverlayText(newText);
 
-      // partialLength(n) = animationProgressDuration(ms)
-      // textTotalLength(n) = totalDuration(ms)
-      const newLength = Math.round((progress * length) / duration);
-      const text = children.substring(0, newLength);
+      return isEntering ? newLength <= children.length : newLength > 0;
+    };
 
-      this.setState({ text });
+    this.animationTick = createAnimationTick({ duration, isInverted, onCall });
+  }
 
-      const continueAnimation = isIn ? newLength <= length : newLength > 0;
+  animateTransform (isEntering) {
+    const { children, randomCharacters } = this.props;
+    const duration = this.getDuration();
+    const isInverted = !isEntering;
 
-      if (continueAnimation) {
-        this.currentAnimationFrame = window.requestAnimationFrame(
-          nextAnimation
-        );
-      } else {
-        this.stopAnimation();
+    const initialText = getRandomCharacters(children.length, randomCharacters);
+    this.setOverlayText(initialText);
+
+    const onCall = ({ timeProgress }) => {
+      // If:
+      // progressLength(n) = progressDuration(ms)
+      // totalLength(n) = totalDuration(ms)
+      // Then:
+      const newLength = Math.round((timeProgress * children.length) / duration);
+
+      const newText1 = children.substring(0, newLength);
+      const newText2 = getRandomCharacters(children.length - newLength, randomCharacters);
+      this.setOverlayText(newText1 + newText2);
+
+      return isEntering ? newLength <= children.length : newLength > 0;
+    };
+
+    const onDone = () => {
+      if (isInverted) {
+        this.setOverlayText('');
       }
     };
 
-    this.currentAnimationFrame = window.requestAnimationFrame(nextAnimation);
+    this.animationTick = createAnimationTick({ duration, isInverted, onCall, onDone });
+  }
+
+  setOverlayText (text) {
+    if (this.overlayTextElement) {
+      this.overlayTextElement.textContent = text;
+    }
+  }
+
+  render () {
+    const {
+      theme,
+      classes,
+      energy,
+      className,
+      children,
+      scheme,
+      randomCharacters,
+      stableTime,
+      ...etc
+    } = this.props;
+    const animating = energy.entering || energy.exiting;
+
+    const cls = cx(
+      classes.root,
+      {
+        [classes.hidden]: energy.animate && !energy.show && !animating,
+        [classes.animating]: animating
+      },
+      className
+    );
+
+    return (
+      <span className={cls} {...etc}>
+        <span className={classes.actualText}>{children}</span>
+        {animating && (
+          <span className={classes.overlay}>
+            <span
+              className={classes.overlayText}
+              ref={ref => (this.overlayTextElement = ref)}
+            />
+            {scheme === SCHEME_TRANSITION && (
+              <span className={classes.blink}>&#9611;</span>
+            )}
+          </span>
+        )}
+      </span>
+    );
   }
 }
 
-export { Component };
+export { SCHEME_TRANSITION, SCHEME_TRANSFORM, RANDOM_CHARACTERS, Component };
