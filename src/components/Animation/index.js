@@ -1,5 +1,5 @@
 import React from 'react';
-import withStyles from 'react-jss';
+import { withStyles } from '../../tools';
 import { Component } from './Animation';
 
 const Animation = withStyles(() => ({}))(props => <Component {...props} />);

@@ -1,4 +1,4 @@
-import withStyles from 'react-jss';
+import { withStyles } from '../../tools';
 import { Component } from './Layout';
 import { styles } from './Layout.styles';
 

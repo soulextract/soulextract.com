@@ -1,4 +1,4 @@
-import withStyles from 'react-jss';
+import { withStyles } from '../../tools';
 import { Component } from './Legal';
 import { styles } from './Legal.styles';
 
