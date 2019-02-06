@@ -1,5 +1,7 @@
 export { Animation } from './Animation';
 export { AnimationContext } from './AnimationContext';
+export { SoundsProvider } from './SoundsProvider';
+export { SoundsContext } from './SoundsContext';
 export { Secuence } from './Secuence';
 export { Layout } from './Layout';
 export { Background } from './Background';
