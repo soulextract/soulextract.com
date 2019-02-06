@@ -12,9 +12,10 @@ class Component extends React.PureComponent {
   static displayName = 'Text';
 
   static propTypes = {
-    theme: PropTypes.any.isRequired,
-    classes: PropTypes.any.isRequired,
-    energy: PropTypes.any.isRequired,
+    theme: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    energy: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     children: PropTypes.string.isRequired,
     scheme: PropTypes.oneOf([SCHEME_TRANSITION, SCHEME_TRANSFORM]),
@@ -48,16 +49,28 @@ class Component extends React.PureComponent {
     }
   }
 
+  playSound () {
+    const { energy, sounds } = this.props;
+
+    if (energy.animate && sounds.typing && !sounds.typing.playing()) {
+      sounds.typing.play();
+    }
+  }
+
+  stopSound () {
+    const { sounds } = this.props;
+
+    if (sounds.typing) {
+      sounds.typing.stop();
+    }
+  }
+
   animate (isEntering) {
     const { children, scheme } = this.props;
 
     if (children.length === 0) {
       return;
     }
-
-    // if (animate) {
-    //  sounds.typing && sounds.typing.play();
-    // }
 
     this.cancelAnimate();
 
@@ -75,13 +88,10 @@ class Component extends React.PureComponent {
       return theme.animation.time;
     }
 
-    // 1s / frames per second (FPS).
-    // 60 FPS are the default in requestAnimationFrame.
-    const interval = 1000 / 60;
-
+    // requestAnimationFrame uses 60 FPS.
     // The time it will take to add/remove a character per frame for
     // the actual text.
-    const realDuration = interval * children.length;
+    const realDuration = (1000 / 60) * children.length;
 
     // Animation duration will be at most the animation time setting.
     const duration = Math.min(realDuration, theme.animation.time);
@@ -106,10 +116,14 @@ class Component extends React.PureComponent {
       const newText = children.substring(0, newLength);
       this.setOverlayText(newText);
 
+      this.playSound();
+
       return isEntering ? newLength <= children.length : newLength > 0;
     };
 
-    this.animationTick = createAnimationTick({ duration, isInverted, onCall });
+    const onDone = () => this.stopSound();
+
+    this.animationTick = createAnimationTick({ duration, isInverted, onCall, onDone });
   }
 
   animateTransform (isEntering) {
@@ -131,6 +145,8 @@ class Component extends React.PureComponent {
       const newText2 = getRandomCharacters(children.length - newLength, randomCharacters);
       this.setOverlayText(newText1 + newText2);
 
+      this.playSound();
+
       return isEntering ? newLength <= children.length : newLength > 0;
     };
 
@@ -138,6 +154,8 @@ class Component extends React.PureComponent {
       if (isInverted) {
         this.setOverlayText('');
       }
+
+      this.stopSound();
     };
 
     this.animationTick = createAnimationTick({ duration, isInverted, onCall, onDone });

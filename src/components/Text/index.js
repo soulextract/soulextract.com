@@ -1,7 +1,7 @@
-import { withStyles, withAnimation } from '../../tools';
+import { withStyles, withAnimation, withSounds } from '../../tools';
 import { Component } from './Text';
 import { styles } from './Text.styles';
 
-const Text = withStyles(styles)(withAnimation()(Component));
+const Text = withStyles(styles)(withAnimation()(withSounds()(Component)));
 
 export { Text };
