@@ -2,12 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
+import { SoundsProvider } from '../SoundsProvider';
+
 const metaData = {
   title: 'Soul Extract',
   description: 'Alternative Rock injected with electronic and cinematic elements. Proud member of the FiXT roster.',
   url: 'https://soulextract.com',
   twitter: '@soulextract',
   seoImage: 'https://soulextract.com/images/soulextract.jpg'
+};
+
+const sounds = {
+  settings: {
+    volume: 1
+  },
+  players: {
+    typing: {
+      src: ['/sounds/typing.mp3']
+    }
+  }
 };
 
 const Component = ({ children }) => (
@@ -55,7 +68,9 @@ const Component = ({ children }) => (
         href='//cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css'
       />
     </Helmet>
-    {children}
+    <SoundsProvider sounds={sounds}>
+      {children}
+    </SoundsProvider>
   </>
 );
 
