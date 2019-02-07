@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { createPlayer as createPlayerModule } from '../../tools';
+import {
+  createPlayer as createPlayerModule,
+  createSounds as createSoundsModule
+} from '../../tools';
 import { SoundsContext } from '../SoundsContext';
 
 class Component extends React.PureComponent {
   static propTypes = {
     sounds: PropTypes.object.isRequired,
     createPlayer: PropTypes.func.isRequired,
+    createSounds: PropTypes.func.isRequired,
     children: PropTypes.any
   };
 
   static defaultProps = {
-    createPlayer: createPlayerModule
+    createPlayer: createPlayerModule,
+    createSounds: createSoundsModule
   };
 
   constructor () {
@@ -31,8 +36,8 @@ class Component extends React.PureComponent {
   }
 
   getSounds () {
-    const { sounds, createPlayer } = this.props;
-    const { settings, players } = sounds;
+    const { sounds, createPlayer, createSounds } = this.props;
+    const { settings, players } = createSounds(sounds);
 
     const soundsPlayers = {};
 
