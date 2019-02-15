@@ -9,7 +9,7 @@ module.exports = {
       main: '#ffffff'
     },
     secondary: {
-      main: '#27f0fa'
+      main: '#27e1fa'
     },
     heading: {
       main: '#f8f8fa'
@@ -18,12 +18,14 @@ module.exports = {
       main: '#ffffff'
     },
     link: {
-      main: '#87f7fc',
       light: '#87f7fc',
+      main: '#87f7fc',
       dark: '#87f7fc'
     },
     background: {
-      main: '#050608'
+      dark: '#000000',
+      main: '#02161a',
+      light: '#022A2A'
     }
   },
   animation: {
