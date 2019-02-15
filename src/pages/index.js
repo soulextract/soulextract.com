@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
-import { rgba } from 'polished';
 
 import {
   Layout,
@@ -13,19 +12,9 @@ import {
 } from '../components';
 
 const styles = theme => {
-  const lightColor = rgba(theme.color.secondary.main, 0.13);
   return {
     root: {
       margin: 'auto'
-    },
-    light: {
-      position: 'absolute',
-      zIndex: 0,
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      backgroundImage: `radial-gradient(${lightColor} 35%, transparent)`
     },
     content: {
       position: 'relative',
@@ -50,11 +39,6 @@ const styles = theme => {
       left: '50%',
       bottom: 2,
       transform: 'translateX(-50%)'
-    },
-    '@media (min-width: 480px)': {
-      light: {
-        backgroundImage: `radial-gradient(${lightColor} 20%, transparent)`
-      }
     }
   };
 };
@@ -66,7 +50,6 @@ class Component extends React.Component {
       <Layout>
         <Background>
           <div className={classes.root}>
-            <div className={classes.light} />
             <div className={classes.content}>
               <Brand className={classes.brand} />
               <Menu className={classes.menu} />
