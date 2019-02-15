@@ -1,6 +1,8 @@
 const isFn = data => typeof data === 'function';
 const isNumber = data => typeof data === 'number';
 
+const getRandomNumber = (min, max) => min + Math.round(Math.random() * (max - min));
+
 const getRandomCharacters = (length, characters) => {
   let string = '';
 
@@ -12,4 +14,4 @@ const getRandomCharacters = (length, characters) => {
   return string;
 };
 
-export { isFn, isNumber, getRandomCharacters };
+export { isFn, isNumber, getRandomNumber, getRandomCharacters };
