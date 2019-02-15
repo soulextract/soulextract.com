@@ -1,7 +1,7 @@
-import { withStyles } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './Background';
 import { styles } from './Background.styles';
 
-const Background = withStyles(styles)(Component);
+const Background = withAnimation()(withStyles(styles)(Component));
 
 export { Background };
