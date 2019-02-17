@@ -1,4 +1,4 @@
-import { rgba } from 'polished';
+import { rgba, lighten } from 'polished';
 
 const styles = ({ color }) => ({
   positioned: {
@@ -20,10 +20,14 @@ const styles = ({ color }) => ({
   },
   light1: {
     composes: '$positioned',
+    zIndex: 0,
     backgroundImage: 'radial-gradient(' + rgba(color.secondary.main, 0.1) + ' 25%, transparent)',
     opacity: props => props.energy.entered ? 1 : 0
   },
-  line1Container: {},
+  line1Container: {
+    composes: '$positioned',
+    zIndex: 1
+  },
   line1: {
     position: 'absolute',
     left: 0,
@@ -33,16 +37,37 @@ const styles = ({ color }) => ({
     boxShadow: `0 0 1px ${rgba(color.background.main, color.alpha)}`,
     opacity: props => props.energy.entered ? 1 : 0
   },
-  line2Container: {
+  svgContainer: {
+    composes: '$positioned',
+    zIndex: 2,
     display: 'block',
     width: '100%',
     height: '100%'
   },
-  line2: {
-    position: 'absolute',
-    stroke: color.background.light,
-    strokeDasharray: props => props.energy.entered ? '3 7' : '0 10'
+  dotLinesContainer: {
+    opacity: props => props.energy.exited ? 0 : 1
   },
+  dotLine: {
+    stroke: color.background.light,
+    strokeWidth: 1
+  },
+  line2: {},
+  line3: {},
+  circuitContainer: {},
+  circuit: {
+    opacity: props => props.energy.exited ? 0 : 1
+  },
+  circuitLine: {
+    fill: 'none',
+    stroke: color.background.light,
+    strokeWidth: 1
+  },
+  circuitDot: {
+    fill: lighten(color.accent / 4, color.background.light),
+    opacity: props => props.energy.entered ? 1 : 0
+  },
+  circuitDotStart: {},
+  circuitDotEnd: {},
   content: {
     composes: '$positioned',
     zIndex: 1,

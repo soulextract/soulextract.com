@@ -21,30 +21,43 @@ class Component extends React.PureComponent {
 
     this.state = {
       line1Length: 0,
-      line2ItemsPositions: []
+      line2ItemsPositions: [],
+      line3ItemsPositions: [],
+      circuitLines: []
     };
   }
 
   componentDidMount () {
-    const line1Length = this.getLine1Length();
-    const line2ItemsPositions = this.getLine2ItemsPositions();
-
-    this.setState({ line1Length, line2ItemsPositions });
+    this.draw();
   }
 
   componentWillUnmount () {
     this.unanimateAll();
   }
 
+  draw () {
+    const line1Length = this.getLine1Length();
+    const line2ItemsPositions = this.getLine2ItemsPositions();
+    const line3ItemsPositions = this.getLine3ItemsPositions();
+    const circuitLines = this.getCircuitLines();
+
+    this.setState({
+      line1Length,
+      line2ItemsPositions,
+      line3ItemsPositions,
+      circuitLines
+    });
+  }
+
   getLine1Length () {
     const line1Height = 10;
-    const height = this.patternsElement.offsetHeight;
+    const { height } = this.getPatternsElementSize();
     return Math.ceil(height / line1Height);
   }
 
   getLine2ItemsPositions () {
     const lineSpace = 100;
-    const width = this.patternsElement.offsetWidth;
+    const { width } = this.getPatternsElementSize();
     const length = Math.floor(width / lineSpace);
 
     const itemsPositions = [];
@@ -57,33 +70,131 @@ class Component extends React.PureComponent {
     return itemsPositions;
   }
 
-  enter () {
-    const { theme } = this.props;
-    const duration = theme.animation.time;
+  getLine3ItemsPositions () {
+    const { height } = this.getPatternsElementSize();
+    const lineSpace = 200;
+    const length = Math.floor(height / lineSpace);
 
+    const itemsPositions = [];
+
+    for (let index = 0; index < length; index++) {
+      const itemPosition = getRandomNumber(index * lineSpace, index * lineSpace + lineSpace);
+      itemsPositions.push(itemPosition);
+    }
+
+    return itemsPositions;
+  }
+
+  getCircuitLines () {
+    const { width, height } = this.getPatternsElementSize();
+
+    const widthOriginal = 1000;
+    const heightOriginal = 600;
+
+    const widthScale = width / widthOriginal;
+    const heightScale = height / heightOriginal;
+
+    let linesOriginal = [
+      [[31, 80], [45, 98], [478, 98]],
+      [[-10, 136], [567, 136], [597, 96], [867, 96]],
+      [[65, -10], [98, 33], [496, 33], [507, 21], [923, 21]],
+      [[38, 267], [157, 267]],
+      [[295, 307], [503, 307], [566, 225], [1010, 225]],
+      [[88, 340], [362, 340], [372, 354], [854, 354]],
+      [[908, 368], [1010, 368]],
+      [[219, 491], [236, 512], [484, 512]],
+      [[688, 495], [725, 448], [981, 447]],
+      [[-10, 485], [579, 485], [618, 535], [855, 536]],
+      [[71, 448], [104, 405], [292, 405]],
+      [[34, 610], [63, 560], [147, 560], [173, 520]],
+      [[658, 176], [1010, 176]]
+    ];
+
+    if (width > 420) {
+      linesOriginal = [
+        ...linesOriginal,
+        [[520, 131], [572, 64]],
+        [[27, 174], [275, 174], [314, 135]],
+        [[312, 251], [528, 251], [561, 207], [1010, 207]],
+        [[615, 243], [971, 243]],
+        [[146, 400], [490, 400], [624, 226]],
+        [[-10, 479], [585, 479], [600, 498], [851, 498]]
+      ];
+    }
+
+    const lines = linesOriginal.map(line => {
+      return line.map(([x, y]) => [x * widthScale, y * heightScale]);
+    });
+
+    return lines;
+  }
+
+  enter () {
+    const { energy, classes } = this.props;
+    const duration = energy.duration.enter;
+
+    // Light and horizontal lines
     this.animate(
       [this.light1Element, ...this.line1Container.childNodes],
       { opacity: 1, duration }
     );
 
-    this.animate([...this.line2Container.childNodes], {
-      strokeDasharray: '3 7',
+    // Dot lines
+    this.animate(this.dotLinesContainer, { opacity: 1, duration });
+    this.animate([...this.dotLinesContainer.childNodes], {
+      strokeDasharray: ['3 35', '3 7'],
       duration
+    });
+
+    // Circuits
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotStart), {
+      opacity: 1,
+      duration: duration * (1 / 5)
+    });
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitLine), {
+      strokeDashoffset: [anime.setDashoffset, 0],
+      delay: duration * (1 / 5),
+      duration: duration * (4 / 5)
+    });
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotEnd), {
+      opacity: 1,
+      delay: duration * (4 / 5),
+      duration: duration * (1 / 5)
     });
   }
 
   exit () {
-    const { theme } = this.props;
-    const duration = theme.animation.time;
+    const { energy, classes } = this.props;
+    const duration = energy.duration.enter;
 
+    // Light and horizontal lines
     this.animate(
       [this.light1Element, ...this.line1Container.childNodes],
       { opacity: 0, duration }
     );
 
-    this.animate([...this.line2Container.childNodes], {
-      strokeDasharray: '0 10',
+    // Dot lines
+    this.animate(this.dotLinesContainer, { opacity: 0, duration });
+    this.animate([...this.dotLinesContainer.childNodes], {
+      strokeDasharray: ['3 7', '3 35'],
       duration
+    });
+
+    // Circuit lines
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotEnd), {
+      opacity: 0,
+      duration: duration * (1 / 5)
+    });
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitLine), {
+      strokeDashoffset: [anime.setDashoffset, 0],
+      direction: 'reverse',
+      delay: duration * (1 / 5),
+      duration: duration * (4 / 5)
+    });
+    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotStart), {
+      opacity: 0,
+      delay: duration * (4 / 5),
+      duration: duration * (1 / 5)
     });
   }
 
@@ -104,14 +215,26 @@ class Component extends React.PureComponent {
   unanimateAll () {
     this.unanimate(this.light1Element);
     this.unanimate(this.line1Container.childNodes);
-    this.unanimate(this.line2Container.childNodes);
+    this.unanimate(this.dotLinesContainer.childNodes);
+  }
+
+  getPatternsElementSize () {
+    const width = (this.patternsElement && this.patternsElement.offsetWidth) || 0;
+    const height = (this.patternsElement && this.patternsElement.offsetHeight) || 0;
+
+    return { width, height };
   }
 
   render () {
-    const { line1Length, line2ItemsPositions } = this.state;
+    const {
+      line1Length,
+      line2ItemsPositions,
+      line3ItemsPositions,
+      circuitLines
+    } = this.state;
     const { theme, classes, energy, className, children, ...etc } = this.props;
 
-    const patternsHeight = (this.patternsElement && this.patternsElement.offsetHeight) || 0;
+    const { width, height } = this.getPatternsElementSize();
 
     return (
       <div className={cx(classes.root, className)} {...etc}>
@@ -136,19 +259,55 @@ class Component extends React.PureComponent {
             ))}
           </div>
           <svg
-            className={classes.line2Container}
-            ref={ref => (this.line2Container = ref)}
+            className={cx(classes.svgContainer, classes.dotLinesContainer)}
+            ref={ref => (this.dotLinesContainer = ref)}
             xmlns='http://www.w3.org/2000/svg'
           >
             {line2ItemsPositions.map((value, index) => (
               <line
-                className={classes.line2}
+                className={cx(classes.dotLine, classes.line2)}
                 key={index}
-                y1='0px'
-                y2={`${patternsHeight}px`}
                 x1={`${value}px`}
-                x2={`${value + 1}px`}
+                x2={`${value}px`}
+                y1='0px'
+                y2={`${height}px`}
               />
+            ))}
+            {line3ItemsPositions.map((value, index) => (
+              <line
+                className={cx(classes.dotLine, classes.line3)}
+                key={index}
+                x1='0px'
+                x2={`${width}px`}
+                y1={`${value}px`}
+                y2={`${value}px`}
+              />
+            ))}
+          </svg>
+          <svg
+            className={cx(classes.svgContainer, classes.circuitContainer)}
+            ref={ref => (this.circuitContainer = ref)}
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            {circuitLines.map((line, index) => (
+              <g className={classes.circuit} key={index} data-index={index}>
+                <path
+                  className={classes.circuitLine}
+                  d={line.map(([x, y], pIndex) => `${pIndex === 0 ? 'M' : 'L'}${x},${y}`).join(' ')}
+                />
+                <circle
+                  className={cx(classes.circuitDot, classes.circuitDotStart)}
+                  cx={`${line[0][0]}px`}
+                  cy={`${line[0][1]}px`}
+                  r='3px'
+                />
+                <circle
+                  className={cx(classes.circuitDot, classes.circuitDotEnd)}
+                  cx={`${line[line.length - 1][0]}px`}
+                  cy={`${line[line.length - 1][1]}px`}
+                  r='3px'
+                />
+              </g>
             ))}
           </svg>
         </div>
