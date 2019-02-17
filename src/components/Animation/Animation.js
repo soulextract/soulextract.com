@@ -121,13 +121,14 @@ class Component extends React.PureComponent {
 
   getDurations () {
     const { theme, animate, duration } = this.props;
-    const time = animate ? duration || theme.animation.time : 0;
+    const settingDeration = theme.animation.time;
+    const time = animate ? duration || settingDeration : 0;
 
     if (isNumber(time)) {
       return { enter: time, exit: time };
     }
 
-    return time;
+    return { enter: settingDeration, exit: settingDeration, ...time };
   }
 
   enter () {
