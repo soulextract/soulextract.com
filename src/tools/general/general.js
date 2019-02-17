@@ -1,7 +1,13 @@
 const isFn = data => typeof data === 'function';
 const isNumber = data => typeof data === 'number';
 
-const getRandomNumber = (min, max) => min + Math.round(Math.random() * (max - min));
+const getRandomNumber = (min = 0, max = 1, decimal) => {
+  let random = Math.random() * (max - min);
+  if (!decimal) {
+    random = Math.round(random);
+  }
+  return min + random;
+};
 
 const getRandomCharacters = (length, characters) => {
   let string = '';
