@@ -25,7 +25,7 @@ module.exports = {
     background: {
       dark: '#000000',
       main: '#02161a',
-      light: '#022A2A'
+      light: '#043b3b'
     }
   },
   animation: {
