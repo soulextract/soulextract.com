@@ -62,6 +62,12 @@ const styles = ({ color }) => ({
     stroke: color.background.light,
     strokeWidth: 1
   },
+  circuitLineLight: {
+    fill: 'none',
+    stroke: color.secondary.main,
+    strokeWidth: 1,
+    opacity: 0
+  },
   circuitDot: {
     fill: lighten(color.accent / 4, color.background.light),
     opacity: props => props.energy.entered ? 1 : 0

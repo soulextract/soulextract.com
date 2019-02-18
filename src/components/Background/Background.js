@@ -33,6 +33,7 @@ class Component extends React.PureComponent {
 
   componentWillUnmount () {
     this.unanimateAll();
+    this.stopStandByAnimation();
   }
 
   draw () {
@@ -161,6 +162,8 @@ class Component extends React.PureComponent {
       delay: duration * (4 / 5),
       duration: duration * (1 / 5)
     });
+
+    this.startStandByAnimation();
   }
 
   exit () {
@@ -196,6 +199,8 @@ class Component extends React.PureComponent {
       delay: duration * (4 / 5),
       duration: duration * (1 / 5)
     });
+
+    this.stopStandByAnimation();
   }
 
   animate (elements, params) {
@@ -215,7 +220,9 @@ class Component extends React.PureComponent {
   unanimateAll () {
     this.unanimate(this.light1Element);
     this.unanimate(this.line1Container.childNodes);
+    this.unanimate(this.dotLinesContainer);
     this.unanimate(this.dotLinesContainer.childNodes);
+    this.unanimate(this.circuitContainer.querySelectorAll('*'));
   }
 
   getPatternsElementSize () {
@@ -223,6 +230,63 @@ class Component extends React.PureComponent {
     const height = (this.patternsElement && this.patternsElement.offsetHeight) || 0;
 
     return { width, height };
+  }
+
+  stopStandByAnimation () {
+    const { classes } = this.props;
+    const circuitLineLights = this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight);
+
+    clearInterval(this.standByAnimationId);
+
+    anime.remove(circuitLineLights);
+    anime.set(circuitLineLights, { opacity: 0 });
+  }
+
+  startStandByAnimation () {
+    const { theme, classes } = this.props;
+    const intervalTime = 4000;
+    const animationDuration = theme.animation.time * 2.5;
+
+    let counter = 0;
+
+    this.stopStandByAnimation();
+
+    this.standByAnimationId = setInterval(() => {
+      counter++;
+
+      const pathsAll = Array.from(this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight));
+
+      let paths = [];
+      if (counter % 3 === 0) {
+        paths = pathsAll;
+      } else {
+        const path1 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
+        const path2 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
+        const path3 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
+        const path4 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
+        paths = [path1, path2, path3, path4];
+      }
+
+      paths.forEach((path, index) => {
+        const length = path.getTotalLength();
+        const size = 20;
+
+        // TODO: Use `.animate()` method to simplify setup.
+        // Currently, it only animates one path if used.
+
+        anime({
+          targets: path,
+          duration: animationDuration,
+          direction: index % 2 === 0 ? 'normal' : 'reverse',
+          begin: () => anime.set(path, { opacity: 1 }),
+          change: anim => {
+            const progress = length * (anim.progress / 100);
+            path.setAttribute('stroke-dasharray', `0 ${progress} ${size} ${length}`);
+          },
+          complete: () => anime.set(path, { opacity: 0 })
+        });
+      });
+    }, intervalTime);
   }
 
   render () {
@@ -293,6 +357,10 @@ class Component extends React.PureComponent {
               <g className={classes.circuit} key={index} data-index={index}>
                 <path
                   className={classes.circuitLine}
+                  d={line.map(([x, y], pIndex) => `${pIndex === 0 ? 'M' : 'L'}${x},${y}`).join(' ')}
+                />
+                <path
+                  className={classes.circuitLineLight}
                   d={line.map(([x, y], pIndex) => `${pIndex === 0 ? 'M' : 'L'}${x},${y}`).join(' ')}
                 />
                 <circle
