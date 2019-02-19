@@ -23,12 +23,28 @@ class Component extends React.PureComponent {
       line1Length: 0,
       line2ItemsPositions: [],
       line3ItemsPositions: [],
-      circuitLines: []
+      circuitLines: [],
+      circuitAnimationDone: false
     };
+
+    this.standByStartId = null;
+    this.standByAnimationId = null;
   }
 
   componentDidMount () {
     this.draw();
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    const { circuitAnimationDone } = this.state;
+
+    if (prevState.circuitAnimationDone !== circuitAnimationDone) {
+      if (circuitAnimationDone) {
+        this.startStandByAnimation();
+      } else {
+        this.stopStandByAnimation();
+      }
+    }
   }
 
   componentWillUnmount () {
@@ -88,6 +104,7 @@ class Component extends React.PureComponent {
 
   getCircuitLines () {
     const { width, height } = this.getPatternsElementSize();
+    const isLargeScreen = this.isLargeScreen();
 
     const widthOriginal = 1000;
     const heightOriginal = 600;
@@ -95,31 +112,34 @@ class Component extends React.PureComponent {
     const widthScale = width / widthOriginal;
     const heightScale = height / heightOriginal;
 
+    // Lines go from left to right when they start in the left half.
+    // And go from right to left when they start in the right half.
+
     let linesOriginal = [
       [[31, 80], [45, 98], [478, 98]],
       [[-10, 136], [567, 136], [597, 96], [867, 96]],
-      [[65, -10], [98, 33], [496, 33], [507, 21], [923, 21]],
+      [[923, 21], [507, 21], [496, 33], [98, 33], [65, -10]],
       [[38, 267], [157, 267]],
-      [[295, 307], [503, 307], [566, 225], [1010, 225]],
+      [[1010, 225], [566, 225], [503, 307], [295, 307]],
       [[88, 340], [362, 340], [372, 354], [854, 354]],
-      [[908, 368], [1010, 368]],
+      [[1010, 368], [908, 368]],
       [[219, 491], [236, 512], [484, 512]],
-      [[688, 495], [725, 448], [981, 447]],
-      [[-10, 485], [579, 485], [618, 535], [855, 536]],
+      [[981, 447], [725, 448], [688, 495]],
+      [[855, 536], [618, 535], [579, 485], [-10, 485]],
       [[71, 448], [104, 405], [292, 405]],
       [[34, 610], [63, 560], [147, 560], [173, 520]],
-      [[658, 176], [1010, 176]]
+      [[1010, 176], [658, 176]]
     ];
 
-    if (width > 420) {
+    if (isLargeScreen) {
       linesOriginal = [
         ...linesOriginal,
         [[520, 131], [572, 64]],
         [[27, 174], [275, 174], [314, 135]],
-        [[312, 251], [528, 251], [561, 207], [1010, 207]],
-        [[615, 243], [971, 243]],
+        [[1010, 207], [561, 207], [528, 251], [312, 251]],
+        [[971, 243], [615, 243]],
         [[146, 400], [490, 400], [624, 226]],
-        [[-10, 479], [585, 479], [600, 498], [851, 498]]
+        [[851, 498], [600, 498], [585, 479], [-10, 479]]
       ];
     }
 
@@ -131,8 +151,11 @@ class Component extends React.PureComponent {
   }
 
   enter () {
-    const { energy, classes } = this.props;
-    const duration = energy.duration.enter;
+    const { classes } = this.props;
+    const { width } = this.getPatternsElementSize();
+    const duration = Math.min(width, 1000);
+
+    this.setState({ circuitAnimationDone: false });
 
     // Light and horizontal lines
     this.animate(
@@ -148,27 +171,47 @@ class Component extends React.PureComponent {
     });
 
     // Circuits
-    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotStart), {
-      opacity: 1,
-      duration: duration * (1 / 5)
-    });
-    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitLine), {
-      strokeDashoffset: [anime.setDashoffset, 0],
-      delay: duration * (1 / 5),
-      duration: duration * (4 / 5)
-    });
-    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotEnd), {
-      opacity: 1,
-      delay: duration * (4 / 5),
-      duration: duration * (1 / 5)
+    const circuits = Array.from(this.circuitContainer.querySelectorAll('g'));
+
+    let circuitDurationLongest = 0;
+
+    circuits.forEach(circuit => {
+      const dotStart = circuit.querySelector('.' + classes.circuitDotStart);
+      const dotEnd = circuit.querySelector('.' + classes.circuitDotEnd);
+      const line = circuit.querySelector('.' + classes.circuitLine);
+      const length = line.getTotalLength();
+      const circuitDuration = this.getPathAnimationDuration(length);
+      const dotDuration = duration * (1 / 10);
+
+      circuitDurationLongest = Math.max(circuitDurationLongest, circuitDuration);
+
+      this.animate(dotStart, {
+        opacity: 1,
+        duration: dotDuration
+      });
+      this.animate(line, {
+        strokeDashoffset: [anime.setDashoffset, 0],
+        delay: dotDuration,
+        duration: circuitDuration
+      });
+      this.animate(dotEnd, {
+        opacity: 1,
+        delay: circuitDuration,
+        duration: dotDuration
+      });
     });
 
-    this.startStandByAnimation();
+    clearTimeout(this.standByStartId);
+    this.standByStartId = setTimeout(() => {
+      this.setState({ circuitAnimationDone: true });
+    }, circuitDurationLongest);
   }
 
   exit () {
     const { energy, classes } = this.props;
-    const duration = energy.duration.enter;
+    const duration = energy.duration.exit;
+
+    this.setState({ circuitAnimationDone: false });
 
     // Light and horizontal lines
     this.animate(
@@ -184,23 +227,18 @@ class Component extends React.PureComponent {
     });
 
     // Circuit lines
-    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotEnd), {
-      opacity: 0,
-      duration: duration * (1 / 5)
-    });
+    this.animate(
+      [
+        ...this.circuitContainer.querySelectorAll('.' + classes.circuitDotStart),
+        ...this.circuitContainer.querySelectorAll('.' + classes.circuitDotEnd)
+      ],
+      { opacity: 0, duration: duration * (1 / 10) }
+    );
     this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitLine), {
       strokeDashoffset: [anime.setDashoffset, 0],
       direction: 'reverse',
-      delay: duration * (1 / 5),
-      duration: duration * (4 / 5)
+      duration: duration
     });
-    this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitDotStart), {
-      opacity: 0,
-      delay: duration * (4 / 5),
-      duration: duration * (1 / 5)
-    });
-
-    this.stopStandByAnimation();
   }
 
   animate (elements, params) {
@@ -223,19 +261,15 @@ class Component extends React.PureComponent {
     this.unanimate(this.dotLinesContainer);
     this.unanimate(this.dotLinesContainer.childNodes);
     this.unanimate(this.circuitContainer.querySelectorAll('*'));
-  }
 
-  getPatternsElementSize () {
-    const width = (this.patternsElement && this.patternsElement.offsetWidth) || 0;
-    const height = (this.patternsElement && this.patternsElement.offsetHeight) || 0;
-
-    return { width, height };
+    this.stopStandByAnimation();
   }
 
   stopStandByAnimation () {
     const { classes } = this.props;
     const circuitLineLights = this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight);
 
+    clearTimeout(this.standByStartId);
     clearInterval(this.standByAnimationId);
 
     anime.remove(circuitLineLights);
@@ -243,40 +277,31 @@ class Component extends React.PureComponent {
   }
 
   startStandByAnimation () {
-    const { theme, classes } = this.props;
-    const intervalTime = 4000;
-    const animationDuration = theme.animation.time * 2.5;
+    const { classes } = this.props;
+    const isLargeScreen = this.isLargeScreen();
 
-    let counter = 0;
-
-    this.stopStandByAnimation();
-
-    this.standByAnimationId = setInterval(() => {
-      counter++;
-
+    const run = () => {
       const pathsAll = Array.from(this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight));
 
-      let paths = [];
-      if (counter % 3 === 0) {
-        paths = pathsAll;
-      } else {
-        const path1 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
-        const path2 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
-        const path3 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
-        const path4 = pathsAll[getRandomNumber(0, pathsAll.length - 1)];
-        paths = [path1, path2, path3, path4];
-      }
+      const paths = Array(isLargeScreen ? getRandomNumber(2, 4) : getRandomNumber(1, 2))
+        .fill(0)
+        .map(() => pathsAll[getRandomNumber(0, pathsAll.length - 1)]);
+
+      let longestDuration = 0;
 
       paths.forEach((path, index) => {
         const length = path.getTotalLength();
+        const circuitDuration = this.getPathAnimationDuration(length);
         const size = 20;
+
+        longestDuration = Math.max(longestDuration, circuitDuration);
 
         // TODO: Use `.animate()` method to simplify setup.
         // Currently, it only animates one path if used.
 
         anime({
           targets: path,
-          duration: animationDuration,
+          duration: circuitDuration,
           direction: index % 2 === 0 ? 'normal' : 'reverse',
           begin: () => anime.set(path, { opacity: 1 }),
           change: anim => {
@@ -286,7 +311,31 @@ class Component extends React.PureComponent {
           complete: () => anime.set(path, { opacity: 0 })
         });
       });
-    }, intervalTime);
+
+      this.standByAnimationId = setTimeout(run, longestDuration);
+    };
+
+    this.stopStandByAnimation();
+
+    run();
+  }
+
+  getPathAnimationDuration (length) {
+    const isLargeScreen = this.isLargeScreen();
+    const duration = Math.min(isLargeScreen ? length : length * 2, 2000);
+    return duration;
+  }
+
+  getPatternsElementSize () {
+    const width = (this.patternsElement && this.patternsElement.offsetWidth) || 0;
+    const height = (this.patternsElement && this.patternsElement.offsetHeight) || 0;
+
+    return { width, height };
+  }
+
+  isLargeScreen () {
+    const { width } = this.getPatternsElementSize();
+    return width > 420;
   }
 
   render () {
