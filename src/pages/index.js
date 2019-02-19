@@ -8,7 +8,8 @@ import {
   Brand,
   SocialLinks,
   Menu,
-  Legal
+  Legal,
+  Fader
 } from '../components';
 
 const styles = theme => {
@@ -44,16 +45,30 @@ const styles = theme => {
 };
 
 class Component extends React.Component {
+  constructor () {
+    super(...arguments);
+
+    this.state = { show: false };
+  }
+
+  componentDidMount () {
+    setTimeout(() => this.setState({ show: true }), 1000);
+  }
+
   render () {
+    const { show } = this.state;
     const { classes } = this.props;
+
     return (
       <Layout>
-        <Background>
+        <Background animation={{ show, duration: { enter: 1000 } }}>
           <div className={classes.root}>
             <div className={classes.content}>
-              <Brand className={classes.brand} />
-              <Menu className={classes.menu} />
-              <SocialLinks className={classes.social} />
+              <Fader>
+                <Brand className={classes.brand} />
+                <Menu className={classes.menu} />
+                <SocialLinks className={classes.social} />
+              </Fader>
             </div>
             <Legal className={classes.legal} />
           </div>
