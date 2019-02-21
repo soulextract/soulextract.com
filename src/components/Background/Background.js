@@ -13,7 +13,12 @@ class Component extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
     className: PropTypes.any,
-    children: PropTypes.any
+    children: PropTypes.any,
+    initialMaxDuration: PropTypes.number
+  };
+
+  static defaultProps = {
+    initialMaxDuration: 2000
   };
 
   constructor () {
@@ -49,7 +54,6 @@ class Component extends React.PureComponent {
 
   componentWillUnmount () {
     this.unanimateAll();
-    this.stopStandByAnimation();
   }
 
   draw () {
@@ -321,8 +325,9 @@ class Component extends React.PureComponent {
   }
 
   getPathAnimationDuration (length) {
+    const { initialMaxDuration } = this.props;
     const isLargeScreen = this.isLargeScreen();
-    const duration = Math.min(isLargeScreen ? length : length * 2, 2000);
+    const duration = Math.min(isLargeScreen ? length : length * 2, initialMaxDuration);
     return duration;
   }
 
@@ -345,7 +350,15 @@ class Component extends React.PureComponent {
       line3ItemsPositions,
       circuitLines
     } = this.state;
-    const { theme, classes, energy, className, children, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      className,
+      children,
+      initialMaxDuration,
+      ...etc
+    } = this.props;
 
     const { width, height } = this.getPatternsElementSize();
 

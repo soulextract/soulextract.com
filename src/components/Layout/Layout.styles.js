@@ -2,6 +2,9 @@ import { lighten } from 'polished';
 
 const styles = theme => ({
   '@global': {
+    '*, *:before, *:after': {
+      boxSizing: 'inherit'
+    },
     '::selection': {
       color: theme.color.background.main,
       backgroundColor: theme.color.secondary.main

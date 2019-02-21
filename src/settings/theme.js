@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   animation: {
-    time: 1000,
-    stagger: 500
+    time: 250,
+    stagger: 50
   }
 };

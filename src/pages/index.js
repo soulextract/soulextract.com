@@ -8,18 +8,18 @@ import {
   Brand,
   SocialLinks,
   Menu,
-  Legal,
-  Fader
+  Legal
 } from '../components';
 
 const styles = theme => {
   return {
     root: {
-      margin: 'auto'
+      margin: 'auto',
+      width: '100%'
     },
     content: {
-      position: 'relative',
-      zIndex: 1,
+      display: 'block',
+      margin: [0, 'auto'],
       padding: 20
     },
     brand: {
@@ -64,11 +64,9 @@ class Component extends React.Component {
         <Background animation={{ show, duration: { enter: 1000 } }}>
           <div className={classes.root}>
             <div className={classes.content}>
-              <Fader>
-                <Brand className={classes.brand} />
-                <Menu className={classes.menu} />
-                <SocialLinks className={classes.social} />
-              </Fader>
+              <Brand className={classes.brand} />
+              <Menu className={classes.menu} />
+              <SocialLinks className={classes.social} />
             </div>
             <Legal className={classes.legal} />
           </div>
