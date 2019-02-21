@@ -1,7 +1,7 @@
-import { withStyles } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './Brand';
 import { styles } from './Brand.styles';
 
-const Brand = withStyles(styles)(Component);
+const Brand = withAnimation()(withStyles(styles)(Component));
 
 export { Brand };
