@@ -24,7 +24,7 @@ class Component extends React.PureComponent {
   }
 
   enter () {
-    const { time } = this.props.theme.animation;
+    const time = this.props.energy.duration.enter;
 
     this.animate({
       keyframes: [
@@ -36,7 +36,7 @@ class Component extends React.PureComponent {
   }
 
   exit () {
-    const { time } = this.props.theme.animation;
+    const time = this.props.energy.duration.exit;
 
     this.animate({
       keyframes: [
