@@ -74,8 +74,8 @@ class Component extends React.Component {
 
   onBackgroundEnter = () => {
     this.setState({ show2: true });
-    this.show3Timeout = setTimeout(() => this.setState({ show3: true }), 50);
-    this.show4Timeout = setTimeout(() => this.setState({ show4: true }), 100);
+    this.show3Timeout = setTimeout(() => this.setState({ show3: true }), 200);
+    this.show4Timeout = setTimeout(() => this.setState({ show4: true }), 500);
   }
 
   render () {
