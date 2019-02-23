@@ -1,6 +1,8 @@
 const styles = theme => ({
   root: {
-    display: 'block',
+    display: 'block'
+  },
+  link: {
     border: 'none',
     outline: 'none',
     userSelect: 'none'
@@ -9,7 +11,8 @@ const styles = theme => ({
     display: 'block',
     margin: 0,
     border: 'none',
-    padding: 0
+    padding: 0,
+    opacity: 0
   },
   path: {
     fill: 'none',
