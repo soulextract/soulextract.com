@@ -5,7 +5,7 @@ import { Layout, Brand } from '../components';
 
 const Charity = () => (
   <Layout>
-    <Brand />
+    <Brand style={{ width: '500px' }} />
     <hr />
     <h2>Charity</h2>
     <Link to='/'>Home</Link>

@@ -5,7 +5,7 @@ import { Layout, Brand } from '../components';
 
 const Music = () => (
   <Layout>
-    <Brand />
+    <Brand style={{ width: '500px' }} />
     <hr />
     <h2>Music</h2>
     <Link to='/'>Home</Link>
