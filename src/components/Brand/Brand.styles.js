@@ -1,8 +1,6 @@
 const styles = theme => ({
   root: {
     display: 'block',
-    width: '100%',
-    maxWidth: '100%',
     border: 'none',
     outline: 'none',
     userSelect: 'none'

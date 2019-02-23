@@ -1,7 +1,7 @@
-import { withStyles } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './SocialLinks';
 import { styles } from './SocialLinks.styles';
 
-const SocialLinks = withStyles(styles)(Component);
+const SocialLinks = withAnimation()(withStyles(styles)(Component));
 
 export { SocialLinks };

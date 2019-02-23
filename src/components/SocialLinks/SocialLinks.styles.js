@@ -6,12 +6,15 @@ const styles = theme => ({
     userSelect: 'none'
   },
   item: {
-    display: 'inline-block',
-    padding: 10,
+    flex: 1,
+    display: 'block',
+    padding: [10, 0],
     lineHeight: 1,
     fontSize: 24,
     textShadow: `0 0 5px ${theme.color.secondary.main}`,
+    textAlign: 'center',
     color: theme.color.primary.main,
+    opacity: 0,
     '&:hover': {
       color: theme.color.secondary.main
     }

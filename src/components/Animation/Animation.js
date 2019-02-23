@@ -23,9 +23,11 @@ class Component extends React.PureComponent {
       PropTypes.number,
       PropTypes.shape({
         enter: PropTypes.number,
-        exit: PropTypes.number
+        exit: PropTypes.number,
+        stagger: PropTypes.number
       })
     ]),
+    onUpdate: PropTypes.func,
     children: PropTypes.any
   };
 
@@ -106,6 +108,10 @@ class Component extends React.PureComponent {
       this.setState({
         executedStatus: status,
         energy: this.getEnergyState(status)
+      }, () => {
+        if (this.props.onUpdate) {
+          this.props.onUpdate(status);
+        }
       });
     }
   }
@@ -120,15 +126,24 @@ class Component extends React.PureComponent {
   }
 
   getDurations () {
-    const { theme, animate, duration } = this.props;
+    const { theme, duration } = this.props;
     const settingDeration = theme.animation.time;
-    const time = animate ? duration || settingDeration : 0;
+    const settingStagger = theme.animation.stagger;
 
-    if (isNumber(time)) {
-      return { enter: time, exit: time };
+    if (isNumber(duration)) {
+      return {
+        enter: duration,
+        exit: duration,
+        stagger: settingStagger
+      };
     }
 
-    return { enter: settingDeration, exit: settingDeration, ...time };
+    return {
+      enter: settingDeration,
+      exit: settingDeration,
+      stagger: settingStagger,
+      ...duration
+    };
   }
 
   enter () {

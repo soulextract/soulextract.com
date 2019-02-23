@@ -1,7 +1,7 @@
-import { withStyles } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './Menu';
 import { styles } from './Menu.styles';
 
-const Menu = withStyles(styles)(Component);
+const Menu = withAnimation()(withStyles(styles)(Component));
 
 export { Menu };

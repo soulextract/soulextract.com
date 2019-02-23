@@ -14,11 +14,13 @@ class Component extends React.PureComponent {
     energy: PropTypes.object.isRequired,
     className: PropTypes.any,
     children: PropTypes.any,
-    initialMaxDuration: PropTypes.number
+    initialMaxDuration: PropTypes.number,
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func
   };
 
   static defaultProps = {
-    initialMaxDuration: 2000
+    initialMaxDuration: 1000
   };
 
   constructor () {
@@ -208,6 +210,10 @@ class Component extends React.PureComponent {
     clearTimeout(this.standByStartId);
     this.standByStartId = setTimeout(() => {
       this.setState({ circuitAnimationDone: true });
+
+      if (this.props.onEnter) {
+        this.props.onEnter();
+      }
     }, circuitDurationLongest);
   }
 
@@ -241,7 +247,12 @@ class Component extends React.PureComponent {
     this.animate(this.circuitContainer.querySelectorAll('.' + classes.circuitLine), {
       strokeDashoffset: [anime.setDashoffset, 0],
       direction: 'reverse',
-      duration: duration
+      duration: duration,
+      complete: () => {
+        if (this.props.onExit) {
+          this.props.onExit();
+        }
+      }
     });
   }
 
@@ -357,6 +368,8 @@ class Component extends React.PureComponent {
       className,
       children,
       initialMaxDuration,
+      onEnter,
+      onExit,
       ...etc
     } = this.props;
 

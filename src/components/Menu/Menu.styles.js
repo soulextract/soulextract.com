@@ -20,14 +20,18 @@ const styles = theme => ({
     whiteSpace: 'nowrap'
   },
   divisor: {
-    display: 'none'
+    display: 'none',
+    width: 0,
+    transform: 'scale(1, 0)',
+    transformOrigin: 'center center'
   },
+  link: {},
   '@media (min-width: 480px)': {
     item: {
-      display: 'inline-block'
+      display: 'block'
     },
     divisor: {
-      display: 'inline-block'
+      display: 'block'
     }
   }
 });
