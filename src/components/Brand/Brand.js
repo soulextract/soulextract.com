@@ -19,31 +19,55 @@ class Component extends React.Component {
     link: '/'
   };
 
+  componentDidMount () {
+    const { energy } = this.props;
+
+    if (energy.animate) {
+      anime.set(this.svgElement, { opacity: 0 });
+    }
+  }
+
+  componentWillUnmount () {
+    const paths = this.svgElement.querySelectorAll('path');
+    anime.remove(paths);
+  }
+
   enter () {
-    const { theme, energy } = this.props;
-    const paths = this.svg.querySelectorAll('path');
+    const { theme } = this.props;
+    const paths = this.svgElement.querySelectorAll('path');
+
+    anime.set(this.svgElement, { opacity: 1 });
 
     anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutQuad',
+      easing: 'easeOutCubic',
       delay: (path, index) => index * theme.animation.stagger,
-      duration: energy.duration.exit
+      duration: path => this.getPathDuration(path.getTotalLength())
     });
   }
 
   exit () {
-    const { theme, energy } = this.props;
-    const paths = this.svg.querySelectorAll('path');
+    const { theme } = this.props;
+    const paths = this.svgElement.querySelectorAll('path');
 
     anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutQuad',
+      easing: 'easeOutCubic',
       direction: 'reverse',
       delay: (path, index) => index * theme.animation.stagger,
-      duration: energy.duration.exit
+      duration: path => this.getPathDuration(path.getTotalLength()),
+      complete: () => anime.set(this.svgElement, { opacity: 0 })
     });
+  }
+
+  getPathDuration (length) {
+    const original = 1400;
+    const actual = this.svgElement.getBBox().width;
+    const factor = actual / original;
+
+    return length * factor;
   }
 
   render () {
@@ -52,7 +76,7 @@ class Component extends React.Component {
     return (
       <Link className={cx(classes.root, className)} to={link} {...etc}>
         <svg
-          ref={ref => (this.svg = ref)}
+          ref={ref => (this.svgElement = ref)}
           className={classes.svg}
           viewBox='0 0 1400 92'
           xmlns='http://www.w3.org/2000/svg'

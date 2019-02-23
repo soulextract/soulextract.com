@@ -16,8 +16,7 @@ const styles = theme => ({
   path: {
     fill: 'none',
     strokeWidth: 16,
-    stroke: theme.color.primary.main,
-    opacity: ({ energy }) => energy.exited ? 0 : 1
+    stroke: theme.color.primary.main
   }
 });
 
