@@ -38,7 +38,10 @@ const styles = theme => ({
       textDecoration: 'none',
       color: theme.color.link.main,
       outline: 'none',
-      transition: `all ${theme.animation.time}ms ease-out`,
+      transition: [
+        `color ${theme.animation.time}ms ease-out`,
+        `text-shadow ${theme.animation.time}ms ease-out`
+      ].join(', '),
       '&:focus': {
         outline: 'none'
       },

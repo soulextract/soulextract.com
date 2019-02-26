@@ -5,6 +5,7 @@ import cx from 'classnames';
 import anime from 'animejs';
 
 import { Text } from '../Text';
+import { SCHEME_NORMAL, SCHEME_EXPAND } from './Menu.constants';
 
 class Component extends React.PureComponent {
   static displayName = 'Menu';
@@ -14,7 +15,14 @@ class Component extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
     audio: PropTypes.object,
-    className: PropTypes.any
+    className: PropTypes.any,
+    scheme: PropTypes.oneOf([SCHEME_NORMAL, SCHEME_EXPAND]),
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func
+  };
+
+  static defaultProps = {
+    scheme: SCHEME_NORMAL
   };
 
   constructor () {
@@ -29,7 +37,17 @@ class Component extends React.PureComponent {
   }
 
   enter () {
-    const { classes, energy } = this.props;
+    const { scheme } = this.props;
+
+    if (scheme === SCHEME_NORMAL) {
+      this.animateNormalEnter();
+    } else {
+      this.animateExpandEnter();
+    }
+  }
+
+  animateNormalEnter () {
+    const { classes, energy, onEnter } = this.props;
     const { duration } = energy;
 
     const divisors = this.element.querySelectorAll('.' + classes.divisor);
@@ -39,8 +57,11 @@ class Component extends React.PureComponent {
       easing: 'easeOutCubic',
       scaleY: [0, 1],
       duration: duration.enter,
-      delay: (divisor, index) => index * duration.stagger * 2
+      delay: (divisor, index) => index * duration.stagger * 2,
+      complete: () => onEnter && onEnter()
     });
+
+    // TODO: Remove timeouts on component unmount.
 
     setTimeout(() => this.setState({ show1: true }), duration.stagger);
     setTimeout(() => this.setState({ show2: true }), duration.stagger * 3);
@@ -48,13 +69,49 @@ class Component extends React.PureComponent {
     setTimeout(() => this.setState({ show4: true }), duration.stagger * 7);
   }
 
+  animateExpandEnter () {
+    const { energy, onEnter } = this.props;
+    const { duration } = energy;
+
+    const links = this.element.querySelectorAll('a');
+    const divisors = this.element.querySelectorAll('b');
+
+    anime({
+      targets: divisors,
+      easing: 'easeOutCubic',
+      scaleY: [0, 1],
+      translateX: (divisor, index) => [[100, 0, -100][index], 0],
+      duration: duration.enter
+    });
+    anime({
+      targets: links,
+      easing: 'easeOutCubic',
+      opacity: 1,
+      translateX: (link, index) => [[150, 75, -75, -150][index], 0],
+      duration: duration.enter,
+      complete: () => onEnter && onEnter()
+    });
+  }
+
   exit () {
-    //
+    // TODO:
   }
 
   render () {
-    const { theme, classes, energy, audio, className, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      audio,
+      className,
+      scheme,
+      onEnter,
+      onExit,
+      ...etc
+    } = this.props;
     const { show1, show2, show3, show4 } = this.state;
+
+    const animateText = scheme === SCHEME_NORMAL;
 
     return (
       <nav
@@ -64,34 +121,34 @@ class Component extends React.PureComponent {
       >
         <Link className={cx(classes.item, classes.link)} to='/news'>
           <Text
-            animation={{ show: show1, stableTime: true, independent: true }}
+            animation={{ animate: animateText, show: show1, stableTime: true, independent: true }}
             audio={{ silent: true }}
           >
             News
           </Text>
         </Link>
-        <span className={cx(classes.item, classes.divisor)}>|</span>
+        <b className={cx(classes.item, classes.divisor)}>|</b>
         <Link className={cx(classes.item, classes.link)} to='/music'>
           <Text
-            animation={{ show: show2, stableTime: true, independent: true }}
+            animation={{ animate: animateText, show: show2, stableTime: true, independent: true }}
             audio={{ silent: true }}
           >
             Music
           </Text>
         </Link>
-        <span className={cx(classes.item, classes.divisor)}>|</span>
+        <b className={cx(classes.item, classes.divisor)}>|</b>
         <Link className={cx(classes.item, classes.link)} to='/charity'>
           <Text
-            animation={{ show: show3, stableTime: true, independent: true }}
+            animation={{ animate: animateText, show: show3, stableTime: true, independent: true }}
             audio={{ silent: true }}
           >
             Charity
           </Text>
         </Link>
-        <span className={cx(classes.item, classes.divisor)}>|</span>
+        <b className={cx(classes.item, classes.divisor)}>|</b>
         <Link className={cx(classes.item, classes.link)} to='/about'>
           <Text
-            animation={{ show: show4, stableTime: true, independent: true }}
+            animation={{ animate: animateText, show: show4, stableTime: true, independent: true }}
             audio={{ silent: true }}
           >
             About

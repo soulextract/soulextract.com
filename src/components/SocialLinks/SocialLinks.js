@@ -10,43 +10,68 @@ class Component extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
-    className: PropTypes.any
+    className: PropTypes.any,
+    animateY: PropTypes.bool,
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func
+  };
+
+  static defaultProps = {
+    animateY: true
   };
 
   enter () {
-    const { duration } = this.props.energy;
-    const links = this.element.querySelectorAll('a');
+    const { energy, animateY, onEnter } = this.props;
+    const { duration } = energy;
 
     anime({
-      targets: links,
+      targets: this.element,
       easing: 'easeOutCubic',
       keyframes: [
         { opacity: 1, duration: duration.enter / 3 },
         { opacity: 0, duration: duration.enter / 5 },
         { opacity: 1, duration: duration.enter / 2 }
       ],
-      delay: (link, index) => index * duration.stagger
+      complete: () => onEnter && onEnter()
     });
+
+    if (animateY) {
+      anime({
+        targets: this.element,
+        easing: 'easeOutCubic',
+        translateY: [-10, 0],
+        duration: duration.enter
+      });
+    }
   }
 
   exit () {
-    const { duration } = this.props.energy;
-    const links = this.element.querySelectorAll('a');
+    const { energy, onExit } = this.props;
+    const { duration } = energy;
 
     anime({
-      targets: links,
+      targets: this.element,
       easing: 'easeOutCubic',
       keyframes: [
         { opacity: 0, duration: duration.exit / 3 },
         { opacity: 1, duration: duration.exit / 5 },
         { opacity: 0, duration: duration.exit / 2 }
       ],
-      delay: (link, index) => index * duration.stagger
+      complete: () => onExit && onExit()
     });
   }
 
   render () {
-    const { theme, classes, energy, className, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      className,
+      animateY,
+      onEnter,
+      onExit,
+      ...etc
+    } = this.props;
 
     return (
       <div

@@ -12,7 +12,9 @@ class Component extends React.Component {
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
     className: PropTypes.any,
-    link: PropTypes.string
+    link: PropTypes.string,
+    onEnter: PropTypes.func,
+    onExit: PropTypes.func
   };
 
   static defaultProps = {
@@ -25,7 +27,7 @@ class Component extends React.Component {
   }
 
   enter () {
-    const { theme } = this.props;
+    const { theme, onEnter } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime.set(this.svgElement, { opacity: 1 });
@@ -35,12 +37,13 @@ class Component extends React.Component {
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'easeOutCubic',
       delay: (path, index) => index * theme.animation.stagger,
-      duration: path => this.getPathDuration(path.getTotalLength())
+      duration: path => this.getPathDuration(path.getTotalLength()),
+      complete: () => onEnter && onEnter()
     });
   }
 
   exit () {
-    const { theme } = this.props;
+    const { theme, onExit } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime({
@@ -50,7 +53,10 @@ class Component extends React.Component {
       direction: 'reverse',
       delay: (path, index) => index * theme.animation.stagger,
       duration: path => this.getPathDuration(path.getTotalLength()),
-      complete: () => anime.set(this.svgElement, { opacity: 0 })
+      complete: () => {
+        anime.set(this.svgElement, { opacity: 0 });
+        onExit && onExit();
+      }
     });
   }
 
@@ -63,7 +69,7 @@ class Component extends React.Component {
   }
 
   render () {
-    const { theme, classes, energy, className, link, ...etc } = this.props;
+    const { theme, classes, energy, className, link, onEnter, onExit, ...etc } = this.props;
 
     return (
       <div className={cx(classes.root, className)} {...etc}>

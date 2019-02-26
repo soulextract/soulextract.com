@@ -1,3 +1,5 @@
+import { SCHEME_EXPAND } from './Menu.constants';
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -22,10 +24,14 @@ const styles = theme => ({
   divisor: {
     display: 'none',
     width: 0,
+    fontWeight: 'normal',
     transform: 'scale(1, 0)',
     transformOrigin: 'center center'
   },
-  link: {},
+  link: {
+    overflow: 'hidden',
+    opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1
+  },
   '@media (min-width: 480px)': {
     item: {
       display: 'block'

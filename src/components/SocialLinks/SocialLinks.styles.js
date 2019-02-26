@@ -3,7 +3,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    userSelect: 'none'
+    userSelect: 'none',
+    opacity: 0
   },
   item: {
     flex: 1,
@@ -14,7 +15,6 @@ const styles = theme => ({
     textShadow: `0 0 5px ${theme.color.secondary.main}`,
     textAlign: 'center',
     color: theme.color.primary.main,
-    opacity: 0,
     '&:hover': {
       color: theme.color.secondary.main
     }

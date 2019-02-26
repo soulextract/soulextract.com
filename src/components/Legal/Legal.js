@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const Component = ({ classes, className }) => (
-  <div className={cx(classes.root, className)}>© Josh Mullis 2018</div>
+  <div className={cx(classes.root, className)}>© Josh Mullis 2019</div>
 );
 
 Component.displayName = 'Legal';

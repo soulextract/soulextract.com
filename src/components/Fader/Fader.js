@@ -52,7 +52,7 @@ class Component extends React.PureComponent {
 
     anime({
       targets: this.element,
-      easing: 'easeInOutQuad',
+      easing: 'easeOutCubic',
       ...params
     });
   }
