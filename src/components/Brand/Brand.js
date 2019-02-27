@@ -13,6 +13,7 @@ class Component extends React.Component {
     energy: PropTypes.object.isRequired,
     className: PropTypes.any,
     link: PropTypes.string,
+    hover: PropTypes.bool,
     onEnter: PropTypes.func,
     onExit: PropTypes.func
   };
@@ -27,7 +28,7 @@ class Component extends React.Component {
   }
 
   enter () {
-    const { theme, onEnter } = this.props;
+    const { energy, onEnter } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime.set(this.svgElement, { opacity: 1 });
@@ -35,24 +36,23 @@ class Component extends React.Component {
     anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeOutCubic',
-      delay: (path, index) => index * theme.animation.stagger,
+      easing: 'linear',
+      delay: (path, index) => index * energy.duration.stagger,
       duration: path => this.getPathDuration(path.getTotalLength()),
       complete: () => onEnter && onEnter()
     });
   }
 
   exit () {
-    const { theme, onExit } = this.props;
+    const { energy, onExit } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeOutCubic',
+      easing: 'linear',
       direction: 'reverse',
-      delay: (path, index) => index * theme.animation.stagger,
-      duration: path => this.getPathDuration(path.getTotalLength()),
+      duration: energy.duration.exit,
       complete: () => {
         anime.set(this.svgElement, { opacity: 0 });
         onExit && onExit();
@@ -69,10 +69,20 @@ class Component extends React.Component {
   }
 
   render () {
-    const { theme, classes, energy, className, link, onEnter, onExit, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      className,
+      link,
+      hover,
+      onEnter,
+      onExit,
+      ...etc
+    } = this.props;
 
     return (
-      <div className={cx(classes.root, className)} {...etc}>
+      <div className={cx(classes.root, hover && classes.hover, className)} {...etc}>
         <Link className={classes.link} to={link}>
           <svg
             ref={ref => (this.svgElement = ref)}

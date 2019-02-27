@@ -26,10 +26,6 @@ function withAnimation (providedOptions) {
       }
 
       componentDidMount () {
-        if (!this.inner.enter || !this.inner.exit) {
-          throw new Error('Provided animated component needs to have methods "enter" and "exit".');
-        }
-
         this.flow();
       }
 
@@ -49,6 +45,10 @@ function withAnimation (providedOptions) {
 
         if (!options.flow) {
           return;
+        }
+
+        if (!this.inner.enter || !this.inner.exit) {
+          throw new Error('Provided animated component needs to have methods "enter" and "exit".');
         }
 
         if (energy.entering) {

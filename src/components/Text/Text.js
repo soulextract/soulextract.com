@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getRandomCharacters, createAnimationTick } from '../../tools';
-
-const SCHEME_TRANSITION = 'transition';
-const SCHEME_TRANSFORM = 'transform';
-const RANDOM_CHARACTERS = '$#%&!()=/*-_.             abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+import { SCHEME_TRANSITION, SCHEME_TRANSFORM, RANDOM_CHARACTERS } from './Text.constants';
 
 class Component extends React.PureComponent {
   static displayName = 'Text';
@@ -212,4 +209,4 @@ class Component extends React.PureComponent {
   }
 }
 
-export { SCHEME_TRANSITION, SCHEME_TRANSFORM, RANDOM_CHARACTERS, Component };
+export { Component };

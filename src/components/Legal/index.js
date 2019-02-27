@@ -1,7 +1,7 @@
-import { withStyles } from '../../tools';
+import { withStyles, withAnimation } from '../../tools';
 import { Component } from './Legal';
 import { styles } from './Legal.styles';
 
-const Legal = withStyles(styles)(Component);
+const Legal = withAnimation({ flow: false })(withStyles(styles)(Component));
 
 export { Legal };

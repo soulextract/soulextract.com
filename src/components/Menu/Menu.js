@@ -36,6 +36,11 @@ class Component extends React.PureComponent {
     };
   }
 
+  componentWillUnmount () {
+    const elements = this.element.querySelectorAll('a, b');
+    anime.remove(elements);
+  }
+
   enter () {
     const { scheme } = this.props;
 
@@ -47,10 +52,10 @@ class Component extends React.PureComponent {
   }
 
   animateNormalEnter () {
-    const { classes, energy, onEnter } = this.props;
+    const { energy, onEnter } = this.props;
     const { duration } = energy;
 
-    const divisors = this.element.querySelectorAll('.' + classes.divisor);
+    const divisors = this.element.querySelectorAll('b');
 
     anime({
       targets: divisors,
@@ -73,8 +78,8 @@ class Component extends React.PureComponent {
     const { energy, onEnter } = this.props;
     const { duration } = energy;
 
-    const links = this.element.querySelectorAll('a');
     const divisors = this.element.querySelectorAll('b');
+    const links = this.element.querySelectorAll('a');
 
     anime({
       targets: divisors,
@@ -94,7 +99,25 @@ class Component extends React.PureComponent {
   }
 
   exit () {
-    // TODO:
+    const { energy, onExit } = this.props;
+    const { duration } = energy;
+
+    const divisors = this.element.querySelectorAll('b');
+    const links = this.element.querySelectorAll('a');
+
+    anime({
+      targets: divisors,
+      easing: 'easeOutCubic',
+      scaleY: [1, 0],
+      duration: duration.exit
+    });
+    anime({
+      targets: links,
+      easing: 'easeOutCubic',
+      opacity: 0,
+      duration: duration.exit,
+      complete: () => onExit && onExit()
+    });
   }
 
   render () {

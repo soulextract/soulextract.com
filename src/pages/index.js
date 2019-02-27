@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'react-jss';
 
-import {
-  Template,
-  Brand,
-  SocialLinks,
-  Menu,
-  Legal
-} from '../components';
+import { Template, Brand, SocialLinks, Menu } from '../components';
 
 const styles = theme => {
   return {
@@ -37,12 +31,6 @@ const styles = theme => {
       margin: [0, 'auto'],
       width: '100%',
       maxWidth: 400
-    },
-    legal: {
-      position: 'absolute',
-      left: '50%',
-      bottom: 2,
-      transform: 'translateX(-50%)'
     }
   };
 };
@@ -59,51 +47,34 @@ class Component extends React.Component {
     };
   }
 
-  componentDidMount () {
-    // TODO: Modularize the session functionality.
-
-    const visited = window.sessionStorage.getItem('visited');
-
-    if (visited) {
-      this.setState({ show1: true });
-    } else {
-      setTimeout(() => {
-        this.setState({ show1: true });
-        window.sessionStorage.setItem('visited', 'true');
-      }, 1000);
-    }
-  }
-
   render () {
     const { show1, show2, show3, show4 } = this.state;
     const { classes } = this.props;
 
     return (
       <Template
-        background={{
-          animation: { show: show1 },
-          onEnter: () => this.setState({ show2: true })
-        }}
+        background={{ onEnter: () => this.setState({ show1: true }) }}
+        legal={{ animation: { show: show4 } }}
       >
         <div className={classes.root}>
           <div className={classes.content}>
             <Brand
               className={classes.brand}
-              animation={{ show: show2, independent: true }}
-              onEnter={() => this.setState({ show3: true })}
+              animation={{ show: show1, independent: true }}
+              onEnter={() => this.setState({ show2: true })}
             />
             <Menu
               className={classes.menu}
-              animation={{ show: show3, independent: true }}
+              animation={{ show: show2, independent: true }}
               scheme='expand'
-              onEnter={() => this.setState({ show4: true })}
+              onEnter={() => this.setState({ show3: true })}
             />
             <SocialLinks
               className={classes.social}
-              animation={{ show: show4, duration: { enter: 400 }, independent: true }}
+              animation={{ show: show3, independent: true }}
+              onEnter={() => this.setState({ show4: true })}
             />
           </div>
-          <Legal className={classes.legal} />
         </div>
       </Template>
     );
