@@ -1,4 +1,5 @@
 export * from './general';
+export * from './viewport';
 export * from './withStyles';
 export * from './withAnimation';
 export * from './withSounds';
