@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'react-jss';
 
-import { Template, Brand, SocialLinks, Menu } from '../components';
+import { withStyles } from '../tools';
+import { Template, Brand, SocialLinks, Menu, Legal } from '../components';
 
 const styles = theme => {
   return {
@@ -31,6 +31,12 @@ const styles = theme => {
       margin: [0, 'auto'],
       width: '100%',
       maxWidth: 400
+    },
+    legal: {
+      position: 'absolute',
+      left: '50%',
+      bottom: 0,
+      transform: 'translateX(-50%)'
     }
   };
 };
@@ -54,7 +60,6 @@ class Component extends React.Component {
     return (
       <Template
         background={{ onEnter: () => this.setState({ show1: true }) }}
-        legal={{ animation: { show: show4 } }}
       >
         <div className={classes.root}>
           <div className={classes.content}>
@@ -65,7 +70,7 @@ class Component extends React.Component {
             />
             <Menu
               className={classes.menu}
-              animation={{ show: show2, independent: true }}
+              animation={{ show: show2, independent: true, duration: { enter: 400 } }}
               scheme='expand'
               onEnter={() => this.setState({ show3: true })}
             />
@@ -75,6 +80,10 @@ class Component extends React.Component {
               onEnter={() => this.setState({ show4: true })}
             />
           </div>
+          <Legal
+            className={classes.legal}
+            animation={{ show: show4, independent: true }}
+          />
         </div>
       </Template>
     );
