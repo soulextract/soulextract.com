@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 
 import { Layout } from '../Layout';
 import { Background } from '../Background';
-import { Legal } from '../Legal';
 
 class Component extends React.Component {
   static displayName = 'Template';
 
   static propTypes = {
-    classes: PropTypes.object,
     layout: PropTypes.object,
     background: PropTypes.object,
-    legal: PropTypes.object,
     children: PropTypes.any
   };
 
@@ -45,7 +42,7 @@ class Component extends React.Component {
 
   render () {
     const { show } = this.state;
-    const { classes, layout, background, legal, children } = this.props;
+    const { layout, background, children } = this.props;
 
     return (
       <Layout {...layout}>
@@ -54,11 +51,6 @@ class Component extends React.Component {
           animation={{ show, ...background.animation }}
         >
           {children}
-          <Legal
-            {...legal}
-            className={classes.legal}
-            animation={{ independent: true, ...legal.animation }}
-          />
         </Background>
       </Layout>
     );

@@ -32,7 +32,7 @@ const styles = theme => ({
     overflow: 'hidden',
     opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1
   },
-  '@media (min-width: 480px)': {
+  '@media (min-width: 600px)': {
     item: {
       display: 'block'
     },

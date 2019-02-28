@@ -2,34 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Text } from '../Text';
+import { Brand } from '../Brand';
+import { Menu } from '../Menu';
 
 class Component extends React.Component {
-  static displayName = 'Legal';
+  static displayName = 'Header';
 
   static propTypes = {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
-    className: PropTypes.any
+    className: PropTypes.any,
+    children: PropTypes.any
   };
+
+  enter () {
+    //
+  }
+
+  exit () {
+    //
+  }
 
   render () {
     const { theme, classes, energy, className, ...etc } = this.props;
-    const { animate, duration } = energy;
-    const show = energy.entering || energy.entered;
 
     return (
       <div className={cx(classes.root, className)} {...etc}>
-        <a
-          className={classes.link}
-          href='https://github.com/soulextract/soulextract.com'
-          target='github'
-        >
-          <Text animation={{ animate, show, duration }} stableTime>
-            — Open Source by Contributors —
-          </Text>
-        </a>
+        <div className={classes.frame} />
+        <div className={classes.content}>
+          <Brand className={classes.brand} />
+          <Menu className={classes.menu} />
+        </div>
       </div>
     );
   }

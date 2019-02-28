@@ -4,6 +4,7 @@ import { Link } from 'gatsby';
 import cx from 'classnames';
 import anime from 'animejs';
 
+import { getViewportRange } from '../../tools';
 import { Text } from '../Text';
 import { SCHEME_NORMAL, SCHEME_EXPAND } from './Menu.constants';
 
@@ -77,23 +78,35 @@ class Component extends React.PureComponent {
   animateExpandEnter () {
     const { energy, onEnter } = this.props;
     const { duration } = energy;
+    const viewportRange = getViewportRange();
 
     const divisors = this.element.querySelectorAll('b');
     const links = this.element.querySelectorAll('a');
 
-    anime({
-      targets: divisors,
-      easing: 'easeOutCubic',
-      scaleY: [0, 1],
-      translateX: (divisor, index) => [[100, 0, -100][index], 0],
-      duration: duration.enter
-    });
+    if (!viewportRange.small) {
+      anime({
+        targets: divisors[1],
+        easing: 'easeOutCubic',
+        scaleY: [0, 1],
+        duration: duration.enter / 2
+      });
+      anime({
+        targets: [divisors[0], divisors[2]],
+        easing: 'easeOutCubic',
+        scaleY: [0, 1],
+        translateX: (divisor, index) => [[100, 0, -100][index], 0],
+        delay: duration.enter / 2,
+        duration: duration.enter / 2
+      });
+    }
+
     anime({
       targets: links,
       easing: 'easeOutCubic',
       opacity: 1,
       translateX: (link, index) => [[150, 75, -75, -150][index], 0],
-      duration: duration.enter,
+      delay: viewportRange.small ? 0 : duration.enter / 2,
+      duration: viewportRange.small ? duration.enter : duration.enter / 2,
       complete: () => onEnter && onEnter()
     });
   }

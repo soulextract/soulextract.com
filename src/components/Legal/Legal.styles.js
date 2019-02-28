@@ -9,7 +9,8 @@ const styles = theme => ({
   },
   link: {
     display: 'block',
-    padding: 5
+    padding: 5,
+    whiteSpace: 'nowrap'
   }
 });
 

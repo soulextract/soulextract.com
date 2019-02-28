@@ -3,7 +3,7 @@ import { lighten } from 'polished';
 const styles = theme => ({
   '@global': {
     '*, *:before, *:after': {
-      boxSizing: 'inherit'
+      boxSizing: 'border-box'
     },
     '::selection': {
       color: theme.color.background.main,

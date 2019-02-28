@@ -20,7 +20,7 @@ class Component extends React.PureComponent {
   };
 
   static defaultProps = {
-    initialMaxDuration: 1000
+    initialMaxDuration: 2000
   };
 
   constructor () {

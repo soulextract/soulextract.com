@@ -8,7 +8,7 @@ import { SoundsProvider } from '../SoundsProvider';
 
 const Component = ({ children }) => (
   <>
-    <Helmet title={meta.title}>
+    <Helmet>
       <html lang='en' />
 
       <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -36,6 +36,7 @@ const Component = ({ children }) => (
       <meta name='twitter:creator' content={meta.twitter} />
       <meta name='twitter:image' content={meta.seoImage} />
 
+      <meta name='mobile-web-app-capable' content='yes' />
       <meta name='theme-color' content='#000000' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-title' content={meta.title} />

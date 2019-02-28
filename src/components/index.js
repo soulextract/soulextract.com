@@ -13,3 +13,6 @@ export { Frame } from './Frame';
 export { Fader } from './Fader';
 export { Text } from './Text';
 export { Template } from './Template';
+export { Header } from './Header';
+export { Main } from './Main';
+export { Footer } from './Footer';
