@@ -1,12 +1,15 @@
 module.exports = {
   typography: {
-    primary: 'Orbitron, sans-serif'
+    primary: 'Orbitron, sans-serif',
+    secondary: "'Titillium Web', sans-serif"
   },
   color: {
     accent: 0.2,
     alpha: 0.65,
     primary: {
-      main: '#ffffff'
+      dark: '#cccccc',
+      main: '#ffffff',
+      light: '#ffffff'
     },
     secondary: {
       main: '#27e1fa'
