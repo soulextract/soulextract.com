@@ -29,6 +29,7 @@ class Component extends React.Component {
 
     return (
       <div className={cx(classes.root, className)} {...etc}>
+        <div className={classes.ground} />
         <div className={classes.frame} />
         <div className={classes.content}>
           <Brand className={classes.brand} />
