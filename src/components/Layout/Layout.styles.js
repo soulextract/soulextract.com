@@ -30,7 +30,7 @@ const styles = theme => ({
       padding: 0,
       lineHeight: 1.5,
       fontSize: 16,
-      fontFamily: theme.typography.primary,
+      fontFamily: theme.typography.secondary,
       color: theme.color.text.main,
       backgroundColor: theme.color.background.main
     },
@@ -52,6 +52,7 @@ const styles = theme => ({
     'h1, h2, h3, h4, h5, h6': {
       display: 'block',
       margin: [0, 0, 20],
+      fontFamily: theme.typography.primary,
       lineHeight: 1,
       color: theme.color.heading.main
     },

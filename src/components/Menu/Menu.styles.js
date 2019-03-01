@@ -18,6 +18,7 @@ const styles = theme => ({
     textAlign: 'center',
     textTransform: 'uppercase',
     textShadow: `0 0 5px ${theme.color.secondary.main}`,
+    fontFamily: theme.typography.primary,
     color: theme.color.primary.main,
     whiteSpace: 'nowrap'
   },

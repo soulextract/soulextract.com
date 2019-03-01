@@ -45,7 +45,7 @@ const Component = ({ children }) => (
 
       <link
         rel='stylesheet'
-        href='https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900'
+        href='https://fonts.googleapis.com/css?family=Orbitron:400,500,700|Titillium+Web:300,400,700'
       />
       <link
         rel='stylesheet'
