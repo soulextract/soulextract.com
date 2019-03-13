@@ -15,7 +15,8 @@ class Component extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
-    audio: PropTypes.object,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     scheme: PropTypes.oneOf([SCHEME_NORMAL, SCHEME_EXPAND]),
     onEnter: PropTypes.func,
@@ -35,6 +36,15 @@ class Component extends React.PureComponent {
       show3: false,
       show4: false
     };
+  }
+
+  componentDidMount () {
+    const { sounds } = this.props;
+    const linksElements = Array.from(this.element.querySelectorAll('a'));
+
+    linksElements.forEach(linkElement => {
+      linkElement.addEventListener('mouseenter', () => sounds.hover.play());
+    });
   }
 
   componentWillUnmount () {
@@ -76,12 +86,14 @@ class Component extends React.PureComponent {
   }
 
   animateExpandEnter () {
-    const { energy, onEnter } = this.props;
+    const { energy, sounds, onEnter } = this.props;
     const { duration } = energy;
     const viewportRange = getViewportRange();
 
     const divisors = this.element.querySelectorAll('b');
     const links = this.element.querySelectorAll('a');
+
+    sounds.expand.play();
 
     if (!viewportRange.small) {
       anime({
@@ -139,6 +151,7 @@ class Component extends React.PureComponent {
       classes,
       energy,
       audio,
+      sounds,
       className,
       scheme,
       onEnter,

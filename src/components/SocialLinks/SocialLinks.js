@@ -10,6 +10,8 @@ class Component extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     animateY: PropTypes.bool,
     onEnter: PropTypes.func,
@@ -20,9 +22,20 @@ class Component extends React.PureComponent {
     animateY: true
   };
 
+  componentDidMount () {
+    const { sounds } = this.props;
+    const linksElements = Array.from(this.element.querySelectorAll('a'));
+
+    linksElements.forEach(linkElement => {
+      linkElement.addEventListener('mouseenter', () => sounds.hover.play());
+    });
+  }
+
   enter () {
-    const { energy, animateY, onEnter } = this.props;
+    const { energy, sounds, animateY, onEnter } = this.props;
     const { duration } = energy;
+
+    sounds.fade.play();
 
     anime({
       targets: this.element,
@@ -46,8 +59,10 @@ class Component extends React.PureComponent {
   }
 
   exit () {
-    const { energy, onExit } = this.props;
+    const { energy, sounds, onExit } = this.props;
     const { duration } = energy;
+
+    sounds.fade.play();
 
     anime({
       targets: this.element,
@@ -66,6 +81,8 @@ class Component extends React.PureComponent {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       animateY,
       onEnter,

@@ -10,6 +10,8 @@ class Component extends React.PureComponent {
     theme: PropTypes.any.isRequired,
     classes: PropTypes.any.isRequired,
     energy: PropTypes.any.isRequired,
+    audio: PropTypes.any.isRequired,
+    sounds: PropTypes.any.isRequired,
     className: PropTypes.any,
     children: PropTypes.any,
     node: PropTypes.string
@@ -20,11 +22,17 @@ class Component extends React.PureComponent {
   };
 
   componentWillUnmount () {
+    const { sounds } = this.props;
+
     this.unanimate();
+    sounds.fade.stop();
   }
 
   enter () {
-    const time = this.props.energy.duration.enter;
+    const { energy, sounds } = this.props;
+    const time = energy.duration.enter;
+
+    sounds.fade.play();
 
     this.animate({
       keyframes: [
@@ -36,7 +44,10 @@ class Component extends React.PureComponent {
   }
 
   exit () {
-    const time = this.props.energy.duration.exit;
+    const { energy, sounds } = this.props;
+    const time = energy.duration.exit;
+
+    sounds.fade.play();
 
     this.animate({
       keyframes: [
@@ -66,6 +77,8 @@ class Component extends React.PureComponent {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       children,
       node,

@@ -11,6 +11,8 @@ class Component extends React.Component {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     link: PropTypes.string,
     hover: PropTypes.bool,
@@ -28,10 +30,12 @@ class Component extends React.Component {
   }
 
   enter () {
-    const { energy, onEnter } = this.props;
+    const { energy, sounds, onEnter } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime.set(this.svgElement, { opacity: 1 });
+
+    sounds.logo.play();
 
     anime({
       targets: paths,
@@ -73,6 +77,8 @@ class Component extends React.Component {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       link,
       hover,

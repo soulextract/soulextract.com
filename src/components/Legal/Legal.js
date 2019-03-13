@@ -11,16 +11,27 @@ class Component extends React.Component {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any
   };
 
+  componentDidMount () {
+    const { sounds } = this.props;
+    this.element.addEventListener('mouseenter', () => sounds.hover.play());
+  }
+
   render () {
-    const { theme, classes, energy, className, ...etc } = this.props;
+    const { theme, classes, energy, audio, sounds, className, ...etc } = this.props;
     const { animate, duration } = energy;
     const show = energy.entering || energy.entered;
 
     return (
-      <div className={cx(classes.root, className)} {...etc}>
+      <div
+        className={cx(classes.root, className)}
+        ref={ref => (this.element = ref)}
+        {...etc}
+      >
         <a
           className={classes.link}
           href='https://github.com/soulextract/soulextract.com'

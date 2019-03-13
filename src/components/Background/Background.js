@@ -12,6 +12,8 @@ class Component extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     children: PropTypes.any,
     initialMaxDuration: PropTypes.number,
@@ -55,7 +57,10 @@ class Component extends React.PureComponent {
   }
 
   componentWillUnmount () {
+    const { sounds } = this.props;
+
     this.unanimateAll();
+    sounds.start.stop();
   }
 
   draw () {
@@ -157,7 +162,7 @@ class Component extends React.PureComponent {
   }
 
   enter () {
-    const { classes } = this.props;
+    const { classes, sounds } = this.props;
     const { width } = this.getPatternsElementSize();
     const duration = Math.min(width, 1000);
 
@@ -215,6 +220,8 @@ class Component extends React.PureComponent {
         this.props.onEnter();
       }
     }, circuitDurationLongest);
+
+    sounds.start.play();
   }
 
   exit () {
@@ -365,6 +372,8 @@ class Component extends React.PureComponent {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       children,
       initialMaxDuration,
