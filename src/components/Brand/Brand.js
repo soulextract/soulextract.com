@@ -95,6 +95,7 @@ class Component extends React.Component {
             className={classes.svg}
             viewBox='0 0 1400 92'
             xmlns='http://www.w3.org/2000/svg'
+            onMouseEnter={() => sounds.hover.play()}
           >
             <path className={classes.path} d='M0,81 L263,81 L263,46 L158,46 L158,10 L501,10' />
             <path className={classes.path} d='M290,81 L378,81 L378,37 L290,37 L290,89' />

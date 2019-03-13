@@ -16,11 +16,6 @@ class Component extends React.Component {
     className: PropTypes.any
   };
 
-  componentDidMount () {
-    const { sounds } = this.props;
-    this.element.addEventListener('mouseenter', () => sounds.hover.play());
-  }
-
   render () {
     const { theme, classes, energy, audio, sounds, className, ...etc } = this.props;
     const { animate, duration } = energy;
@@ -29,7 +24,7 @@ class Component extends React.Component {
     return (
       <div
         className={cx(classes.root, className)}
-        ref={ref => (this.element = ref)}
+        onMouseEnter={() => sounds.hover.play()}
         {...etc}
       >
         <a

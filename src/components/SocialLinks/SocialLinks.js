@@ -22,15 +22,6 @@ class Component extends React.PureComponent {
     animateY: true
   };
 
-  componentDidMount () {
-    const { sounds } = this.props;
-    const linksElements = Array.from(this.element.querySelectorAll('a'));
-
-    linksElements.forEach(linkElement => {
-      linkElement.addEventListener('mouseenter', () => sounds.hover.play());
-    });
-  }
-
   enter () {
     const { energy, sounds, animateY, onEnter } = this.props;
     const { duration } = energy;
@@ -90,33 +81,41 @@ class Component extends React.PureComponent {
       ...etc
     } = this.props;
 
+    const A = elprops => (
+      <a
+        className={classes.item}
+        onMouseEnter={() => sounds.hover.play()}
+        {...elprops}
+      />
+    );
+
     return (
       <div
         className={cx(classes.root, className)}
         ref={ref => (this.element = ref)}
         {...etc}
       >
-        <a className={classes.item} href='https://www.youtube.com/channel/UCS8LdV8eOeK6XnMMkRP3pXA' target='youtube'>
+        <A href='https://www.youtube.com/channel/UCS8LdV8eOeK6XnMMkRP3pXA' target='youtube'>
           <span className='mdi mdi-youtube' />
-        </a>
-        <a className={classes.item} href='https://open.spotify.com/artist/1cEPAqNFhmARDe0HgKOD3h' target='spotify'>
+        </A>
+        <A href='https://open.spotify.com/artist/1cEPAqNFhmARDe0HgKOD3h' target='spotify'>
           <span className='mdi mdi-spotify' />
-        </a>
-        <a className={classes.item} href='https://soundcloud.com/soulextract' target='soundcloud'>
+        </A>
+        <A href='https://soundcloud.com/soulextract' target='soundcloud'>
           <span className='mdi mdi-soundcloud' />
-        </a>
-        <a className={classes.item} href='https://www.facebook.com/soulextract' target='facebook'>
+        </A>
+        <A href='https://www.facebook.com/soulextract' target='facebook'>
           <span className='mdi mdi-facebook' />
-        </a>
-        <a className={classes.item} href='https://twitter.com/soulextract' target='twitter'>
+        </A>
+        <A href='https://twitter.com/soulextract' target='twitter'>
           <span className='mdi mdi-twitter' />
-        </a>
-        <a className={classes.item} href='https://www.instagram.com/soulextract' target='instagram'>
+        </A>
+        <A href='https://www.instagram.com/soulextract' target='instagram'>
           <span className='mdi mdi-instagram' />
-        </a>
-        <a className={classes.item} href='mailto:soulextractmusic@gmail.com' target='email'>
+        </A>
+        <A href='mailto:soulextractmusic@gmail.com' target='email'>
           <span className='mdi mdi-email-outline' />
-        </a>
+        </A>
       </div>
     );
   }

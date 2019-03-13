@@ -38,15 +38,6 @@ class Component extends React.PureComponent {
     };
   }
 
-  componentDidMount () {
-    const { sounds } = this.props;
-    const linksElements = Array.from(this.element.querySelectorAll('a'));
-
-    linksElements.forEach(linkElement => {
-      linkElement.addEventListener('mouseenter', () => sounds.hover.play());
-    });
-  }
-
   componentWillUnmount () {
     const elements = this.element.querySelectorAll('a, b');
     anime.remove(elements);
@@ -168,7 +159,11 @@ class Component extends React.PureComponent {
         ref={ref => (this.element = ref)}
         {...etc}
       >
-        <Link className={cx(classes.item, classes.link)} to='/news'>
+        <Link
+          className={cx(classes.item, classes.link)}
+          to='/news'
+          onMouseEnter={() => sounds.hover.play()}
+        >
           <Text
             animation={{ animate: animateText, show: show1, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -177,7 +172,11 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link className={cx(classes.item, classes.link)} to='/music'>
+        <Link
+          className={cx(classes.item, classes.link)}
+          to='/music'
+          onMouseEnter={() => sounds.hover.play()}
+        >
           <Text
             animation={{ animate: animateText, show: show2, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -186,7 +185,11 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link className={cx(classes.item, classes.link)} to='/charity'>
+        <Link
+          className={cx(classes.item, classes.link)}
+          to='/charity'
+          onMouseEnter={() => sounds.hover.play()}
+        >
           <Text
             animation={{ animate: animateText, show: show3, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -195,7 +198,11 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link className={cx(classes.item, classes.link)} to='/about'>
+        <Link
+          className={cx(classes.item, classes.link)}
+          to='/about'
+          onMouseEnter={() => sounds.hover.play()}
+        >
           <Text
             animation={{ animate: animateText, show: show4, stableTime: true, independent: true }}
             audio={{ silent: true }}
