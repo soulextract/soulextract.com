@@ -19,6 +19,10 @@ module.exports = {
         icon: 'src/images/favicon.png'
       }
     },
-    'gatsby-plugin-offline'
+    'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: { component: require.resolve(`./src/layouts/Template`) }
+    }
   ]
 };
