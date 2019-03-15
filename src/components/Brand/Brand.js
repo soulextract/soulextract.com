@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
 import cx from 'classnames';
 import anime from 'animejs';
+
+import { Link } from '../Link';
 
 class Component extends React.Component {
   static displayName = 'Brand';
@@ -17,7 +18,9 @@ class Component extends React.Component {
     link: PropTypes.string,
     hover: PropTypes.bool,
     onEnter: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    onLinkStart: PropTypes.func,
+    onLinkEnd: PropTypes.func
   };
 
   static defaultProps = {
@@ -52,6 +55,12 @@ class Component extends React.Component {
     const paths = this.svgElement.querySelectorAll('path');
 
     anime({
+      targets: this.svgElement,
+      easing: 'easeInCubic',
+      duration: energy.duration.exit,
+      opacity: 0
+    });
+    anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'linear',
@@ -84,12 +93,19 @@ class Component extends React.Component {
       hover,
       onEnter,
       onExit,
+      onLinkStart,
+      onLinkEnd,
       ...etc
     } = this.props;
 
     return (
       <div className={cx(classes.root, hover && classes.hover, className)} {...etc}>
-        <Link className={classes.link} to={link}>
+        <Link
+          className={classes.link}
+          href={link}
+          onLinkStart={onLinkStart}
+          onLinkEnd={onLinkEnd}
+        >
           <svg
             ref={ref => (this.svgElement = ref)}
             className={classes.svg}

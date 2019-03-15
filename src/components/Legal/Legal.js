@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { Text } from '../Text';
+import { Link } from '../Link';
 
 class Component extends React.Component {
   static displayName = 'Legal';
@@ -13,11 +14,23 @@ class Component extends React.Component {
     energy: PropTypes.object.isRequired,
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
-    className: PropTypes.any
+    className: PropTypes.any,
+    onLinkStart: PropTypes.func,
+    onLinkEnd: PropTypes.func
   };
 
   render () {
-    const { theme, classes, energy, audio, sounds, className, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      audio,
+      sounds,
+      className,
+      onLinkStart,
+      onLinkEnd,
+      ...etc
+    } = this.props;
     const { animate, duration } = energy;
     const show = energy.entering || energy.entered;
 
@@ -27,15 +40,17 @@ class Component extends React.Component {
         onMouseEnter={() => sounds.hover.play()}
         {...etc}
       >
-        <a
+        <Link
           className={classes.link}
           href='https://github.com/soulextract/soulextract.com'
           target='github'
+          onLinkStart={onLinkStart}
+          onLinkEnd={onLinkEnd}
         >
           <Text animation={{ animate, show, duration }} stableTime>
             — Open Source by Contributors —
           </Text>
-        </a>
+        </Link>
       </div>
     );
   }

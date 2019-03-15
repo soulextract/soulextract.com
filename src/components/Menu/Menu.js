@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
 import cx from 'classnames';
 import anime from 'animejs';
 
 import { getViewportRange } from '../../tools';
+import { Link } from '../Link';
 import { Text } from '../Text';
 import { SCHEME_NORMAL, SCHEME_EXPAND } from './Menu.constants';
 
@@ -20,7 +20,9 @@ class Component extends React.PureComponent {
     className: PropTypes.any,
     scheme: PropTypes.oneOf([SCHEME_NORMAL, SCHEME_EXPAND]),
     onEnter: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    onLinkStart: PropTypes.func,
+    onLinkEnd: PropTypes.func
   };
 
   static defaultProps = {
@@ -147,11 +149,19 @@ class Component extends React.PureComponent {
       scheme,
       onEnter,
       onExit,
+      onLinkStart,
+      onLinkEnd,
       ...etc
     } = this.props;
     const { show1, show2, show3, show4 } = this.state;
 
     const animateText = scheme === SCHEME_NORMAL;
+    const linkProps = {
+      className: cx(classes.item, classes.link),
+      onMouseEnter: () => sounds.hover.play(),
+      onLinkStart,
+      onLinkEnd
+    };
 
     return (
       <nav
@@ -159,11 +169,7 @@ class Component extends React.PureComponent {
         ref={ref => (this.element = ref)}
         {...etc}
       >
-        <Link
-          className={cx(classes.item, classes.link)}
-          to='/news'
-          onMouseEnter={() => sounds.hover.play()}
-        >
+        <Link href='/news' {...linkProps}>
           <Text
             animation={{ animate: animateText, show: show1, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -172,11 +178,7 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link
-          className={cx(classes.item, classes.link)}
-          to='/music'
-          onMouseEnter={() => sounds.hover.play()}
-        >
+        <Link href='/music' {...linkProps}>
           <Text
             animation={{ animate: animateText, show: show2, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -185,11 +187,7 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link
-          className={cx(classes.item, classes.link)}
-          to='/charity'
-          onMouseEnter={() => sounds.hover.play()}
-        >
+        <Link href='/charity' {...linkProps}>
           <Text
             animation={{ animate: animateText, show: show3, stableTime: true, independent: true }}
             audio={{ silent: true }}
@@ -198,11 +196,7 @@ class Component extends React.PureComponent {
           </Text>
         </Link>
         <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link
-          className={cx(classes.item, classes.link)}
-          to='/about'
-          onMouseEnter={() => sounds.hover.play()}
-        >
+        <Link href='/about' {...linkProps}>
           <Text
             animation={{ animate: animateText, show: show4, stableTime: true, independent: true }}
             audio={{ silent: true }}

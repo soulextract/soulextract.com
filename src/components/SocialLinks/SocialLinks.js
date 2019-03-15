@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import anime from 'animejs';
 
+import { Link } from '../Link';
+
 class Component extends React.PureComponent {
   static displayName = 'SocialLinks';
 
@@ -15,7 +17,9 @@ class Component extends React.PureComponent {
     className: PropTypes.any,
     animateY: PropTypes.bool,
     onEnter: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    onLinkStart: PropTypes.func,
+    onLinkEnd: PropTypes.func
   };
 
   static defaultProps = {
@@ -78,12 +82,16 @@ class Component extends React.PureComponent {
       animateY,
       onEnter,
       onExit,
+      onLinkStart,
+      onLinkEnd,
       ...etc
     } = this.props;
 
     const A = elprops => (
-      <a
+      <Link
         className={classes.item}
+        onLinkStart={onLinkStart}
+        onLinkEnd={onLinkEnd}
         onMouseEnter={() => sounds.hover.play()}
         {...elprops}
       />

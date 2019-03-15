@@ -20,6 +20,9 @@ module.exports = {
     },
     hover: {
       src: ['/sounds/hover.mp3']
+    },
+    click: {
+      src: ['/sounds/click.mp3']
     }
   }
 };
