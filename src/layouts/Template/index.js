@@ -1,3 +1,7 @@
+import { withStyles } from '../../tools';
 import { Component } from './Template';
+import { styles } from './Template.styles';
 
-export default Component;
+const Template = withStyles(styles)(Component);
+
+export default Template;
