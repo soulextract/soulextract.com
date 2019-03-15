@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Template } from '../Template';
 import { Header } from '../Header';
 import { Main } from '../Main';
 import { Footer } from '../Footer';
@@ -21,15 +20,13 @@ class Component extends React.Component {
     const { theme, classes, className, children, ...etc } = this.props;
 
     return (
-      <Template {...etc}>
-        <div className={cx(classes.root, className)}>
-          <Header className={classes.header} />
-          <Main className={classes.main}>
-            {children}
-          </Main>
-          <Footer className={classes.footer} />
-        </div>
-      </Template>
+      <div className={cx(classes.root, className)} {...etc}>
+        <Header className={classes.header} />
+        <Main className={classes.main}>
+          {children}
+        </Main>
+        <Footer className={classes.footer} />
+      </div>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools';
-import { Template, Brand, SocialLinks, Menu, Legal } from '../components';
+import { Brand, SocialLinks, Menu, Legal } from '../components';
 
 const styles = theme => {
   return {
@@ -48,44 +48,52 @@ class Component extends React.Component {
     this.state = {
       show1: false,
       show2: false,
-      show3: false,
-      show4: false
+      show3: false
     };
   }
 
+  onLinkStart = (event, { isInternal }) => {
+    if (isInternal) {
+      this.setState({
+        show1: false,
+        show2: false,
+        show3: false
+      });
+    }
+  }
+
   render () {
-    const { show1, show2, show3, show4 } = this.state;
+    const { show1, show2, show3 } = this.state;
     const { classes } = this.props;
 
     return (
-      <Template
-        background={{ onEnter: () => this.setState({ show1: true }) }}
-      >
-        <div className={classes.root}>
-          <div className={classes.content}>
-            <Brand
-              className={classes.brand}
-              animation={{ show: show1, independent: true }}
-              onEnter={() => this.setState({ show2: true })}
-            />
-            <Menu
-              className={classes.menu}
-              animation={{ show: show2, independent: true, duration: { enter: 400 } }}
-              scheme='expand'
-              onEnter={() => this.setState({ show3: true })}
-            />
-            <SocialLinks
-              className={classes.social}
-              animation={{ show: show3, independent: true }}
-              onEnter={() => this.setState({ show4: true })}
-            />
-          </div>
-          <Legal
-            className={classes.legal}
-            animation={{ show: show4, independent: true }}
+      <div className={classes.root}>
+        <div className={classes.content}>
+          <Brand
+            className={classes.brand}
+            onEnter={() => this.setState({ show1: true })}
+            onLinkStart={this.onLinkStart}
+          />
+          <Menu
+            className={classes.menu}
+            animation={{ show: show1, independent: true, duration: { enter: 400 } }}
+            scheme='expand'
+            onEnter={() => this.setState({ show2: true })}
+            onLinkStart={this.onLinkStart}
+          />
+          <SocialLinks
+            className={classes.social}
+            animation={{ show: show2, independent: true }}
+            onEnter={() => this.setState({ show3: true })}
+            onLinkStart={this.onLinkStart}
           />
         </div>
-      </Template>
+        <Legal
+          className={classes.legal}
+          animation={{ show: show3, independent: true }}
+          onLinkStart={this.onLinkStart}
+        />
+      </div>
     );
   }
 }

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
 
 import { withStyles } from '../tools';
-import { Template } from '../components';
+import { Brand, Menu } from '../components';
 
 const styles = theme => ({
   root: {
@@ -20,12 +19,11 @@ class News extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Template>
-        <div className={classes.root}>
-          <h1>News</h1>
-          <Link to='/'>Home</Link>
-        </div>
-      </Template>
+      <div className={classes.root}>
+        <h1>News</h1>
+        <Brand style={{ width: 320 }} />
+        <Menu style={{ width: 320 }} />
+      </div>
     );
   }
 }
