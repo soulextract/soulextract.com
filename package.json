@@ -5,7 +5,8 @@
   "license": "GNUv3",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop --host=0.0.0.0",
+    "develop": "gatsby develop --host 0.0.0.0 --port 5000",
+    "serve": "serve public --listen tcp://0.0.0.0:5000",
     "lint": "eslint ./src"
   },
   "dependencies": {
@@ -25,7 +26,8 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-helmet": "^5.2.0",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "serve": "^10.1.2"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
