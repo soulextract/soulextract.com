@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '../tools';
-import { Brand, Menu } from '../components';
+import { withStyles } from '../tools/withStyles';
+import { Brand } from '../components/Brand';
+import { Menu } from '../components/Menu';
 
 const styles = theme => ({
   root: {

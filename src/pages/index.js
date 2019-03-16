@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '../tools';
-import { Brand, SocialLinks, Menu, Legal } from '../components';
+import { withStyles } from '../tools/withStyles';
+import { Brand } from '../components/Brand';
+import { Menu } from '../components/Menu';
+import { SocialLinks } from '../components/SocialLinks';
+import { Legal } from '../components/Legal';
 
 const styles = theme => {
   return {

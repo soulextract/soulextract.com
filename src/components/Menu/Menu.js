@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import anime from 'animejs';
 
-import { getViewportRange } from '../../tools';
+import { getViewportRange } from '../../tools/viewport';
 import { Link } from '../Link';
 import { Text } from '../Text';
 import { SCHEME_NORMAL, SCHEME_EXPAND } from './Menu.constants';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import anime from 'animejs';
 
-import { getRandomNumber } from '../../tools';
+import { getRandomNumber } from '../../tools/general';
 
 class Component extends React.PureComponent {
   static displayName = 'Background';

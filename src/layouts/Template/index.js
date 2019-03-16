@@ -1,4 +1,4 @@
-import { withStyles } from '../../tools';
+import { withStyles } from '../../tools/withStyles';
 import { Component } from './Template';
 import { styles } from './Template.styles';
 

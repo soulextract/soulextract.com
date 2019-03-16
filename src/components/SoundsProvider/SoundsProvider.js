@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  createPlayer as createPlayerModule,
-  createSounds as createSoundsModule
-} from '../../tools';
+import { createSounds as createSoundsModule } from '../../tools/createSounds';
+import { createPlayer as createPlayerModule } from '../../tools/createPlayer';
 import { SoundsContext } from '../SoundsContext';
 
 class Component extends React.PureComponent {

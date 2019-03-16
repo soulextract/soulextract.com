@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isNumber } from '../../tools/general';
 import {
-  isNumber,
   ENTERING,
   ENTERED,
   EXITING,
   EXITED,
   getAnimationStatusState
-} from '../../tools';
+} from '../../tools/animationStatus';
 import { AnimationContext } from '../AnimationContext';
 
 class Component extends React.PureComponent {

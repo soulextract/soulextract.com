@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import anime from 'animejs';
 
-import { Layout, Background } from '../../components';
+import { Layout } from '../../components/Layout';
+import { Background } from '../../components/Background';
 
 class Component extends React.Component {
   static displayName = 'Template';

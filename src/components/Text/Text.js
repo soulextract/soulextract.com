@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { getRandomCharacters, createAnimationTick } from '../../tools';
+import { getRandomCharacters } from '../../tools/general';
+import { createAnimationTick } from '../../tools/animationTick';
 import { SCHEME_TRANSITION, SCHEME_TRANSFORM, RANDOM_CHARACTERS } from './Text.constants';
 
 class Component extends React.PureComponent {
