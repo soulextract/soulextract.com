@@ -15,7 +15,8 @@ module.exports = {
         start_url: '/',
         background_color: '#000000',
         theme_color: '#000000',
-        display: 'minimal-ui',
+        display: 'standalone',
+        orientation: 'portrait',
         icon: 'src/images/favicon.png'
       }
     },
