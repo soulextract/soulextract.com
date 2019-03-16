@@ -17,10 +17,7 @@ const Component = ({ children }) => (
       <meta name='robots' content='index, follow' />
       <title>{meta.title}</title>
       <meta name='description' content={meta.description} />
-      <meta
-        name='keywords'
-        content='soul extract, soulextract, alternative electronic rock, cinematic elements, fixt, fixt roster, science fiction'
-      />
+      <meta name='keywords' content={meta.keywords} />
 
       <meta property='og:title' content={meta.title} />
       <meta property='og:site_name' content={meta.title} />
@@ -37,11 +34,11 @@ const Component = ({ children }) => (
       <meta name='twitter:image' content={meta.seoImage} />
 
       <meta name='mobile-web-app-capable' content='yes' />
-      <meta name='theme-color' content='#000000' />
+      <meta name='theme-color' content={meta.color} />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-title' content={meta.title} />
-      <meta name='apple-mobile-web-app-status-bar-style' content='#000000' />
-      <meta name='msapplication-TileColor' content='#000000' />
+      <meta name='apple-mobile-web-app-status-bar-style' content={meta.color} />
+      <meta name='msapplication-TileColor' content={meta.color} />
 
       <link
         rel='stylesheet'

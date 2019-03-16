@@ -13,8 +13,8 @@ module.exports = {
         name: 'Soul Extract',
         short_name: 'Soul Extract',
         start_url: '/',
-        background_color: theme.color.primary.main,
-        theme_color: theme.color.primary.main,
+        background_color: '#000000',
+        theme_color: '#000000',
         display: 'minimal-ui',
         icon: 'src/images/favicon.png'
       }
@@ -22,7 +22,9 @@ module.exports = {
     'gatsby-plugin-offline',
     {
       resolve: `gatsby-plugin-layout`,
-      options: { component: require.resolve(`./src/layouts/Template`) }
+      options: {
+        component: require.resolve(`./src/layouts/Template`)
+      }
     }
   ]
 };
