@@ -2,155 +2,180 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { isNumber } from '../../tools/general';
-import {
-  ENTERING,
-  ENTERED,
-  EXITING,
-  EXITED,
-  getAnimationStatusState
-} from '../../tools/animationStatus';
+import { ENTERING, ENTERED, EXITING, EXITED } from '../../tools/animationStatus';
+import { Animation } from '../Animation';
+import { AnimationContext } from '../AnimationContext';
 
-class Component extends React.PureComponent {
+class Secuencing extends React.PureComponent {
   static displayName = 'Secuence';
 
   static propTypes = {
-    theme: PropTypes.any.isRequired,
-    animate: PropTypes.bool,
-    show: PropTypes.bool,
-    appear: PropTypes.bool,
-    stagger: PropTypes.bool,
-    children: PropTypes.array.isRequired
+    theme: PropTypes.object.isRequired,
+    stagger: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.number
+    ]),
+    children: PropTypes.any
   };
 
-  static defaultProps = {
-    animate: true,
-    show: true,
-    appear: true
-  };
+  static contextType = AnimationContext;
 
   constructor () {
     super(...arguments);
 
-    const { animate, appear, children } = this.props;
-    const initialStatus = animate && appear ? EXITED : ENTERED;
-
-    this.timeouts = {};
-
-    this.state = {
-      childrenStatuses: children.map(() => initialStatus)
+    this.prevContext = this.context;
+    this.gateContext = {
+      subscribe: this.subscribe,
+      unsubscribe: this.unsubscribe,
+      getEnergy: this.getEnergy
     };
+
+    this.subscribers = [];
+    this.timeouts = {};
   }
 
-  componentDidMount () {
-    const { children, animate, show } = this.props;
+  componentDidUpdate () {
+    const prevStatus = this.prevContext.status;
+    const currentStatus = this.context.status;
 
-    if (children.length && animate && show) {
-      this.enter();
-    }
-  }
-
-  componentWillUnmount () {
-    this.resetTimeouts();
-  }
-
-  componentDidUpdate (prevProps) {
-    const { animate, show } = this.props;
-
-    if (animate && show !== prevProps.show) {
-      if (show) {
+    if (prevStatus !== currentStatus) {
+      if (currentStatus === ENTERING) {
         this.enter();
-      } else {
+      } else if (currentStatus === EXITING) {
         this.exit();
       }
     }
+
+    this.prevContext = this.context;
   }
 
-  resetTimeouts () {
-    Object.values(this.timeouts).forEach(clearTimeout);
+  componentWillUnmount () {
+    Object.values(this.timeouts).forEach(timeout => clearTimeout(timeout));
+    this.timeouts = {};
+  }
+
+  subscribe = (ref, callback) => {
+    if (!ref || !callback) {
+      throw new Error('Subscriber needs valid Animation component and callback.');
+    }
+
+    const createdSubscription = this.subscribers.find(sub => sub && sub.ref === ref);
+
+    if (createdSubscription) {
+      return;
+    }
+
+    const energy = ref.getEnergyState(ref.status);
+    const newSubscription = { ref, callback, energy };
+
+    this.subscribers = [...this.subscribers, newSubscription];
+  }
+
+  unsubscribe = ref => {
+    this.subscribers = this.subscribers.map(sub => {
+      if (sub && sub.ref === ref) {
+        return null;
+      }
+      return sub;
+    });
+  }
+
+  getEnergy = ref => {
+    const createdSubscription = this.subscribers.find(sub => sub && sub.ref === ref);
+
+    if (createdSubscription) {
+      return createdSubscription.energy;
+    }
+
+    return null;
+  }
+
+  enter () {
+    // DEBUG:
+    console.log('Secuence enter');
+
+    const { theme, stagger } = this.props;
+
+    this.subscribers.forEach((subscriber, index) => {
+      if (!subscriber) {
+        return;
+      }
+
+      const startTime = stagger
+        ? isNumber(stagger) ? stagger : theme.animation.stagger
+        : subscriber.energy.duration.enter;
+      const duration = subscriber.energy.duration.enter;
+
+      this.schedule(index, startTime * index, () => {
+        this.updateSubscriber(subscriber, ENTERING);
+
+        this.schedule(index, duration, () => {
+          this.updateSubscriber(subscriber, ENTERED);
+        });
+      });
+    });
+  }
+
+  exit () {
+    // DEBUG:
+    console.log('Secuence exit');
+
+    this.subscribers.forEach((subscriber, index) => {
+      this.updateSubscriber(subscriber, EXITING);
+
+      this.schedule(index, 250, () => {
+        this.updateSubscriber(subscriber, EXITED);
+      });
+    });
+  }
+
+  updateSubscriber (subscriber, status) {
+    subscriber.energy = subscriber.ref.getEnergyState(status);
+    subscriber.callback(subscriber.energy);
   }
 
   schedule (key, time, callback) {
     this.unschedule(key);
-    this.timeouts[key] = setTimeout(callback, time);
+    this.timeouts[key] = setTimeout(() => callback(), time);
   }
 
   unschedule (key) {
     clearTimeout(this.timeouts[key]);
   }
 
-  enter () {
-    const { theme, stagger, children } = this.props;
-    const staggerTime = theme.animation.stagger;
-
-    this.resetTimeouts();
-
-    if (stagger) {
-      children.forEach((item, index) => {
-        this.schedule(index, index * staggerTime, () => {
-          this.performEntering(index);
-        });
-      });
-    } else {
-      this.performEntering(0);
-    }
-  }
-
-  exit () {
-    this.resetTimeouts();
-    this.performExiting('all');
-  }
-
-  performEntering (key) {
-    const { theme, stagger } = this.props;
-    const duration = theme.animation.time;
-
-    this.performStatus(key, ENTERING, () => {
-      this.schedule(key, duration, () => {
-        this.performEntered(key);
-
-        if (!stagger && isNumber(key) && key < this.props.children.length - 1) {
-          this.performEntering(key + 1);
-        }
-      });
-    });
-  }
-
-  performEntered (key) {
-    this.performStatus(key, ENTERED);
-  }
-
-  performExiting (key) {
-    const duration = this.props.theme.animation.time;
-
-    this.performStatus(key, EXITING, () => {
-      this.schedule(key, duration, () => this.performExited(key));
-    });
-  }
-
-  performExited (key) {
-    this.performStatus(key, EXITED);
-  }
-
-  performStatus (key, status, callback) {
-    const childrenStatuses = this.state.childrenStatuses.map((item, index) => {
-      if (key === 'all' || index === key) {
-        return status;
-      }
-
-      return item;
-    });
-
-    this.setState(() => ({ childrenStatuses }), callback);
-  }
-
   render () {
     const { children } = this.props;
-    const { childrenStatuses } = this.state;
 
-    return children.map((item, index) => {
-      const animationState = getAnimationStatusState(childrenStatuses[index]);
-      return item(animationState);
-    });
+    return (
+      <AnimationContext.Provider value={this.gateContext}>
+        {children}
+      </AnimationContext.Provider>
+    );
+  }
+}
+
+class Component extends React.PureComponent {
+  static displayName = 'Secuence';
+
+  static propTypes = {
+    ...Animation.propTypes,
+    stagger: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.number
+    ])
+  };
+
+  render () {
+    const { theme } = this.props;
+    const { stagger, children, ...etc } = this.props;
+
+    return (
+      <Animation {...etc}>
+        <Secuencing theme={theme} stagger={stagger}>
+          {children}
+        </Secuencing>
+      </Animation>
+    );
   }
 }
 

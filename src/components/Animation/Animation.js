@@ -42,10 +42,14 @@ class Component extends React.PureComponent {
   constructor () {
     super(...arguments);
 
-    const initialStatus = this.props.animate ? EXITED : ENTERED;
+    this.status = this.props.animate ? EXITED : ENTERED;
+
+    const parentEnergy = this.context;
+    if (parentEnergy && parentEnergy.subscribe) {
+      parentEnergy.subscribe(this, this.onEnergyChange);
+    }
 
     this.show = this.canShow();
-    this.status = initialStatus;
     this.timeout = null;
     this.state = {
       executedStatus: this.status,
@@ -61,15 +65,23 @@ class Component extends React.PureComponent {
 
   componentWillUnmount () {
     this.unschedule();
+
+    const parentEnergy = this.context;
+    if (parentEnergy && parentEnergy.subscribe) {
+      parentEnergy.unsubscribe(this);
+    }
   }
 
   componentDidUpdate () {
+    this.onEnergyChange();
+  }
+
+  onEnergyChange = () => {
     const { animate } = this.props;
     const show = this.canShow();
 
     if (animate && show !== this.show) {
       this.show = show;
-
       if (this.show) {
         this.enter();
       } else {
@@ -81,14 +93,24 @@ class Component extends React.PureComponent {
   canShow () {
     const parentEnergy = this.context;
     const { independent } = this.props;
-    const show =
-      independent || !parentEnergy ? this.props.show : parentEnergy.status === ENTERED;
 
-    return show;
+    if (independent || !parentEnergy) {
+      return this.props.show;
+    }
+
+    if (parentEnergy.subscribe) {
+      const energy = parentEnergy.getEnergy(this);
+      return energy.entering || energy.entered;
+    }
+
+    return parentEnergy.status === ENTERED;
   }
 
   getEnergyState (status) {
-    const { animate, show, independent } = this.props;
+    status = status || this.state.executedStatus;
+
+    const { animate, independent } = this.props;
+    const show = this.show;
     const animationStatusState = getAnimationStatusState(status);
     const duration = this.getDurations();
 
