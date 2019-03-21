@@ -91,25 +91,32 @@ class Secuencing extends React.PureComponent {
   }
 
   enter () {
-    // DEBUG:
-    console.log('Secuence enter');
-
     const { theme, stagger } = this.props;
+
+    let lastTime = 0;
 
     this.subscribers.forEach((subscriber, index) => {
       if (!subscriber) {
         return;
       }
 
-      const startTime = stagger
-        ? isNumber(stagger) ? stagger : theme.animation.stagger
-        : subscriber.energy.duration.enter;
       const duration = subscriber.energy.duration.enter;
 
-      this.schedule(index, startTime * index, () => {
+      let startTime;
+
+      if (stagger) {
+        startTime = index * (isNumber(stagger) ? stagger : theme.animation.stagger);
+      } else {
+        startTime = lastTime;
+      }
+
+      const endTime = startTime + duration;
+      lastTime = endTime;
+
+      this.schedule(index, startTime, () => {
         this.updateSubscriber(subscriber, ENTERING);
 
-        this.schedule(index, duration, () => {
+        this.schedule(index, endTime, () => {
           this.updateSubscriber(subscriber, ENTERED);
         });
       });
@@ -117,9 +124,6 @@ class Secuencing extends React.PureComponent {
   }
 
   exit () {
-    // DEBUG:
-    console.log('Secuence exit');
-
     this.subscribers.forEach((subscriber, index) => {
       this.updateSubscriber(subscriber, EXITING);
 
