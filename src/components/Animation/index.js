@@ -1,7 +1,6 @@
-import React from 'react';
 import { withStyles } from '../../tools/withStyles';
 import { Component } from './Animation';
 
-const Animation = withStyles(() => ({}))(props => <Component {...props} />);
+const Animation = withStyles(() => ({}))(Component);
 
 export { Animation };

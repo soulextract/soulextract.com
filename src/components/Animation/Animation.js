@@ -45,6 +45,7 @@ class Component extends React.PureComponent {
     this.status = this.props.animate ? EXITED : ENTERED;
     this.show = null;
     this.timeout = null;
+    this.contextDuration = null;
     this.state = {
       executedStatus: this.status,
       energy: this.getEnergyState(this.status)
@@ -115,14 +116,15 @@ class Component extends React.PureComponent {
     const { animate, independent } = this.props;
     const show = this.show;
     const animationStatusState = getAnimationStatusState(status);
-    const duration = this.getDurations();
+    const duration = this.getDuration();
 
     return {
       animate,
       show,
       independent,
       duration,
-      ...animationStatusState
+      ...animationStatusState,
+      updateDuration: this.contextUpdateDuration
     };
   }
 
@@ -130,10 +132,10 @@ class Component extends React.PureComponent {
     this.status = status;
 
     if (this.state.executedStatus !== status) {
-      this.setState({
+      this.setState(() => ({
         executedStatus: status,
         energy: this.getEnergyState(status)
-      }, () => {
+      }), () => {
         if (this.props.onUpdate) {
           this.props.onUpdate(status);
         }
@@ -150,25 +152,47 @@ class Component extends React.PureComponent {
     clearTimeout(this.timeout);
   }
 
-  getDurations () {
+  getDuration () {
     const { theme, duration } = this.props;
     const settingDeration = theme.animation.time;
     const settingStagger = theme.animation.stagger;
 
+    let value;
+
     if (isNumber(duration)) {
-      return {
+      value = {
         enter: duration,
         exit: duration,
         stagger: settingStagger
       };
+    } else {
+      value = {
+        enter: settingDeration,
+        exit: settingDeration,
+        stagger: settingStagger,
+        ...duration
+      };
     }
 
     return {
-      enter: settingDeration,
-      exit: settingDeration,
-      stagger: settingStagger,
-      ...duration
+      ...value,
+      ...this.contextDuration
     };
+  }
+
+  contextUpdateDuration = newDuration => {
+    if (isNumber(newDuration)) {
+      this.contextDuration = {
+        ...this.contextDuration,
+        enter: newDuration,
+        exit: newDuration
+      };
+    } else {
+      this.contextDuration = {
+        ...this.contextDuration,
+        ...newDuration
+      };
+    }
   }
 
   enter () {
@@ -176,11 +200,11 @@ class Component extends React.PureComponent {
       return;
     }
 
-    const durations = this.getDurations();
+    const duration = this.getDuration();
 
     this.updateStatus(ENTERING);
 
-    this.schedule(durations.enter, () => this.updateStatus(ENTERED));
+    this.schedule(duration.enter, () => this.updateStatus(ENTERED));
   }
 
   exit () {
@@ -188,11 +212,11 @@ class Component extends React.PureComponent {
       return;
     }
 
-    const durations = this.getDurations();
+    const duration = this.getDuration();
 
     this.updateStatus(EXITING);
 
-    this.schedule(durations.exit, () => this.updateStatus(EXITED));
+    this.schedule(duration.exit, () => this.updateStatus(EXITED));
   }
 
   render () {

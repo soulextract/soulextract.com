@@ -27,6 +27,14 @@ class Component extends React.Component {
     link: '/'
   };
 
+  constructor () {
+    super(...arguments);
+
+    const { energy } = this.props;
+
+    energy.updateDuration({ enter: 830 });
+  }
+
   componentWillUnmount () {
     const paths = this.svgElement.querySelectorAll('path');
     anime.remove(paths);
