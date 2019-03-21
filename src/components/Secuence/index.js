@@ -1,4 +1,5 @@
+import { withAnimation } from '../../tools/withAnimation';
 import { withStyles } from '../../tools/withStyles';
 import { Component } from './Secuence';
 
-export const Secuence = withStyles(() => ({}))(Component);
+export const Secuence = withAnimation()(withStyles(() => ({}))(Component));

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools/withStyles';
+import { Secuence } from '../components/Secuence';
 import { Brand } from '../components/Brand';
 import { Menu } from '../components/Menu';
 import { SocialLinks } from '../components/SocialLinks';
@@ -45,58 +46,40 @@ const styles = theme => {
 };
 
 class Component extends React.Component {
-  constructor () {
-    super(...arguments);
-
-    this.state = {
-      show1: false,
-      show2: false,
-      show3: false
-    };
-  }
-
   onLinkStart = (event, { isInternal }) => {
     if (isInternal) {
-      this.setState({
-        show1: false,
-        show2: false,
-        show3: false
-      });
+      this.secuenceElement.exit();
     }
   }
 
   render () {
-    const { show1, show2, show3 } = this.state;
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.content}>
-          <Brand
-            className={classes.brand}
-            onEnter={() => this.setState({ show1: true })}
-            onLinkStart={this.onLinkStart}
-          />
-          <Menu
-            className={classes.menu}
-            animation={{ show: show1, independent: true, duration: { enter: 400 } }}
-            scheme='expand'
-            onEnter={() => this.setState({ show2: true })}
-            onLinkStart={this.onLinkStart}
-          />
-          <SocialLinks
-            className={classes.social}
-            animation={{ show: show2, independent: true }}
-            onEnter={() => this.setState({ show3: true })}
+      <Secuence ref={ref => (this.secuenceElement = ref)}>
+        <div className={classes.root}>
+          <div className={classes.content}>
+            <Brand
+              className={classes.brand}
+              onLinkStart={this.onLinkStart}
+            />
+            <Menu
+              className={classes.menu}
+              animation={{ duration: { enter: 400 } }}
+              scheme='expand'
+              onLinkStart={this.onLinkStart}
+            />
+            <SocialLinks
+              className={classes.social}
+              onLinkStart={this.onLinkStart}
+            />
+          </div>
+          <Legal
+            className={classes.legal}
             onLinkStart={this.onLinkStart}
           />
         </div>
-        <Legal
-          className={classes.legal}
-          animation={{ show: show3, independent: true }}
-          onLinkStart={this.onLinkStart}
-        />
-      </div>
+      </Secuence>
     );
   }
 }

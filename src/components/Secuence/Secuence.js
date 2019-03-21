@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import { isNumber } from '../../tools/general';
 import { ENTERING, ENTERED, EXITING, EXITED } from '../../tools/animationStatus';
-import { Animation } from '../Animation';
 import { AnimationContext } from '../AnimationContext';
 
-class Secuencing extends React.PureComponent {
+class Component extends React.PureComponent {
   static displayName = 'Secuence';
 
   static propTypes = {
@@ -158,31 +157,6 @@ class Secuencing extends React.PureComponent {
       <AnimationContext.Provider value={this.gateContext}>
         {children}
       </AnimationContext.Provider>
-    );
-  }
-}
-
-class Component extends React.PureComponent {
-  static displayName = 'Secuence';
-
-  static propTypes = {
-    ...Animation.propTypes,
-    stagger: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.number
-    ])
-  };
-
-  render () {
-    const { theme } = this.props;
-    const { stagger, children, ...etc } = this.props;
-
-    return (
-      <Animation {...etc}>
-        <Secuencing theme={theme} stagger={stagger}>
-          {children}
-        </Secuencing>
-      </Animation>
     );
   }
 }
