@@ -43,13 +43,7 @@ class Component extends React.PureComponent {
     super(...arguments);
 
     this.status = this.props.animate ? EXITED : ENTERED;
-
-    const parentEnergy = this.context;
-    if (parentEnergy && parentEnergy.subscribe) {
-      parentEnergy.subscribe(this, this.onEnergyChange);
-    }
-
-    this.show = this.canShow();
+    this.show = null;
     this.timeout = null;
     this.state = {
       executedStatus: this.status,
@@ -58,6 +52,14 @@ class Component extends React.PureComponent {
   }
 
   componentDidMount () {
+    const parentEnergy = this.context;
+
+    if (parentEnergy && parentEnergy.subscribe) {
+      parentEnergy.subscribe(this, this.onEnergyChange);
+    }
+
+    this.show = this.canShow();
+
     if (this.props.animate && this.show) {
       this.enter();
     }
@@ -67,6 +69,7 @@ class Component extends React.PureComponent {
     this.unschedule();
 
     const parentEnergy = this.context;
+
     if (parentEnergy && parentEnergy.subscribe) {
       parentEnergy.unsubscribe(this);
     }

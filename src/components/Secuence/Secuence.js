@@ -100,6 +100,8 @@ class Secuencing extends React.PureComponent {
         return;
       }
 
+      subscriber.energy = subscriber.ref.getEnergyState(subscriber.ref.status);
+
       const duration = subscriber.energy.duration.enter;
 
       let startTime;
@@ -124,10 +126,12 @@ class Secuencing extends React.PureComponent {
   }
 
   exit () {
+    const duration = this.props.theme.animation.time;
+
     this.subscribers.forEach((subscriber, index) => {
       this.updateSubscriber(subscriber, EXITING);
 
-      this.schedule(index, 250, () => {
+      this.schedule(index, duration, () => {
         this.updateSubscriber(subscriber, EXITED);
       });
     });
