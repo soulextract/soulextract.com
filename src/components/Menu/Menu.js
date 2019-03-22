@@ -6,6 +6,7 @@ import anime from 'animejs';
 import { getViewportRange } from '../../tools/viewport';
 import { Link } from '../Link';
 import { Text } from '../Text';
+import { Secuence } from '../Secuence';
 import { SCHEME_NORMAL, SCHEME_EXPAND } from './Menu.constants';
 
 class Component extends React.PureComponent {
@@ -33,11 +34,20 @@ class Component extends React.PureComponent {
     super(...arguments);
 
     this.state = {
-      show1: false,
-      show2: false,
-      show3: false,
-      show4: false
+      showSecuence: false
     };
+  }
+
+  componentDidUpdate (prevProps) {
+    const { energy } = this.props;
+
+    if (prevProps.energy.status !== energy.status) {
+      if (energy.entering) {
+        this.setState({ showSecuence: true }); // eslint-disable-line react/no-did-update-set-state
+      } else if (energy.exiting) {
+        this.setState({ showSecuence: false }); // eslint-disable-line react/no-did-update-set-state
+      }
+    }
   }
 
   componentWillUnmount () {
@@ -60,22 +70,18 @@ class Component extends React.PureComponent {
     const { duration } = energy;
 
     const divisors = this.element.querySelectorAll('b');
+    const links = this.element.querySelectorAll('a');
+
+    anime.set(links, { opacity: 1 });
 
     anime({
       targets: divisors,
       easing: 'easeOutCubic',
       scaleY: [0, 1],
       duration: duration.enter,
-      delay: (divisor, index) => index * duration.stagger * 2,
+      delay: (divisor, index) => index * duration.stagger,
       complete: () => onEnter && onEnter()
     });
-
-    // TODO: Remove timeouts on component unmount.
-
-    setTimeout(() => this.setState({ show1: true }), duration.stagger);
-    setTimeout(() => this.setState({ show2: true }), duration.stagger * 3);
-    setTimeout(() => this.setState({ show3: true }), duration.stagger * 5);
-    setTimeout(() => this.setState({ show4: true }), duration.stagger * 7);
   }
 
   animateExpandEnter () {
@@ -153,7 +159,7 @@ class Component extends React.PureComponent {
       onLinkEnd,
       ...etc
     } = this.props;
-    const { show1, show2, show3, show4 } = this.state;
+    const { showSecuence } = this.state;
 
     const animateText = scheme === SCHEME_NORMAL;
     const linkProps = {
@@ -164,47 +170,52 @@ class Component extends React.PureComponent {
     };
 
     return (
-      <nav
-        className={cx(classes.root, className)}
-        ref={ref => (this.element = ref)}
-        {...etc}
+      <Secuence
+        animation={{ show: showSecuence, independent: true }}
+        stagger
       >
-        <Link href='/news' {...linkProps}>
-          <Text
-            animation={{ animate: animateText, show: show1, stableTime: true, independent: true }}
-            audio={{ silent: true }}
-          >
-            News
-          </Text>
-        </Link>
-        <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link href='/music' {...linkProps}>
-          <Text
-            animation={{ animate: animateText, show: show2, stableTime: true, independent: true }}
-            audio={{ silent: true }}
-          >
-            Music
-          </Text>
-        </Link>
-        <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link href='/charity' {...linkProps}>
-          <Text
-            animation={{ animate: animateText, show: show3, stableTime: true, independent: true }}
-            audio={{ silent: true }}
-          >
-            Charity
-          </Text>
-        </Link>
-        <b className={cx(classes.item, classes.divisor)}>|</b>
-        <Link href='/about' {...linkProps}>
-          <Text
-            animation={{ animate: animateText, show: show4, stableTime: true, independent: true }}
-            audio={{ silent: true }}
-          >
-            About
-          </Text>
-        </Link>
-      </nav>
+        <nav
+          className={cx(classes.root, className)}
+          ref={ref => (this.element = ref)}
+          {...etc}
+        >
+          <Link href='/news' {...linkProps}>
+            <Text
+              animation={{ animate: animateText }}
+              audio={{ silent: !animateText }}
+            >
+              News
+            </Text>
+          </Link>
+          <b className={cx(classes.item, classes.divisor)}>|</b>
+          <Link href='/music' {...linkProps}>
+            <Text
+              animation={{ animate: animateText }}
+              audio={{ silent: !animateText }}
+            >
+              Music
+            </Text>
+          </Link>
+          <b className={cx(classes.item, classes.divisor)}>|</b>
+          <Link href='/charity' {...linkProps}>
+            <Text
+              animation={{ animate: animateText }}
+              audio={{ silent: !animateText }}
+            >
+              Charity
+            </Text>
+          </Link>
+          <b className={cx(classes.item, classes.divisor)}>|</b>
+          <Link href='/about' {...linkProps}>
+            <Text
+              animation={{ animate: animateText }}
+              audio={{ silent: !animateText }}
+            >
+              About
+            </Text>
+          </Link>
+        </nav>
+      </Secuence>
     );
   }
 }
