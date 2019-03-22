@@ -23,7 +23,7 @@ class Music extends React.Component {
       <div className={classes.root}>
         <h1>Music</h1>
         <Brand style={{ width: 320 }} />
-        <Menu style={{ width: 320 }} />
+        <Menu style={{ width: 320 }} itemActive='music' />
       </div>
     );
   }

@@ -23,7 +23,7 @@ class News extends React.Component {
       <div className={classes.root}>
         <h1>News</h1>
         <Brand style={{ width: 320 }} />
-        <Menu style={{ width: 320 }} />
+        <Menu style={{ width: 320 }} itemActive='news' />
       </div>
     );
   }

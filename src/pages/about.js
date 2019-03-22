@@ -23,7 +23,7 @@ class About extends React.Component {
       <div className={classes.root}>
         <h1>About</h1>
         <Brand style={{ width: 320 }} />
-        <Menu style={{ width: 320 }} />
+        <Menu style={{ width: 320 }} itemActive='about' />
       </div>
     );
   }

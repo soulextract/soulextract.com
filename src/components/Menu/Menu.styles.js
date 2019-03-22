@@ -33,6 +33,9 @@ const styles = theme => ({
     overflow: 'hidden',
     opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1
   },
+  linkActive: {
+    color: theme.color.link.main
+  },
   '@media (min-width: 600px)': {
     item: {
       display: 'block'
