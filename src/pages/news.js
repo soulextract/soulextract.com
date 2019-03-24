@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools/withStyles';
-import { Brand } from '../components/Brand';
-import { Menu } from '../components/Menu';
+import { App } from '../components/App';
 
 const styles = theme => ({
-  root: {
-    display: 'block'
-  }
+  root: {}
 });
 
 class News extends React.Component {
@@ -20,11 +17,9 @@ class News extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <App className={classes.root} itemActive='news'>
         <h1>News</h1>
-        <Brand style={{ width: 320 }} />
-        <Menu style={{ width: 320 }} itemActive='news' />
-      </div>
+      </App>
     );
   }
 }
