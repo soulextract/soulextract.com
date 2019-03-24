@@ -7,8 +7,9 @@ const styles = theme => ({
     display: 'flex',
     margin: [0, 'auto'],
     padding: 10,
-    maxWidth: 850,
-    width: '100%'
+    maxWidth: 800,
+    width: '100%',
+    minHeight: '1px'
   },
   ground: {
     position: 'absolute',
@@ -17,7 +18,7 @@ const styles = theme => ({
     right: 10,
     top: 10,
     bottom: 10,
-    backgroundColor: rgba(theme.color.background.dark, 0.5)
+    backgroundColor: rgba(theme.color.background.dark, theme.color.alpha)
   },
   frame: {
     position: 'absolute',
@@ -32,13 +33,14 @@ const styles = theme => ({
     position: 'relative',
     zIndex: 2,
     flex: 1,
-    padding: 20,
+    margin: 20,
     overflowY: 'auto'
   },
 
-  '@media screen and (min-width: 600px)': {
+  '@media screen and (min-width: 768px)': {
     root: {
-      padding: [0, 20]
+      padding: [0, 20],
+      width: 'calc(100% - 200px)'
     },
     ground: {
       left: 20,
@@ -54,8 +56,10 @@ const styles = theme => ({
     }
   },
 
-  '@media screen and (min-width: 992px)': {
-    //
+  '@media screen and (min-width: 1025px)': {
+    root: {
+      width: '100%'
+    }
   }
 });
 

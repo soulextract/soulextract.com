@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Frame } from '../Frame';
+import { Secuence } from '../Secuence';
 import { Brand } from '../Brand';
 import { Menu } from '../Menu';
 
@@ -13,29 +15,29 @@ class Component extends React.Component {
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
     className: PropTypes.any,
-    children: PropTypes.any
+    children: PropTypes.any,
+    itemActive: PropTypes.string
   };
 
-  enter () {
-    //
-  }
-
-  exit () {
-    //
-  }
-
   render () {
-    const { theme, classes, energy, className, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      energy,
+      className,
+      itemActive,
+      ...etc
+    } = this.props;
 
     return (
-      <div className={cx(classes.root, className)} {...etc}>
-        <div className={classes.ground} />
-        <div className={classes.frame} />
-        <div className={classes.content}>
-          <Brand className={classes.brand} />
-          <Menu className={classes.menu} />
-        </div>
-      </div>
+      <header className={cx(classes.root, className)} {...etc}>
+        <Frame className={classes.frame} contentClassName={classes.content}>
+          <Secuence>
+            <Brand className={classes.brand} />
+            <Menu className={classes.menu} itemActive={itemActive} />
+          </Secuence>
+        </Frame>
+      </header>
     );
   }
 }

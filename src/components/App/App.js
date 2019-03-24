@@ -13,15 +13,26 @@ class Component extends React.Component {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     className: PropTypes.any,
-    children: PropTypes.any
+    children: PropTypes.any,
+    itemActive: PropTypes.string
   };
 
   render () {
-    const { theme, classes, className, children, ...etc } = this.props;
+    const {
+      theme,
+      classes,
+      className,
+      children,
+      itemActive,
+      ...etc
+    } = this.props;
 
     return (
       <div className={cx(classes.root, className)} {...etc}>
-        <Header className={classes.header} />
+        <Header
+          className={classes.header}
+          itemActive={itemActive}
+        />
         <Main className={classes.main}>
           {children}
         </Main>

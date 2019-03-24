@@ -77,8 +77,7 @@ const styles = ({ color }) => ({
   content: {
     composes: '$positioned',
     zIndex: 1,
-    display: 'flex',
-    overflowY: 'auto'
+    display: 'flex'
   }
 });
 

@@ -25,13 +25,13 @@ class Component extends React.Component {
     const { theme, classes, energy, className, children, ...etc } = this.props;
 
     return (
-      <div className={cx(classes.root, className)} {...etc}>
+      <main className={cx(classes.root, className)} {...etc}>
         <div className={classes.ground} />
         <div className={classes.frame} />
         <div className={classes.content}>
           {children}
         </div>
-      </div>
+      </main>
     );
   }
 }

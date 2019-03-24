@@ -36,7 +36,7 @@ const styles = theme => ({
   linkActive: {
     color: theme.color.link.main
   },
-  '@media (min-width: 600px)': {
+  '@media (min-width: 768px)': {
     item: {
       display: 'block'
     },
