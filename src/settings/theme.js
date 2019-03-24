@@ -7,23 +7,23 @@ module.exports = {
     accent: 0.2,
     alpha: 0.65,
     primary: {
-      dark: '#cccccc',
-      main: '#ffffff',
+      dark: '#bbbbbb',
+      main: '#eeeeee',
       light: '#ffffff'
     },
     secondary: {
       main: '#27e1fa'
     },
     heading: {
-      main: '#f8f8fa'
+      main: '#f0f0f0'
     },
     text: {
-      main: '#ffffff'
+      main: '#dddddd'
     },
     link: {
-      light: '#87f7fc',
+      dark: '#55cbd0',
       main: '#87f7fc',
-      dark: '#87f7fc'
+      light: '#aff3f6'
     },
     background: {
       dark: '#000000',

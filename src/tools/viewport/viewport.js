@@ -11,11 +11,11 @@ function getViewportRangeStatus (status) {
 function getViewportRange () {
   const { width } = getViewportSize();
 
-  if (width < 600) {
+  if (width < 768) {
     return getViewportRangeStatus(SMALL);
   }
 
-  if (width < 992) {
+  if (width < 1025) {
     return getViewportRangeStatus(MEDIUM);
   }
 
