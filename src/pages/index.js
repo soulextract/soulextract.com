@@ -76,6 +76,7 @@ class Component extends React.Component {
           </div>
           <Legal
             className={classes.legal}
+            opaque
             onLinkStart={this.onLinkStart}
           />
         </div>

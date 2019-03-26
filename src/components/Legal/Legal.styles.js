@@ -1,20 +1,22 @@
 const styles = theme => ({
   root: {
     display: 'block',
+    padding: 6,
     fontSize: 14,
-    color: theme.color.primary.main,
-    opacity: 0.3,
     userSelect: 'none',
     textAlign: 'center',
-    transition: `opacity ${theme.animation.time}ms ease-out`,
+    whiteSpace: 'nowrap',
+    color: theme.color.text.main,
+    opacity: ({ opaque }) => opaque ? theme.color.alpha / 2 : 1,
+    transition: [
+      `opacity ${theme.animation.time}ms ease-out`,
+      `color ${theme.animation.time}ms ease-out`
+    ].join(','),
+
     '&:hover': {
+      color: theme.color.secondary.main,
       opacity: 1
     }
-  },
-  link: {
-    display: 'block',
-    padding: 5,
-    whiteSpace: 'nowrap'
   }
 });
 

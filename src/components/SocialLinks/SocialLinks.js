@@ -15,6 +15,7 @@ class Component extends React.PureComponent {
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
+    itemClassName: PropTypes.string,
     animateY: PropTypes.bool,
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
@@ -79,6 +80,7 @@ class Component extends React.PureComponent {
       audio,
       sounds,
       className,
+      itemClassName,
       animateY,
       onEnter,
       onExit,
@@ -89,7 +91,7 @@ class Component extends React.PureComponent {
 
     const A = elprops => (
       <Link
-        className={classes.item}
+        className={cx(classes.item, itemClassName)}
         onLinkStart={onLinkStart}
         onLinkEnd={onLinkEnd}
         onMouseEnter={() => sounds.hover.play()}

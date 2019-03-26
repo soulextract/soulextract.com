@@ -15,6 +15,7 @@ class Component extends React.Component {
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
+    opaque: PropTypes.bool,
     onLinkStart: PropTypes.func,
     onLinkEnd: PropTypes.func
   };
@@ -27,6 +28,7 @@ class Component extends React.Component {
       audio,
       sounds,
       className,
+      opaque,
       onLinkStart,
       onLinkEnd,
       ...etc
@@ -35,23 +37,19 @@ class Component extends React.Component {
     const show = energy.entering || energy.entered;
 
     return (
-      <div
+      <Link
         className={cx(classes.root, className)}
+        href='https://github.com/soulextract/soulextract.com'
+        target='github'
         onMouseEnter={() => sounds.hover.play()}
+        onLinkStart={onLinkStart}
+        onLinkEnd={onLinkEnd}
         {...etc}
       >
-        <Link
-          className={classes.link}
-          href='https://github.com/soulextract/soulextract.com'
-          target='github'
-          onLinkStart={onLinkStart}
-          onLinkEnd={onLinkEnd}
-        >
-          <Text animation={{ animate, show, duration }} stableTime>
-            — Open Source by Contributors —
-          </Text>
-        </Link>
-      </div>
+        <Text animation={{ animate, show, duration }} stableTime>
+          — Open Source by Contributors —
+        </Text>
+      </Link>
     );
   }
 }

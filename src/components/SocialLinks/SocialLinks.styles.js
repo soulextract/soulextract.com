@@ -10,11 +10,12 @@ const styles = theme => ({
     flex: 1,
     display: 'block',
     padding: [10, 0],
-    lineHeight: 1,
+    height: 24,
     fontSize: 24,
+    lineHeight: 1,
     textShadow: `0 0 5px ${theme.color.secondary.main}`,
     textAlign: 'center',
-    color: theme.color.primary.main,
+    color: theme.color.text.main,
     '&:hover': {
       color: theme.color.secondary.main
     }
