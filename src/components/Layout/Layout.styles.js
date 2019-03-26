@@ -1,5 +1,3 @@
-import { lighten } from 'polished';
-
 const styles = theme => ({
   '@global': {
     '*, *:before, *:after': {
@@ -22,14 +20,14 @@ const styles = theme => ({
       border: '1px solid ' + theme.color.secondary.main,
       cursor: 'pointer',
       '&:hover': {
-        borderColor: lighten(theme.accent, theme.color.secondary.main)
+        borderColor: theme.color.secondary.light
       }
     },
     'html, body': {
       margin: 0,
       padding: 0,
       lineHeight: 1.5,
-      fontSize: 18,
+      fontSize: 16,
       fontFamily: theme.typography.secondary,
       color: theme.color.text.main,
       backgroundColor: theme.color.background.main
@@ -38,16 +36,12 @@ const styles = theme => ({
       textDecoration: 'none',
       color: theme.color.link.main,
       outline: 'none',
-      transition: [
-        `color ${theme.animation.time}ms ease-out`,
-        `text-shadow ${theme.animation.time}ms ease-out`
-      ].join(', '),
+      transition: `color ${theme.animation.time}ms ease-out`,
       '&:focus': {
         outline: 'none'
       },
       '&:hover, &:focus': {
-        color: theme.color.link.light,
-        textShadow: '0 0 2px ' + theme.color.link.main
+        color: theme.color.link.light
       }
     },
     'h1, h2, h3, h4, h5, h6': {
@@ -58,12 +52,12 @@ const styles = theme => ({
       color: theme.color.heading.main,
       textShadow: '0 0 2px ' + theme.color.heading.main
     },
-    h1: { fontSize: 32 },
-    h2: { fontSize: 27 },
-    h3: { fontSize: 24 },
-    h4: { fontSize: 21 },
-    h5: { fontSize: 18 },
-    h6: { fontSize: 16 },
+    h1: { fontSize: 27 },
+    h2: { fontSize: 24 },
+    h3: { fontSize: 21 },
+    h4: { fontSize: 18 },
+    h5: { fontSize: 16 },
+    h6: { fontSize: 14 },
     p: {
       display: 'block',
       margin: [0, 0, 20]

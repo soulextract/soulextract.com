@@ -1,7 +1,7 @@
 module.exports = {
   typography: {
     primary: 'Orbitron, sans-serif',
-    secondary: "'Titillium Web', sans-serif"
+    secondary: 'Electrolize, sans-serif'
   },
   color: {
     accent: 0.2,
@@ -12,7 +12,9 @@ module.exports = {
       light: '#ffffff'
     },
     secondary: {
-      main: '#27e1fa'
+      dark: '#19a0b3',
+      main: '#27e1fa',
+      light: '#7eecfb'
     },
     heading: {
       main: '#f0f0f0'

@@ -42,7 +42,7 @@ const Component = ({ children }) => (
 
       <link
         rel='stylesheet'
-        href='https://fonts.googleapis.com/css?family=Orbitron:400,500,700|Titillium+Web:300,400,700'
+        href='https://fonts.googleapis.com/css?family=Orbitron:400,500,700|Electrolize'
       />
       <link
         rel='stylesheet'
