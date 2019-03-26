@@ -19,7 +19,7 @@ const styles = theme => ({
     textTransform: 'uppercase',
     textShadow: `0 0 5px ${theme.color.secondary.main}`,
     fontFamily: theme.typography.primary,
-    color: theme.color.primary.main,
+    color: theme.color.text.main,
     whiteSpace: 'nowrap'
   },
   divisor: {

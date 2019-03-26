@@ -1,4 +1,4 @@
-const geometry = [
+const shapes = [
   //
   // Down shapes
   //
@@ -276,4 +276,4 @@ const geometry = [
   }
 ];
 
-export { geometry };
+export { shapes };

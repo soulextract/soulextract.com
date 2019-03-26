@@ -18,7 +18,7 @@ const styles = theme => ({
   path: {
     fill: 'none',
     strokeWidth: 16,
-    stroke: theme.color.primary.main,
+    stroke: theme.color.heading.main,
     transition: `stroke ${theme.animation.time}ms ease-out`
   },
   hover: {
