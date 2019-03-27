@@ -16,6 +16,11 @@ module.exports = {
       main: '#27e1fa',
       light: '#7eecfb'
     },
+    tertiary: {
+      dark: '#b5a005',
+      main: '#fae127',
+      light: '#feec67'
+    },
     heading: {
       main: '#f0f0f0'
     },

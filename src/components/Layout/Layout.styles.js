@@ -5,11 +5,11 @@ const styles = theme => ({
     },
     '::selection': {
       color: theme.color.background.main,
-      backgroundColor: theme.color.secondary.main
+      backgroundColor: theme.color.tertiary.main
     },
     '::-moz-selection': {
       color: theme.color.background.main,
-      backgroundColor: theme.color.secondary.main
+      backgroundColor: theme.color.tertiary.main
     },
     '::-webkit-scrollbar': {
       width: 10,
@@ -17,10 +17,11 @@ const styles = theme => ({
       backgroundColor: theme.color.background.main
     },
     '::-webkit-scrollbar-thumb': {
-      border: '1px solid ' + theme.color.secondary.main,
+      border: '1px solid ' + theme.color.tertiary.main,
       cursor: 'pointer',
+
       '&:hover': {
-        borderColor: theme.color.secondary.light
+        borderColor: theme.color.secondary.main
       }
     },
     'html, body': {

@@ -61,7 +61,7 @@ class Component extends React.Component {
     this.svg.setAttribute('width', width);
     this.svg.setAttribute('height', height);
 
-    const boxWidth = Math.min(800, width);
+    const boxWidth = Math.min(1000, width);
     const offset = small ? 5 : 20;
     const pit = height - (small ? 5 : 10);
     const double = small ? 0 : 12;
@@ -73,6 +73,7 @@ class Component extends React.Component {
     const x5 = x4 + offset;
 
     const backgroundColor = rgba(theme.color.background.dark, theme.color.alpha);
+    const lineColor = rgba(theme.color.primary.dark, 0.5);
 
     const ground = {
       d: `M0,0 L${width},0 L${width},${height} L${x5},${height} L${x4},${pit} L${x3},${pit} L${x2},${pit} L${x1},${height} L0,${height} L0,0`,
@@ -80,26 +81,30 @@ class Component extends React.Component {
       stroke: backgroundColor
     };
     const line1 = {
-      d: `M0,${height} L${x1},${height}`
+      d: `M0,${height} L${x1},${height}`,
+      stroke: lineColor
     };
     const slash1 = {
       d: `M${x1},${height} L${x2},${pit} M${x1 - double},${height} L${x2 - double},${pit}`,
-      stroke: theme.color.secondary.main,
+      stroke: theme.color.tertiary.main,
       strokeWidth: 3
     };
     const line2 = {
-      d: `M${x2 - double},${pit} L${x3},${pit}`
+      d: `M${x2 - double},${pit} L${x3},${pit}`,
+      stroke: lineColor
     };
     const line3 = {
-      d: `M${x4 + double},${pit} L${x3},${pit}`
+      d: `M${x4 + double},${pit} L${x3},${pit}`,
+      stroke: lineColor
     };
     const slash2 = {
       d: `M${x5},${height} L${x4},${pit} M${x5 + double},${height} L${x4 + double},${pit}`,
-      stroke: theme.color.secondary.main,
+      stroke: theme.color.tertiary.main,
       strokeWidth: 3
     };
     const line4 = {
-      d: `M${width},${height} L${x5},${height}`
+      d: `M${width},${height} L${x5},${height}`,
+      stroke: lineColor
     };
 
     const shapes = [ground, line1, slash1, line2, line3, slash2, line4];

@@ -25,6 +25,8 @@ const styles = theme => ({
   divisor: {
     display: 'none',
     width: 0,
+    color: theme.color.tertiary.main,
+    textShadow: `0 0 5px ${theme.color.tertiary.main}`,
     fontWeight: 'normal',
     transform: 'scale(1, 0)',
     transformOrigin: 'center center'
@@ -34,7 +36,8 @@ const styles = theme => ({
     opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1
   },
   linkActive: {
-    color: theme.color.link.main
+    color: theme.color.tertiary.main,
+    textShadow: `0 0 5px ${theme.color.tertiary.main}`
   },
   '@media (min-width: 768px)': {
     item: {

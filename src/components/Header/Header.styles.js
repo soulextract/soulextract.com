@@ -25,7 +25,7 @@ const styles = theme => ({
   brand: {
     margin: [0, 'auto', 10],
     width: '100%',
-    maxWidth: 400
+    maxWidth: 300
   },
   menu: {
     width: '100%'
@@ -38,11 +38,11 @@ const styles = theme => ({
     content: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       padding: [20, 20, 30]
     },
     brand: {
-      margin: [7, 0, 0],
-      maxWidth: 300
+      margin: 0
     },
     menu: {
       margin: 0,
@@ -51,15 +51,6 @@ const styles = theme => ({
   },
 
   '@media screen and (min-width: 1025px)': {
-    content: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    },
-    brand: {
-      margin: 0,
-      maxWidth: 420
-    },
     menu: {
       margin: 0,
       width: 420,

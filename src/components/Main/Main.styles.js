@@ -6,19 +6,9 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     margin: [0, 'auto'],
-    padding: [0, 10],
-    maxWidth: 800,
+    maxWidth: 1000,
     width: '100%',
     minHeight: '1px'
-  },
-  ground: {
-    position: 'absolute',
-    zIndex: 0,
-    left: 10,
-    right: 10,
-    top: 0,
-    bottom: 0,
-    backgroundColor: rgba(theme.color.background.dark, theme.color.alpha)
   },
   frame: {
     position: 'absolute',
@@ -27,15 +17,22 @@ const styles = theme => ({
     right: 10,
     top: 0,
     bottom: 0,
-    border: `1px solid ${theme.color.primary.dark}`
+    outline: `2px solid ${theme.color.background.dark}`,
+    outlineOffset: 2,
+    backgroundColor: rgba(theme.color.background.dark, theme.color.alpha)
   },
   content: {
     position: 'relative',
     zIndex: 2,
     flex: 1,
-    margin: 20,
     overflowX: 'hidden',
     overflowY: 'auto',
+    margin: [10, 10, 10, 20],
+    padding: [0, 10, 0, 0],
+
+    '& h1, & h2, & h3, & h4, & h5, & h6': {
+      textTransform: 'uppercase'
+    },
     '& img': {
       margin: [0, 'auto', 20]
     },
@@ -45,27 +42,22 @@ const styles = theme => ({
   },
 
   '@media screen and (min-width: 768px)': {
-    root: {
-      padding: [0, 20],
-      width: 'calc(100% - 200px)'
-    },
-    ground: {
-      left: 20,
-      right: 20,
-      top: 0,
-      bottom: 0
-    },
     frame: {
       left: 20,
       right: 20,
       top: 0,
       bottom: 0
+    },
+    content: {
+      margin: [30, 40, 30, 50],
+      padding: [0, 10, 0, 0]
     }
   },
 
   '@media screen and (min-width: 1025px)': {
-    root: {
-      width: '100%'
+    content: {
+      margin: [50, 60, 50, 70],
+      padding: [0, 10, 0, 0]
     }
   }
 });

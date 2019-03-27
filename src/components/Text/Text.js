@@ -200,9 +200,6 @@ class Component extends React.PureComponent {
               className={classes.overlayText}
               ref={ref => (this.overlayTextElement = ref)}
             />
-            {scheme === SCHEME_TRANSITION && (
-              <span className={classes.blink}>&#9611;</span>
-            )}
           </span>
         )}
       </span>

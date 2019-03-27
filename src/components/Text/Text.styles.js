@@ -16,13 +16,6 @@ const styles = () => ({
     opacity: 0
   },
   overlayText: {},
-  blink: {
-    position: 'relative',
-    width: 0,
-    height: 0,
-    display: 'inline-block',
-    animation: 'text-blink 200ms step-end infinite'
-  },
   hidden: {
     opacity: 0
   },
@@ -32,15 +25,6 @@ const styles = () => ({
     },
     '& $overlay': {
       opacity: 1
-    }
-  },
-
-  '@keyframes text-blink': {
-    '0%, 100%': {
-      color: 'transparent'
-    },
-    '50%': {
-      color: 'inherit'
     }
   }
 });
