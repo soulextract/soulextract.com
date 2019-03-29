@@ -16,6 +16,8 @@ class Component extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     children: PropTypes.any
   };
@@ -115,6 +117,19 @@ class Component extends React.PureComponent {
     return small || medium ? 500 : 1000;
   }
 
+  playSound () {
+    const { sounds } = this.props;
+
+    if (!sounds.deploy.playing()) {
+      sounds.deploy.play();
+    }
+  }
+
+  stopSound () {
+    const { sounds } = this.props;
+    sounds.deploy.stop();
+  }
+
   enter () {
     const shapes = Array.from(this.svg.querySelectorAll('path'));
     const [ground, line1, slash1, line2, line3, slash2, line4] = shapes;
@@ -122,17 +137,20 @@ class Component extends React.PureComponent {
 
     anime.set(shapes, { opacity: 0 });
 
+    this.playSound();
+
     anime({
       targets: this.element,
-      translateY: [40, 0],
+      translateY: ['100%', 0],
       easing: 'easeOutCubic',
-      duration
+      duration,
+      complete: () => this.stopSound()
     });
 
     anime({
       targets: ground,
       opacity: [0, 1],
-      easing: 'linear',
+      easing: 'easeOutCubic',
       duration,
       complete: () => {
         this.draw();
@@ -180,18 +198,21 @@ class Component extends React.PureComponent {
   }
 
   exit () {
-    const { energy } = this.props;
+    const { energy, sounds } = this.props;
     const shapes = Array.from(this.svg.querySelectorAll('path'));
     const [ground, line1, slash1, line2, line3, slash2, line4] = shapes;
     const duration = energy.duration.exit;
+
+    sounds.deploy.play();
 
     this.setState({ show: false });
 
     anime({
       targets: ground,
       opacity: [1, 0],
-      easing: 'linear',
-      duration
+      easing: 'easeOutCubic',
+      duration,
+      complete: () => this.stopSound()
     });
 
     const shapesGroup1 = [line1, line4];
@@ -262,6 +283,8 @@ class Component extends React.PureComponent {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       ...etc
     } = this.props;

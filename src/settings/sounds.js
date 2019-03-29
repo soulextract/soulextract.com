@@ -15,6 +15,9 @@ module.exports = {
     fade: {
       src: ['/sounds/fade.mp3']
     },
+    deploy: {
+      src: ['/sounds/deploy.mp3']
+    },
     expand: {
       src: ['/sounds/expand.mp3']
     },

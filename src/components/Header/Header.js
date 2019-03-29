@@ -16,6 +16,8 @@ class Component extends React.Component {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     energy: PropTypes.object.isRequired,
+    audio: PropTypes.object.isRequired,
+    sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
     children: PropTypes.any,
     itemActive: PropTypes.string
@@ -25,7 +27,7 @@ class Component extends React.Component {
     super(...arguments);
 
     this.state = {
-      show: true, // TODO: false
+      show: false,
       shapes: []
     };
 
@@ -117,12 +119,141 @@ class Component extends React.Component {
     return small || medium ? 500 : 1000;
   }
 
+  playSound () {
+    const { sounds } = this.props;
+
+    if (!sounds.deploy.playing()) {
+      sounds.deploy.play();
+    }
+  }
+
+  stopSound () {
+    const { sounds } = this.props;
+    sounds.deploy.stop();
+  }
+
   enter () {
-    //
+    const shapes = Array.from(this.svg.querySelectorAll('path'));
+    const [ground, line1, slash1, line2, line3, slash2, line4] = shapes;
+    const duration = this.getDurationEnter();
+
+    anime.set(shapes, { opacity: 0 });
+
+    this.playSound();
+
+    anime({
+      targets: this.element,
+      translateY: ['-100%', 0],
+      easing: 'easeOutCubic',
+      duration,
+      complete: () => this.stopSound()
+    });
+
+    anime({
+      targets: ground,
+      opacity: [0, 1],
+      easing: 'easeOutCubic',
+      duration,
+      complete: () => {
+        this.draw();
+        this.setState({ show: true });
+      }
+    });
+
+    const shapesGroup1 = [line1, line4];
+    const scaleGroup1 = shapesGroup1[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup1 = duration * scaleGroup1;
+
+    anime.set(shapesGroup1, { opacity: 1 });
+    anime({
+      targets: shapesGroup1,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'linear',
+      duration: durationGroup1
+    });
+
+    const shapesGroup2 = [slash1, slash2];
+    const scaleGroup2 = shapesGroup2[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup2 = duration * scaleGroup2;
+
+    anime.set(shapesGroup2, { opacity: 1 });
+    anime({
+      targets: shapesGroup2,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'linear',
+      delay: durationGroup1,
+      duration: durationGroup2
+    });
+
+    const shapesGroup3 = [line2, line3];
+    const scaleGroup3 = shapesGroup3[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup3 = duration * scaleGroup3;
+
+    anime.set(shapesGroup3, { opacity: 1 });
+    anime({
+      targets: shapesGroup3,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'linear',
+      delay: durationGroup1,
+      duration: durationGroup3
+    });
   }
 
   exit () {
-    //
+    const { energy, sounds } = this.props;
+    const shapes = Array.from(this.svg.querySelectorAll('path'));
+    const [ground, line1, slash1, line2, line3, slash2, line4] = shapes;
+    const duration = energy.duration.exit;
+
+    sounds.deploy.play();
+
+    this.setState({ show: false });
+
+    anime({
+      targets: ground,
+      opacity: [1, 0],
+      easing: 'easeOutCubic',
+      duration,
+      complete: () => this.stopSound()
+    });
+
+    const shapesGroup1 = [line1, line4];
+    const scaleGroup1 = shapesGroup1[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup1 = duration * scaleGroup1;
+
+    anime({
+      targets: shapesGroup1,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      direction: 'reverse',
+      easing: 'linear',
+      duration: durationGroup1
+    });
+
+    const shapesGroup2 = [slash1, slash2];
+    const scaleGroup2 = shapesGroup2[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup2 = duration * scaleGroup2;
+
+    anime({
+      targets: shapesGroup2,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      direction: 'reverse',
+      easing: 'linear',
+      delay: durationGroup1,
+      duration: durationGroup2
+    });
+
+    const shapesGroup3 = [line2, line3];
+    const scaleGroup3 = shapesGroup3[0].getTotalLength() / this.element.offsetWidth;
+    const durationGroup3 = duration * scaleGroup3;
+
+    anime({
+      targets: shapesGroup3,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      direction: 'reverse',
+      easing: 'linear',
+      delay: durationGroup1,
+      duration: durationGroup3
+    });
   }
 
   stop () {
@@ -154,6 +285,8 @@ class Component extends React.Component {
       theme,
       classes,
       energy,
+      audio,
+      sounds,
       className,
       itemActive,
       ...etc

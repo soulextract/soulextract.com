@@ -11,7 +11,9 @@ const styles = theme => ({
     left: 0,
     top: 0
   },
-  path: {},
+  path: {
+    opacity: ({ energy }) => energy.animate ? 0 : 1
+  },
   content: {
     position: 'relative',
     zIndex: 10,
