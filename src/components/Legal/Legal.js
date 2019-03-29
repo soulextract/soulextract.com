@@ -37,19 +37,23 @@ class Component extends React.Component {
     const show = energy.entering || energy.entered;
 
     return (
-      <Link
+      <p
         className={cx(classes.root, className)}
-        href='https://github.com/soulextract/soulextract.com'
-        target='github'
-        onMouseEnter={() => sounds.hover.play()}
-        onLinkStart={onLinkStart}
-        onLinkEnd={onLinkEnd}
         {...etc}
       >
-        <Text animation={{ animate, show, duration }} stableTime>
-          — Open Source by Contributors —
-        </Text>
-      </Link>
+        <Link
+          className={classes.link}
+          href='https://github.com/soulextract/soulextract.com'
+          target='github'
+          onMouseEnter={() => sounds.hover.play()}
+          onLinkStart={onLinkStart}
+          onLinkEnd={onLinkEnd}
+        >
+          <Text animation={{ animate, show, duration }} stableTime>
+            — Open Source by Contributors —
+          </Text>
+        </Link>
+      </p>
     );
   }
 }

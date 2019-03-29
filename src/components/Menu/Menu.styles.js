@@ -33,12 +33,18 @@ const styles = theme => ({
   },
   link: {
     overflow: 'hidden',
-    opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1
+    opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1,
+
+    '&:hover, &:focus': {
+      color: theme.color.secondary.light,
+      textShadow: `0 0 5px ${theme.color.secondary.light}`
+    }
   },
   linkActive: {
     color: theme.color.tertiary.main,
     textShadow: `0 0 5px ${theme.color.tertiary.main}`
   },
+
   '@media (min-width: 768px)': {
     item: {
       display: 'block'
