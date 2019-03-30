@@ -6,6 +6,7 @@ import { Main } from '../components/Main';
 import { Link } from '../components/Link';
 import joshMullisFamilyURL from '../images/josh-mullis-family.jpg';
 import newDayFosterHomeURL from '../images/new-day-foster-home.jpg';
+import newDayFosterHomeLogoURL from '../images/new-day-foster-home-logo.jpg';
 
 const styles = theme => ({
   root: {}
@@ -27,8 +28,8 @@ class Charity extends React.Component {
           </header>
           <img src={joshMullisFamilyURL} alt="Josh Mullis's family" />
           <p>Music has always been a platform for artists to support and raise awareness to causes near and dear to them. Through their creative outlets countless established and aspiring musicians/artists alike have utilized the powerful tool that is a public platform to fuel societal-consciousness of causes that might otherwise go neglected.</p>
-          <p>For Soul Extract’s Josh Mullis that cause is the <Link href='http://newdayfosterhome.com/foster' target='new-day-foster-home'>New Day Foster Home</Link>, a non-profit organization based in China that’s been providing “life saving surgeries and a loving home” to orphaned children since late 2000. Mullis’ family became involved with New Day in 2011 when they made the life-changing choice to adopt a child from China, which at the time still held a strictly enforced “one child law”.</p>
-          <Link href='http://newdayfosterhome.com/foster' target='new-day-foster-home'>
+          <p>For Soul Extract’s Josh Mullis that cause is the <Link href='http://newdayfosterhome.com/foster' target='newdayfosterhome'>New Day Foster Home</Link>, a non-profit organization based in China that’s been providing “life saving surgeries and a loving home” to orphaned children since late 2000. Mullis’ family became involved with New Day in 2011 when they made the life-changing choice to adopt a child from China, which at the time still held a strictly enforced “one child law”.</p>
+          <Link href='http://newdayfosterhome.com/foster' target='newdayfosterhome'>
             <img src={newDayFosterHomeURL} alt='New Day Forster Home' />
           </Link>
           <blockquote>
@@ -41,10 +42,14 @@ class Charity extends React.Component {
           <blockquote>When I become frustrated with the music creation process, this keeps me going and has created a sense of purpose with this project.</blockquote>
           <p>If fans of Soul Extract are looking to get involved with the New Day Foster Home, Mullis definitely has some ideas:</p>
           <blockquote>
-            <p>For starters, if you’re listening to <Link href='https://fanlink.to/circalgorithm'>Circadian Algorithm</Link> via streaming outlets or have purchased it, you are helping New Day as partial proceeds are sent directly to them. They also have an awesome Instagram account (<Link href='https://www.instagram.com/newdayfosterhome' target='@newdayfosterhome'>@newdayfosterhome</Link>), where they post regularly on fun things they do with the children, surgery updates, etc.</p>
+            <p>For starters, if you’re listening to <Link href='https://fanlink.to/circalgorithm'>Circadian Algorithm</Link> via streaming outlets or have purchased it, you are helping New Day as partial proceeds are sent directly to them. They also have an awesome Instagram account (<Link href='https://www.instagram.com/newdaycharities' target='@newdaycharities'>@newdaycharities</Link>), where they post regularly on fun things they do with the children, surgery updates, etc.</p>
             <p>I’d say that’s a good place to start and if your heart pulls you in that direction, they have a donation page here:</p>
           </blockquote>
+          <Link href='http://www.newdayfosterhome.com/en/help-us/one-time-donations' target='newdayfosterhome-donation'>
+            <img src={newDayFosterHomeLogoURL} alt='New Day Foster Home logo' />
+          </Link>
           <p>We’re elated to have Soul Extract on the FiXT roster and more than happy to bolster his efforts in making the world a better place, one badass album at a time.</p>
+          <p>Source: <Link href='https://www.fixtonline.com/artist-update-feature-soul-extract' target='article-source'>fixtonline.com/artist-update-feature-soul-extract</Link>.</p>
         </article>
       </Main>
     );
