@@ -76,7 +76,9 @@ class Component extends React.Component {
   render () {
     const { show } = this.state;
     const { classes, layout, background, children } = this.props;
-    const isURLIndex = window.location.pathname === '/';
+
+    // TODO:
+    const isURLIndex = window && window.location.pathname === '/';
 
     return (
       <Layout {...layout}>

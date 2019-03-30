@@ -82,7 +82,7 @@ class Component extends React.PureComponent {
       }, timeout);
     };
 
-    const linkMatchesURL = window.location.pathname.includes(href);
+    const linkMatchesURL = window && window.location.pathname.includes(href);
 
     return (
       <a
