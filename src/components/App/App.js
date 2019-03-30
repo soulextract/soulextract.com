@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { Header } from '../Header';
-import { Main } from '../Main';
 import { Footer } from '../Footer';
 
 class Component extends React.Component {
@@ -28,9 +27,7 @@ class Component extends React.Component {
     return (
       <div className={cx(classes.root, className)} {...etc}>
         <Header className={classes.header} />
-        <Main className={classes.main}>
-          {children}
-        </Main>
+        {children}
         <Footer className={classes.footer} />
       </div>
     );

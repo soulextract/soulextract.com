@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools/withStyles';
-import { App } from '../components/App';
+import { Main } from '../components/Main';
 
 const styles = theme => ({
   root: {}
@@ -17,9 +17,9 @@ class News extends React.Component {
     const { classes } = this.props;
 
     return (
-      <App className={classes.root}>
+      <Main className={classes.root}>
         <h1>News</h1>
-      </App>
+      </Main>
     );
   }
 }

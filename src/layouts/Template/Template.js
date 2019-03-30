@@ -5,6 +5,7 @@ import anime from 'animejs';
 
 import { Layout } from '../../components/Layout';
 import { Background } from '../../components/Background';
+import { App } from '../../components/App';
 
 class Component extends React.Component {
   static displayName = 'Template';
@@ -75,6 +76,7 @@ class Component extends React.Component {
   render () {
     const { show } = this.state;
     const { classes, layout, background, children } = this.props;
+    const isURLIndex = window.location.pathname === '/';
 
     return (
       <Layout {...layout}>
@@ -82,7 +84,7 @@ class Component extends React.Component {
           {...background}
           animation={{ show, ...background.animation }}
         >
-          {children}
+          {isURLIndex ? children : <App>{children}</App>}
           {!show && (
             <div className={classes.enterOverlay}>
               <div
