@@ -19,7 +19,6 @@ class Component extends React.PureComponent {
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
-    itemActive: PropTypes.oneOf(['news', 'music', 'charity', 'about']),
     scheme: PropTypes.oneOf([SCHEME_NORMAL, SCHEME_EXPAND]),
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
@@ -153,7 +152,6 @@ class Component extends React.PureComponent {
       audio,
       sounds,
       className,
-      itemActive,
       scheme,
       onEnter,
       onExit,
@@ -165,13 +163,10 @@ class Component extends React.PureComponent {
 
     const animateText = scheme === SCHEME_NORMAL;
     const linkProps = {
+      className: cx(classes.item, classes.link),
       onMouseEnter: () => sounds.hover.play(),
       onLinkStart,
       onLinkEnd
-    };
-    const getCN = name => {
-      const isActive = name === itemActive;
-      return cx(classes.item, classes.link, isActive && classes.linkActive);
     };
 
     return (
@@ -184,7 +179,7 @@ class Component extends React.PureComponent {
           ref={ref => (this.element = ref)}
           {...etc}
         >
-          <Link href='/news' className={getCN('news')} {...linkProps}>
+          <Link href='/news' {...linkProps}>
             <Text
               animation={{ animate: animateText }}
               audio={{ silent: !animateText }}
@@ -193,7 +188,7 @@ class Component extends React.PureComponent {
             </Text>
           </Link>
           <b className={cx(classes.item, classes.divisor)}>|</b>
-          <Link href='/music' className={getCN('music')} {...linkProps}>
+          <Link href='/music' {...linkProps}>
             <Text
               animation={{ animate: animateText }}
               audio={{ silent: !animateText }}
@@ -202,7 +197,7 @@ class Component extends React.PureComponent {
             </Text>
           </Link>
           <b className={cx(classes.item, classes.divisor)}>|</b>
-          <Link href='/charity' className={getCN('charity')} {...linkProps}>
+          <Link href='/charity' {...linkProps}>
             <Text
               animation={{ animate: animateText }}
               audio={{ silent: !animateText }}
@@ -211,7 +206,7 @@ class Component extends React.PureComponent {
             </Text>
           </Link>
           <b className={cx(classes.item, classes.divisor)}>|</b>
-          <Link href='/about' className={getCN('about')} {...linkProps}>
+          <Link href='/about' {...linkProps}>
             <Text
               animation={{ animate: animateText }}
               audio={{ silent: !animateText }}

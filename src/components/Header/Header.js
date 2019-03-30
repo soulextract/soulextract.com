@@ -19,8 +19,7 @@ class Component extends React.Component {
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
-    children: PropTypes.any,
-    itemActive: PropTypes.string
+    children: PropTypes.any
   };
 
   constructor () {
@@ -288,7 +287,6 @@ class Component extends React.Component {
       audio,
       sounds,
       className,
-      itemActive,
       ...etc
     } = this.props;
     const { show, shapes } = this.state;
@@ -318,7 +316,7 @@ class Component extends React.Component {
         <div className={classes.content}>
           <Secuence animation={{ show, independent: true }}>
             <Brand className={classes.brand} />
-            <Menu className={classes.menu} itemActive={itemActive} />
+            <Menu className={classes.menu} />
           </Secuence>
         </div>
       </header>

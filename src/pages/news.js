@@ -17,7 +17,7 @@ class News extends React.Component {
     const { classes } = this.props;
 
     return (
-      <App className={classes.root} itemActive='news'>
+      <App className={classes.root}>
         <h1>News</h1>
       </App>
     );

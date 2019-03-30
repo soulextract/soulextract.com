@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from 'gatsby';
+import cx from 'classnames';
 
 const checkURLExternal = /^https?:\/\//;
 
@@ -15,6 +16,7 @@ class Component extends React.PureComponent {
     audio: PropTypes.object.isRequired,
     sounds: PropTypes.object.isRequired,
     className: PropTypes.any,
+    activeClassName: PropTypes.any,
     children: PropTypes.any,
     href: PropTypes.string.isRequired,
     target: PropTypes.string,
@@ -22,6 +24,10 @@ class Component extends React.PureComponent {
     onClick: PropTypes.func,
     onLinkStart: PropTypes.func,
     onLinkEnd: PropTypes.func
+  };
+
+  static defaultProps = {
+    activeClassName: 'link-active'
   };
 
   render () {
@@ -33,6 +39,8 @@ class Component extends React.PureComponent {
       href,
       target,
       delay,
+      className,
+      activeClassName,
       children,
       onClick,
       onLinkStart,
@@ -74,8 +82,16 @@ class Component extends React.PureComponent {
       }, timeout);
     };
 
+    const linkMatchesURL = window.location.pathname.includes(href);
+
     return (
-      <a {...etc} href={href} target={target} onClick={linkTrigger}>
+      <a
+        {...etc}
+        className={cx(className, linkMatchesURL && activeClassName)}
+        href={href}
+        target={target}
+        onClick={linkTrigger}
+      >
         {children}
       </a>
     );

@@ -17,7 +17,7 @@ class Charity extends React.Component {
     const { classes } = this.props;
 
     return (
-      <App className={classes.root} itemActive='charity'>
+      <App className={classes.root}>
         <h1>Charity</h1>
       </App>
     );

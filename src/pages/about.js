@@ -21,7 +21,7 @@ class About extends React.Component {
     const { classes } = this.props;
 
     return (
-      <App className={classes.root} itemActive='about'>
+      <App className={classes.root}>
         <Secuence stagger>
           <article>
             <header>

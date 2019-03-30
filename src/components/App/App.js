@@ -13,8 +13,7 @@ class Component extends React.Component {
     theme: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     className: PropTypes.any,
-    children: PropTypes.any,
-    itemActive: PropTypes.string
+    children: PropTypes.any
   };
 
   render () {
@@ -23,16 +22,12 @@ class Component extends React.Component {
       classes,
       className,
       children,
-      itemActive,
       ...etc
     } = this.props;
 
     return (
       <div className={cx(classes.root, className)} {...etc}>
-        <Header
-          className={classes.header}
-          itemActive={itemActive}
-        />
+        <Header className={classes.header} />
         <Main className={classes.main}>
           {children}
         </Main>

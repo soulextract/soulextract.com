@@ -17,7 +17,7 @@ class Music extends React.Component {
     const { classes } = this.props;
 
     return (
-      <App className={classes.root} itemActive='music'>
+      <App className={classes.root}>
         <h1>Music</h1>
       </App>
     );

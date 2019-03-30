@@ -38,11 +38,11 @@ const styles = theme => ({
     '&:hover, &:focus': {
       color: theme.color.secondary.light,
       textShadow: `0 0 5px ${theme.color.secondary.light}`
+    },
+    '&.link-active': {
+      color: theme.color.tertiary.main,
+      textShadow: `0 0 5px ${theme.color.tertiary.main}`
     }
-  },
-  linkActive: {
-    color: theme.color.tertiary.main,
-    textShadow: `0 0 5px ${theme.color.tertiary.main}`
   },
 
   '@media (min-width: 768px)': {
