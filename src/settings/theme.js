@@ -5,7 +5,7 @@ module.exports = {
   },
   color: {
     accent: 0.2,
-    alpha: 0.65,
+    alpha: 0.5,
     primary: {
       dark: '#bbbbbb',
       main: '#eeeeee',

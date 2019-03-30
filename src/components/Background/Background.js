@@ -38,6 +38,9 @@ class Component extends React.PureComponent {
 
     this.standByStartId = null;
     this.standByAnimationId = null;
+
+    // TODO:
+    this.props.energy.updateDuration(1000);
   }
 
   componentDidMount () {
