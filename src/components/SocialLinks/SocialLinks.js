@@ -105,25 +105,25 @@ class Component extends React.PureComponent {
         ref={ref => (this.element = ref)}
         {...etc}
       >
-        <A href='https://www.youtube.com/channel/UCS8LdV8eOeK6XnMMkRP3pXA' target='youtube'>
+        <A href='https://www.youtube.com/channel/UCS8LdV8eOeK6XnMMkRP3pXA' title='YouTube' target='youtube'>
           <span className='mdi mdi-youtube' />
         </A>
-        <A href='https://open.spotify.com/artist/1cEPAqNFhmARDe0HgKOD3h' target='spotify'>
+        <A href='https://open.spotify.com/artist/1cEPAqNFhmARDe0HgKOD3h' title='Spotify' target='spotify'>
           <span className='mdi mdi-spotify' />
         </A>
-        <A href='https://soundcloud.com/soulextract' target='soundcloud'>
+        <A href='https://soundcloud.com/soulextract' title='SoundCloud' target='soundcloud'>
           <span className='mdi mdi-soundcloud' />
         </A>
-        <A href='https://www.facebook.com/soulextract' target='facebook'>
+        <A href='https://www.facebook.com/soulextract' title='Facebook' target='facebook'>
           <span className='mdi mdi-facebook' />
         </A>
-        <A href='https://twitter.com/soulextract' target='twitter'>
+        <A href='https://twitter.com/soulextract' title='Twitter' target='twitter'>
           <span className='mdi mdi-twitter' />
         </A>
-        <A href='https://www.instagram.com/soulextract' target='instagram'>
+        <A href='https://www.instagram.com/soulextract' title='Instagram' target='instagram'>
           <span className='mdi mdi-instagram' />
         </A>
-        <A href='mailto:soulextractmusic@gmail.com' target='email'>
+        <A href='mailto:soulextractmusic@gmail.com' title='Email' target='email'>
           <span className='mdi mdi-email-outline' />
         </A>
       </div>

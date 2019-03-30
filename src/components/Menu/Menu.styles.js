@@ -35,13 +35,13 @@ const styles = theme => ({
     overflow: 'hidden',
     opacity: ({ scheme }) => scheme === SCHEME_EXPAND ? 0 : 1,
 
-    '&:hover, &:focus': {
-      color: theme.color.secondary.light,
-      textShadow: `0 0 5px ${theme.color.secondary.light}`
-    },
     '&.link-active': {
       color: theme.color.tertiary.main,
       textShadow: `0 0 5px ${theme.color.tertiary.main}`
+    },
+    '&:hover, &:focus': {
+      color: theme.color.secondary.light,
+      textShadow: `0 0 5px ${theme.color.secondary.light}`
     }
   },
 

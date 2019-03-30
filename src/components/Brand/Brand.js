@@ -107,13 +107,15 @@ class Component extends React.Component {
     } = this.props;
 
     return (
-      <div className={cx(classes.root, hover && classes.hover, className)} {...etc}>
+      <h1 className={cx(classes.root, hover && classes.hover, className)} {...etc}>
         <Link
           className={classes.link}
           href={link}
+          title='Soul Extract logo'
           onLinkStart={onLinkStart}
           onLinkEnd={onLinkEnd}
         >
+          <span className={classes.title}>SoulExtract</span>
           <svg
             ref={ref => (this.svgElement = ref)}
             className={classes.svg}
@@ -134,7 +136,7 @@ class Component extends React.Component {
             <path className={classes.path} d='M1141,10 L1400,10 M1199,18 L1199,89' />
           </svg>
         </Link>
-      </div>
+      </h1>
     );
   }
 }

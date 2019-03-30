@@ -38,6 +38,10 @@ class Component extends React.PureComponent {
     };
   }
 
+  componentDidMount () {
+    window.addEventListener('popstate', this.onURLChange);
+  }
+
   componentDidUpdate (prevProps) {
     const { energy } = this.props;
 
@@ -53,6 +57,12 @@ class Component extends React.PureComponent {
   componentWillUnmount () {
     const elements = this.element.querySelectorAll('a, b');
     anime.remove(elements);
+
+    window.removeEventListener('popstate', this.onURLChange);
+  }
+
+  onURLChange = () => {
+    this.forceUpdate();
   }
 
   enter () {

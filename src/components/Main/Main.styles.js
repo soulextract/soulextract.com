@@ -30,12 +30,6 @@ const styles = theme => ({
     margin: [10, 10, 10, 20],
     padding: [0, 10, 0, 0],
 
-    '& h1, & h2, & h3, & h4, & h5, & h6': {
-      textTransform: 'uppercase'
-    },
-    '& img': {
-      margin: [0, 'auto', 20]
-    },
     '& > *:last-child, & > article > *:last-child': {
       marginBottom: 0
     }

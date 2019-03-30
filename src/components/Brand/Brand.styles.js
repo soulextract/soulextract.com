@@ -1,11 +1,23 @@
 const styles = theme => ({
   root: {
-    display: 'block'
+    position: 'relative',
+    display: 'block',
+    border: 'none',
+    margin: 0,
+    padding: 0,
+    boxShadow: 'none',
+    textShadow: 'none'
   },
   link: {
     border: 'none',
     outline: 'none',
     userSelect: 'none'
+  },
+  title: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    visibility: 'hidden'
   },
   svg: {
     display: 'block',

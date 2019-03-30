@@ -51,7 +51,8 @@ const styles = theme => ({
       fontFamily: theme.typography.primary,
       lineHeight: 1,
       color: theme.color.heading.main,
-      textShadow: '0 0 2px ' + theme.color.heading.main
+      textShadow: `0 0 5px ${theme.color.secondary.main}`,
+      textTransform: 'uppercase'
     },
     h1: { fontSize: 27 },
     h2: { fontSize: 24 },
@@ -65,15 +66,29 @@ const styles = theme => ({
     },
     img: {
       display: 'block',
-      border: 'none',
-      margin: 0,
-      maxWidth: '100%'
+      borderWidth: [0, 0, 2],
+      borderColor: theme.color.secondary.dark,
+      borderStyle: 'solid',
+      margin: [0, 'auto', 20],
+      maxWidth: '100%',
+      transition: 'border-color 200ms ease-out',
+
+      '&:hover, &:focus': {
+        borderColor: theme.color.secondary.main
+      }
     },
     blockquote: {
       display: 'block',
-      borderLeft: '4px solid ' + theme.color.secondary.dark,
+      borderWidth: [0, 0, 0, 4],
+      borderColor: theme.color.secondary.dark,
+      borderStyle: 'solid',
       margin: [0, 0, 20],
-      padding: [0, 0, 0, 10]
+      padding: [0, 0, 0, 10],
+      transition: 'border-color 200ms ease-out',
+
+      '&:hover, &:focus': {
+        borderColor: theme.color.secondary.main
+      }
     }
   }
 });
