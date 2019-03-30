@@ -71,7 +71,7 @@ const styles = theme => ({
     },
     blockquote: {
       display: 'block',
-      borderLeft: '4px solid ' + theme.color.secondary.main,
+      borderLeft: '4px solid ' + theme.color.secondary.dark,
       margin: [0, 0, 20],
       padding: [0, 0, 0, 10]
     }
