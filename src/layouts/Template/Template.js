@@ -11,8 +11,9 @@ class Component extends React.Component {
   static displayName = 'Template';
 
   static propTypes = {
-    theme: PropTypes.any,
-    classes: PropTypes.any,
+    location: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
     layout: PropTypes.object,
     background: PropTypes.object,
     children: PropTypes.any
@@ -75,10 +76,8 @@ class Component extends React.Component {
 
   render () {
     const { show } = this.state;
-    const { classes, layout, background, children } = this.props;
-
-    // TODO:
-    const isURLIndex = window && window.location.pathname === '/';
+    const { location, classes, layout, background, children } = this.props;
+    const isURLIndex = location.pathname === '/';
 
     return (
       <Layout {...layout}>
