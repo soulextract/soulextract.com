@@ -36,7 +36,7 @@ const styles = theme => ({
     '& img': {
       margin: [0, 'auto', 20]
     },
-    '& > *:last-child': {
+    '& > *:last-child, & > article > *:last-child': {
       marginBottom: 0
     }
   },

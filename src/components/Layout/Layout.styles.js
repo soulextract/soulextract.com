@@ -68,6 +68,12 @@ const styles = theme => ({
       border: 'none',
       margin: 0,
       maxWidth: '100%'
+    },
+    blockquote: {
+      display: 'block',
+      borderLeft: '4px solid ' + theme.color.secondary.main,
+      margin: [0, 0, 20],
+      padding: [0, 0, 0, 10]
     }
   }
 });
