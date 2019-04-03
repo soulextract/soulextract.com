@@ -66,16 +66,8 @@ const styles = theme => ({
     },
     img: {
       display: 'block',
-      borderWidth: [0, 0, 2],
-      borderColor: theme.color.secondary.dark,
-      borderStyle: 'solid',
       margin: [0, 'auto', 20],
-      maxWidth: '100%',
-      transition: 'border-color 200ms ease-out',
-
-      '&:hover, &:focus': {
-        borderColor: theme.color.secondary.main
-      }
+      maxWidth: '100%'
     },
     blockquote: {
       display: 'block',

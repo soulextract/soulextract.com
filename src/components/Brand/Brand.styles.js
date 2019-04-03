@@ -25,7 +25,7 @@ const styles = theme => ({
     border: 'none',
     padding: 0,
     opacity: 0,
-    filter: `drop-shadow(0 0 1px ${theme.color.secondary.main})`
+    filter: `drop-shadow(0 0 1.5px ${theme.color.secondary.main})`
   },
   path: {
     fill: 'none',

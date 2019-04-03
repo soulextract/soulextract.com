@@ -44,7 +44,11 @@ const styles = theme => ({
     },
     content: {
       margin: [30, 40, 30, 50],
-      padding: [0, 10, 0, 0]
+      padding: [0, 10, 0, 0],
+
+      '& img': {
+        maxWidth: '80%'
+      }
     }
   },
 

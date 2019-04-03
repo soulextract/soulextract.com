@@ -11,6 +11,7 @@ const styles = theme => ({
   link: {
     display: 'block',
     color: theme.color.text.main,
+    textShadow: ({ opaque }) => !opaque && `0 0 5px ${theme.color.secondary.main}`,
     opacity: ({ opaque }) => opaque ? theme.color.alpha : 1,
     transition: [
       `opacity ${theme.animation.time}ms ease-out`,
