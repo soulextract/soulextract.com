@@ -26,8 +26,8 @@ class Charity extends React.Component {
           <header>
             <h1>Charity Donation</h1>
           </header>
-          <img src={joshMullisFamilyURL} alt="Josh Mullis's family" />
           <p>Music has always been a platform for artists to support and raise awareness to causes near and dear to them. Through their creative outlets countless established and aspiring musicians/artists alike have utilized the powerful tool that is a public platform to fuel societal-consciousness of causes that might otherwise go neglected.</p>
+          <img src={joshMullisFamilyURL} alt="Josh Mullis's family" />
           <p>For Soul Extract’s Josh Mullis that cause is the <Link href='http://newdayfosterhome.com/foster' target='newdayfosterhome'>New Day Foster Home</Link>, a non-profit organization based in China that’s been providing “life saving surgeries and a loving home” to orphaned children since late 2000. Mullis’ family became involved with New Day in 2011 when they made the life-changing choice to adopt a child from China, which at the time still held a strictly enforced “one child law”.</p>
           <Link href='http://newdayfosterhome.com/foster' target='newdayfosterhome'>
             <img src={newDayFosterHomeURL} alt='New Day Forster Home' />
