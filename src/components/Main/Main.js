@@ -14,6 +14,20 @@ class Component extends React.Component {
     children: PropTypes.any
   };
 
+  componentDidMount () {
+    window.addEventListener('route-change-start', this.onRouteChangeStart);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('route-change-start', this.onRouteChangeStart);
+  }
+
+  onRouteChangeStart = ({ detail: { isInternal } }) => {
+    if (isInternal) {
+      this.element.exit();
+    }
+  }
+
   render () {
     const { theme, classes, className, children, ...etc } = this.props;
 
@@ -21,6 +35,7 @@ class Component extends React.Component {
       <Fader
         className={cx(classes.root, className)}
         node='main'
+        ref={ref => (this.element = ref)}
         {...etc}
       >
         <div className={classes.frame} />

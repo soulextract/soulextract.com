@@ -32,7 +32,7 @@ class Component extends React.Component {
 
     const { energy } = this.props;
 
-    energy.updateDuration({ enter: 830 });
+    // energy.updateDuration({ enter: 830 });
   }
 
   componentWillUnmount () {
@@ -52,8 +52,9 @@ class Component extends React.Component {
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'linear',
-      delay: (path, index) => index * energy.duration.stagger,
-      duration: path => this.getPathDuration(path.getTotalLength()),
+      // delay: (path, index) => index * energy.duration.stagger,
+      // duration: path => this.getPathDuration(path.getTotalLength()),
+      duration: 250,
       complete: () => onEnter && onEnter()
     });
   }

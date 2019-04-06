@@ -57,10 +57,13 @@ class Component extends React.PureComponent {
       const isExternalURL = checkURLExternal.test(href);
       const isOut = !!target;
       const isInternal = !isOut && !isSame;
-      const linkProps = { isOut, isExternalURL, isSame, isInternal };
+      const linkProps = { href, isOut, isExternalURL, isSame, isInternal };
 
       onClick && onClick(event);
       onLinkStart && onLinkStart(event, linkProps);
+
+      const routeChangeStartEvent = new CustomEvent('route-change-start', { detail: linkProps });
+      window.dispatchEvent(routeChangeStartEvent);
 
       if (isSame) {
         return;
@@ -79,6 +82,9 @@ class Component extends React.PureComponent {
         }
 
         onLinkEnd && onLinkEnd(event, linkProps);
+
+        const routeChangeEndEvent = new CustomEvent('route-change-end', { detail: linkProps });
+        window.dispatchEvent(routeChangeEndEvent);
       }, timeout);
     };
 

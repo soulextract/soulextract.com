@@ -67,7 +67,8 @@ const styles = theme => ({
     img: {
       display: 'block',
       margin: [0, 'auto', 20],
-      maxWidth: '100%'
+      maxWidth: '100%',
+      verticalAlign: 'top'
     },
     blockquote: {
       display: 'block',
