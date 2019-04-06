@@ -17,6 +17,7 @@ class Component extends React.Component {
     className: PropTypes.any,
     link: PropTypes.string,
     hover: PropTypes.bool,
+    stableTime: PropTypes.bool,
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
     onLinkStart: PropTypes.func,
@@ -30,9 +31,11 @@ class Component extends React.Component {
   constructor () {
     super(...arguments);
 
-    const { energy } = this.props;
+    const { energy, stableTime } = this.props;
 
-    // energy.updateDuration({ enter: 830 });
+    if (!stableTime) {
+      energy.updateDuration({ enter: 820 });
+    }
   }
 
   componentWillUnmount () {
@@ -41,7 +44,7 @@ class Component extends React.Component {
   }
 
   enter () {
-    const { energy, sounds, onEnter } = this.props;
+    const { energy, sounds, stableTime, onEnter } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
 
     anime.set(this.svgElement, { opacity: 1 });
@@ -52,16 +55,19 @@ class Component extends React.Component {
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'linear',
-      // delay: (path, index) => index * energy.duration.stagger,
-      // duration: path => this.getPathDuration(path.getTotalLength()),
-      duration: 250,
-      complete: () => onEnter && onEnter()
+      delay: (path, index) => stableTime ? 0 : index * energy.duration.stagger,
+      duration: path => stableTime ? energy.duration.enter : path.getTotalLength(),
+      complete: () => {
+        onEnter && onEnter();
+      }
     });
   }
 
   exit () {
-    const { energy, onExit } = this.props;
+    const { energy, sounds, onExit } = this.props;
     const paths = this.svgElement.querySelectorAll('path');
+
+    sounds.fade.play();
 
     anime({
       targets: this.svgElement,
@@ -82,14 +88,6 @@ class Component extends React.Component {
     });
   }
 
-  getPathDuration (length) {
-    const original = 1400;
-    const actual = this.svgElement.getBBox().width;
-    const factor = actual / original;
-
-    return length * factor;
-  }
-
   render () {
     const {
       theme,
@@ -100,6 +98,7 @@ class Component extends React.Component {
       className,
       link,
       hover,
+      stableTime,
       onEnter,
       onExit,
       onLinkStart,

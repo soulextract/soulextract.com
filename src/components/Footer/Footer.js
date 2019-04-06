@@ -113,8 +113,9 @@ class Component extends React.PureComponent {
   }
 
   getDurationEnter () {
+    const { theme } = this.props;
     const { small, medium } = getViewportRange();
-    return small || medium ? 500 : 1000;
+    return (small || medium ? 2 : 4) * theme.animation.time;
   }
 
   playSound () {

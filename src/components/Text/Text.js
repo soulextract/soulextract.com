@@ -25,8 +25,7 @@ class Component extends React.PureComponent {
   static defaultProps = {
     children: '',
     scheme: SCHEME_TRANSITION,
-    randomCharacters: RANDOM_CHARACTERS,
-    stableTime: false
+    randomCharacters: RANDOM_CHARACTERS
   };
 
   componentWillUnmount () {

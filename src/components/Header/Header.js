@@ -114,8 +114,9 @@ class Component extends React.Component {
   }
 
   getDurationEnter () {
+    const { theme } = this.props;
     const { small, medium } = getViewportRange();
-    return small || medium ? 500 : 1000;
+    return (small || medium ? 2 : 4) * theme.animation.time;
   }
 
   playSound () {
@@ -315,7 +316,7 @@ class Component extends React.Component {
         </svg>
         <div className={classes.content}>
           <Secuence animation={{ show, independent: true }}>
-            <Brand className={classes.brand} />
+            <Brand className={classes.brand} stableTime />
             <Menu className={classes.menu} />
           </Secuence>
         </div>
