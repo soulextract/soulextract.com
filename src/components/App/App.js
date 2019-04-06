@@ -27,8 +27,10 @@ class Component extends React.Component {
     return (
       <div className={cx(classes.root, className)} {...etc}>
         <Header className={classes.header} />
-        {children}
-        <Footer className={classes.footer} />
+        <div className={classes.content}>
+          {children}
+          <Footer className={classes.footer} />
+        </div>
       </div>
     );
   }

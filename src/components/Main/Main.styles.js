@@ -7,8 +7,7 @@ const styles = theme => ({
     display: 'flex',
     margin: [0, 'auto'],
     maxWidth: 1000,
-    width: '100%',
-    minHeight: '1px'
+    width: '100%'
   },
   frame: {
     position: 'absolute',
@@ -25,8 +24,6 @@ const styles = theme => ({
     position: 'relative',
     zIndex: 2,
     flex: 1,
-    overflowX: 'hidden',
-    overflowY: 'auto',
     margin: [10, 10, 10, 20],
     padding: [0, 10, 0, 0],
 
@@ -36,6 +33,9 @@ const styles = theme => ({
   },
 
   '@media screen and (min-width: 768px)': {
+    root: {
+      minHeight: 1
+    },
     frame: {
       left: 20,
       right: 20,
@@ -43,6 +43,8 @@ const styles = theme => ({
       bottom: 0
     },
     content: {
+      overflowX: 'hidden',
+      overflowY: 'auto',
       margin: [30, 40, 30, 50],
       padding: [0, 10, 0, 0],
 
