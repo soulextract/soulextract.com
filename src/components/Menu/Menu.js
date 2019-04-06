@@ -39,7 +39,7 @@ class Component extends React.PureComponent {
   }
 
   componentDidMount () {
-    window.addEventListener('popstate', this.onURLChange);
+    window.addEventListener('route-change', this.onURLChange);
   }
 
   componentDidUpdate (prevProps) {
@@ -58,7 +58,7 @@ class Component extends React.PureComponent {
     const elements = this.element.querySelectorAll('a, b');
     anime.remove(elements);
 
-    window.removeEventListener('popstate', this.onURLChange);
+    window.removeEventListener('route-change', this.onURLChange);
   }
 
   onURLChange = () => {
