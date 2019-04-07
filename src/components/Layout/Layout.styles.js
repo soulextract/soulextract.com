@@ -71,16 +71,26 @@ const styles = theme => ({
       verticalAlign: 'top'
     },
     blockquote: {
+      position: 'relative',
       display: 'block',
-      borderWidth: [0, 0, 0, 4],
-      borderColor: theme.color.secondary.dark,
-      borderStyle: 'solid',
-      margin: [0, 0, 20],
-      padding: [0, 0, 0, 10],
-      transition: 'border-color 200ms ease-out',
+      margin: [0, 0, 20, 20],
+      padding: [0, 30, 0, 30],
 
+      '&::before': {
+        content: '"″"',
+        position: 'absolute',
+        left: 0,
+        top: 30,
+        display: 'block',
+        lineHeight: 0,
+        fontSize: 60,
+        color: theme.color.secondary.dark,
+        transition: 'color 200ms ease-out'
+      },
       '&:hover, &:focus': {
-        borderColor: theme.color.secondary.main
+        '&::before': {
+          color: theme.color.secondary.main
+        }
       }
     }
   }
