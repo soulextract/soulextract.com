@@ -55,7 +55,7 @@ class Charity extends React.Component {
               <blockquote>When I become frustrated with the music creation process, this keeps me going and has created a sense of purpose with this project.</blockquote>
               <p>If fans of Soul Extract are looking to get involved with the New Day Foster Home, Mullis definitely has some ideas:</p>
               <blockquote>
-                <p>For starters, if you’re listening to <Link href='https://fanlink.to/circalgorithm'>Circadian Algorithm</Link> via streaming outlets or have purchased it, you are helping New Day as partial proceeds are sent directly to them. They also have an awesome Instagram account (<Link href='https://www.instagram.com/newdaycharities' target='@newdaycharities'>@newdaycharities</Link>), where they post regularly on fun things they do with the children, surgery updates, etc.</p>
+                <p>For starters, if you’re listening to <Link href='https://fanlink.to/circalgorithm' target='circalgorithm'>Circadian Algorithm</Link> via streaming outlets or have purchased it, you are helping New Day as partial proceeds are sent directly to them. They also have an awesome Instagram account (<Link href='https://www.instagram.com/newdaycharities' target='@newdaycharities'>@newdaycharities</Link>), where they post regularly on fun things they do with the children, surgery updates, etc.</p>
                 <p>I’d say that’s a good place to start and if your heart pulls you in that direction, they have a donation page here:</p>
               </blockquote>
               <Link
