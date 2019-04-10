@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools/withStyles';
 import { Main } from '../components/Main';
+import { Secuence } from '../components/Secuence';
+import { Text } from '../components/Text';
 
 const styles = theme => ({
   root: {}
@@ -18,7 +20,10 @@ class News extends React.Component {
 
     return (
       <Main className={classes.root}>
-        <h1>News</h1>
+        <Secuence stagger>
+          <h1><Text>News</Text></h1>
+          <p><Text>Soul Extract latest news posts.</Text></p>
+        </Secuence>
       </Main>
     );
   }

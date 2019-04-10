@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '../tools/withStyles';
 import { Main } from '../components/Main';
+import { Secuence } from '../components/Secuence';
+import { Text } from '../components/Text';
 
 const styles = theme => ({
   root: {}
@@ -18,7 +20,10 @@ class Music extends React.Component {
 
     return (
       <Main className={classes.root}>
-        <h1>Music</h1>
+        <Secuence stagger>
+          <h1><Text>Music</Text></h1>
+          <p><Text>Soul Extract albums player.</Text></p>
+        </Secuence>
       </Main>
     );
   }
