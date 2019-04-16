@@ -45,18 +45,15 @@ class Component extends React.PureComponent {
 
   componentDidMount () {
     this.draw();
+
+    window.addEventListener('resize', this.onResize);
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    const { circuitAnimationDone } = this.state;
-
-    if (prevState.circuitAnimationDone !== circuitAnimationDone) {
-      if (circuitAnimationDone) {
-        this.startStandByAnimation();
-      } else {
-        this.stopStandByAnimation();
-      }
-    }
+  componentDidUpdate () {
+    // Because we are re-rendering animated elements every time the component
+    // is updated, we need to re-start the animations or reset the elements.
+    this.startStandByAnimation();
+    anime.set(this.dotLinesContainer.childNodes, { strokeDasharray: '3 7' });
   }
 
   componentWillUnmount () {
@@ -64,6 +61,12 @@ class Component extends React.PureComponent {
 
     this.unanimateAll();
     sounds.start.stop();
+
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    this.draw();
   }
 
   draw () {
@@ -292,12 +295,17 @@ class Component extends React.PureComponent {
 
   stopStandByAnimation () {
     const { classes } = this.props;
-    const circuitLineLights = this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight);
+    const circuitLineLights = Array.from(
+      this.circuitContainer.querySelectorAll('.' + classes.circuitLineLight)
+    );
 
     clearTimeout(this.standByStartId);
-    clearInterval(this.standByAnimationId);
+    clearTimeout(this.standByAnimationId);
 
     anime.remove(circuitLineLights);
+    circuitLineLights.forEach(circuitLineLight => {
+      circuitLineLight.removeAttribute('style');
+    });
     anime.set(circuitLineLights, { opacity: 0 });
   }
 
@@ -348,8 +356,8 @@ class Component extends React.PureComponent {
   getPathAnimationDuration (length) {
     const { initialMaxDuration } = this.props;
     const isLargeScreen = this.isLargeScreen();
-    const duration = Math.min(isLargeScreen ? length : length * 2, initialMaxDuration);
-    return duration;
+
+    return Math.min(isLargeScreen ? length : length * 2, initialMaxDuration);
   }
 
   getPatternsElementSize () {
