@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import anime from 'animejs';
+import { getViewportSize } from '@helcor/window-sizes';
 
 import { getRandomNumber } from '../../tools/general';
 
@@ -39,8 +40,11 @@ class Component extends React.PureComponent {
     this.standByStartId = null;
     this.standByAnimationId = null;
 
-    // TODO:
-    this.props.energy.updateDuration(1000);
+    // This is a rough calculation of the time the Background last animating
+    // according to the viewport width.
+    const { width } = getViewportSize();
+    const enterDuration = this.getPathAnimationDuration((47 / 55) * width + (500 / 11));
+    this.props.energy.updateDuration({ enter: enterDuration });
   }
 
   componentDidMount () {
@@ -368,7 +372,7 @@ class Component extends React.PureComponent {
   }
 
   isLargeScreen () {
-    const { width } = this.getPatternsElementSize();
+    const { width } = getViewportSize();
     return width > 420;
   }
 
