@@ -74,16 +74,19 @@ const styles = theme => ({
       position: 'relative',
       display: 'block',
       margin: [0, 0, 20, 20],
-      padding: [0, 30, 0, 30],
+      padding: [0, 40, 0, 40],
 
       '&::before': {
-        content: '"″"',
+        content: '"\uF756"', // Quote Close Icon
         position: 'absolute',
         left: 0,
-        top: 30,
+        top: 0,
         display: 'block',
-        lineHeight: 0,
-        fontSize: 60,
+        fontFamily: '"Material Design Icons"',
+        lineHeight: 1,
+        fontSize: 30,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
         color: theme.color.secondary.dark,
         transition: 'color 200ms ease-out'
       },
