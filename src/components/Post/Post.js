@@ -76,7 +76,7 @@ class Component extends React.Component {
       .map((fragment, index) => (
         <React.Fragment key={index}>
           {index !== 0 && <br />}
-          <Text>{fragment}</Text>
+          <Text audio={audio}>{fragment}</Text>
         </React.Fragment>
       ));
 
@@ -93,7 +93,11 @@ class Component extends React.Component {
             target='_blank'
             onMouseEnter={() => sounds.hover && energy.entered && sounds.hover.play()}
           >
-            <Fader node='div' className={classes.media}>
+            <Fader
+              node='div'
+              className={classes.media}
+              audio={audio}
+            >
               <div
                 className={classes.image}
                 style={{ backgroundImage: data.image && `url(${data.image})` }}
@@ -101,7 +105,9 @@ class Component extends React.Component {
             </Fader>
             <div className={classes.info}>
               <h1 className={classes.title}>
-                <Text>{data.title}</Text>
+                <Text audio={audio}>
+                  {data.title}
+                </Text>
               </h1>
               <p className={classes.message}>
                 {messageTexts}

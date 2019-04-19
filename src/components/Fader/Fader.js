@@ -32,7 +32,7 @@ class Component extends React.PureComponent {
     const { energy, sounds } = this.props;
     const time = energy.duration.enter;
 
-    sounds.fade.play();
+    sounds.fade && sounds.fade.play();
 
     this.animate({
       keyframes: [
@@ -47,7 +47,7 @@ class Component extends React.PureComponent {
     const { energy, sounds } = this.props;
     const time = energy.duration.exit;
 
-    sounds.fade.play();
+    sounds.fade && sounds.fade.play();
 
     this.animate({
       keyframes: [
