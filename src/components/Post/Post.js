@@ -20,10 +20,9 @@ class Component extends React.Component {
     className: PropTypes.any,
     children: PropTypes.any,
     data: PropTypes.shape({
-      id: PropTypes.string,
       title: PropTypes.string.isRequired,
       message: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
+      link: PropTypes.string,
       image: PropTypes.string
     })
   };

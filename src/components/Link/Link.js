@@ -18,7 +18,7 @@ class Component extends React.PureComponent {
     className: PropTypes.any,
     activeClassName: PropTypes.any,
     children: PropTypes.any,
-    href: PropTypes.string.isRequired,
+    href: PropTypes.string,
     target: PropTypes.string,
     delay: PropTypes.number,
     onClick: PropTypes.func,
@@ -27,7 +27,8 @@ class Component extends React.PureComponent {
   };
 
   static defaultProps = {
-    activeClassName: 'link-active'
+    activeClassName: 'link-active',
+    href: ''
   };
 
   render () {
@@ -48,8 +49,14 @@ class Component extends React.PureComponent {
       ...etc
     } = this.props;
 
-    const linkTrigger = event => {
+    const onLinkTrigger = event => {
       event.preventDefault();
+
+      if (!href) {
+        onClick && onClick(event);
+        return;
+      }
+
       sounds.click.play();
 
       const { pathname, search } = window.location;
@@ -96,7 +103,7 @@ class Component extends React.PureComponent {
         className={cx(className, linkMatchesURL && activeClassName)}
         href={href}
         target={target}
-        onClick={linkTrigger}
+        onClick={onLinkTrigger}
       >
         {children}
       </a>
