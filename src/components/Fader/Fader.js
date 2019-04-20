@@ -25,7 +25,7 @@ class Component extends React.PureComponent {
     const { sounds } = this.props;
 
     this.unanimate();
-    sounds.fade.stop();
+    sounds.fade && sounds.fade.stop();
   }
 
   enter () {
