@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
+import newsPosts from '../data/news';
 import { withStyles } from '../tools/withStyles';
 import { Link } from '../components/Link';
 import { Main } from '../components/Main';
@@ -18,30 +18,8 @@ class News extends React.Component {
     classes: PropTypes.object
   };
 
-  constructor () {
-    super(...arguments);
-
-    this.state = {
-      posts: []
-    };
-  }
-
-  componentDidMount () {
-    this.loadPosts();
-  }
-
-  loadPosts () {
-    axios
-      .get('/api/facebook/soulextract/posts')
-      .then(response => {
-        const posts = Array.isArray(response.data) ? response.data : [];
-        this.setState({ posts });
-      });
-  }
-
   render () {
     const { classes } = this.props;
-    const { posts } = this.state;
 
     return (
       <Main className={classes.root}>
@@ -49,23 +27,18 @@ class News extends React.Component {
           <header>
             <h1><Text>News</Text></h1>
           </header>
-          {posts.map((post, index) => (
+          {newsPosts.map((post, index) => (
             <Post
-              key={post.id}
+              key={index}
               audio={{ silent: index > 4 }}
-              data={post}
+              data={{ ...post, id: 'post' + index }}
             />
           ))}
-          {!posts.length && (
-            <>
-              <p><Text>No posts were found.</Text></p>
-              <p>
-                <Text>See</Text>
-                {' '}
-                <Link href='https://facebook.com/soulextract/posts' target='facebook'><Text>facebook.com/soulextract.</Text></Link>
-              </p>
-            </>
-          )}
+          <p>
+            <Text>See more at</Text>
+            {' '}
+            <Link href='https://facebook.com/soulextract/posts' target='facebook'><Text>facebook.com/soulextract.</Text></Link>
+          </p>
         </Secuence>
       </Main>
     );
