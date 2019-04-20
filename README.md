@@ -2,7 +2,8 @@
 
 # [SoulExtract.com](https://soulextract.com)
 
-> [soulextract.com](https://soulextract.com) is a project in progress. Not yet aired.
+> [soulextract.com](https://soulextract.com) is a project in progress. You can
+preview the development version at [soulextract.netlify.com](https://soulextract.netlify.com).
 
 Alternative Rock injected with electronic and cinematic elements.
 Proud member of the [FiXT](https://www.fixtonline.com) roster.
