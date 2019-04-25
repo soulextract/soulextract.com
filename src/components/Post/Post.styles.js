@@ -29,6 +29,7 @@ const styles = theme => ({
   },
   media: {
     display: 'flex',
+    margin: [0, 'auto'],
     padding: [0, 0, 20, 0],
     width: '100%',
     height: 200
@@ -53,15 +54,21 @@ const styles = theme => ({
     margin: 0
   },
 
-  '@media screen and (min-width: 768px)': {
+  '@media screen and (min-width: 480px)': {
     link: {
       flexDirection: 'row',
-      padding: 40
+      padding: 20
     },
     media: {
       padding: [0, 20, 0, 0],
       width: 180,
-      height: 120
+      height: 180
+    }
+  },
+
+  '@media screen and (min-width: 768px)': {
+    link: {
+      padding: 40
     }
   }
 });
