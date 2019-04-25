@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import circadianAlgorithmImageURL from '../images/circadian-algorithm.jpg';
-import filamentsImageURL from '../images/filaments.jpg';
 import { withStyles } from '../tools/withStyles';
 import { Main } from '../components/Main';
 import { Secuence } from '../components/Secuence';
@@ -63,7 +61,7 @@ class Music extends React.Component {
                 <Link href='https://fanlink.to/circalgorithm' target='circalgorithm'>
                   <img
                     alt='Soul Extract Circadian Algorithm album cover'
-                    src={circadianAlgorithmImageURL}
+                    src='/images/circadian-algorithm.jpg'
                   />
                 </Link>
               </Fader>
@@ -71,7 +69,7 @@ class Music extends React.Component {
                 <iframe
                   src='https://open.spotify.com/embed/album/0dQsfbQTdfy0yP8QavV91a'
                   width='100%'
-                  height='700'
+                  height='715'
                   frameBorder='0'
                   allowtransparency='true' // eslint-disable-line react/no-unknown-property
                   allow='encrypted-media'
@@ -83,7 +81,7 @@ class Music extends React.Component {
                 <Link href='https://fanlink.to/filaments' target='filaments'>
                   <img
                     alt='Soul Extract Filaments album cover'
-                    src={filamentsImageURL}
+                    src='/images/filaments.jpg'
                   />
                 </Link>
               </Fader>
@@ -91,7 +89,7 @@ class Music extends React.Component {
                 <iframe
                   src='https://open.spotify.com/embed/album/4xLepvKZqUkktVJkWmmgqX'
                   width='100%'
-                  height='515'
+                  height='530'
                   frameBorder='0'
                   allowtransparency='true' // eslint-disable-line react/no-unknown-property
                   allow='encrypted-media'

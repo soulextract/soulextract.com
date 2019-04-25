@@ -10,7 +10,10 @@ import { Secuence } from '../components/Secuence';
 import { Text } from '../components/Text';
 
 const styles = theme => ({
-  root: {}
+  root: {},
+  seeMore: {
+    marginTop: 20
+  }
 });
 
 class News extends React.Component {
@@ -34,7 +37,7 @@ class News extends React.Component {
               data={{ ...post, id: 'post' + index }}
             />
           ))}
-          <p>
+          <p className={classes.seeMore}>
             <Text>See more at</Text>
             {' '}
             <Link href='https://facebook.com/soulextract/posts' target='facebook'><Text>facebook.com/soulextract.</Text></Link>

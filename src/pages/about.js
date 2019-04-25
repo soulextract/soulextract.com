@@ -7,8 +7,7 @@ import { Main } from '../components/Main';
 import { Text } from '../components/Text';
 import { Fader } from '../components/Fader';
 import { Secuence } from '../components/Secuence';
-import circadianAlgorithmImage from '../images/circadian-algorithm.jpg';
-import joshMullisImage from '../images/josh-mullis.jpg';
+import joshMullisImageURL from '../images/josh-mullis.jpg';
 
 const styles = theme => ({
   root: {}
@@ -31,7 +30,7 @@ class About extends React.Component {
             </header>
             <p><Text>Cerebral. Beautiful. Violent. Soul Extract taps into a wealth of human emotions and experiences to generate a listening space that is as intense and unpredictable as life itself. The highly personal inspiration for Soul Extract’s creations gives every song an invigorating level of creative clarity, and the artist’s willingness to smash through genre barriers puts him at the forefront of modern music.</Text></p>
             <Fader>
-              <img src={joshMullisImage} alt="Josh Mullis's photo" />
+              <img src={joshMullisImageURL} alt="Josh Mullis's photo" />
             </Fader>
             <p><Text>Although Soul Extract’s stylistic approach fits within the broad scope of electronic rock, labels can’t begin to describe the exploratory, borderline progressive nature of the songs themselves. Josh Mullis, the architect behind Soul Extract’s elaborate compositions, brings a deconstructive mindset to his craft, tearing apart genres and fusing their most compelling elements back together to build calculated and highly detailed tracks.</Text></p>
             <Link
@@ -41,7 +40,7 @@ class About extends React.Component {
             >
               <Fader style={{ display: 'block' }}>
                 <img
-                  src={circadianAlgorithmImage}
+                  src='/images/circadian-algorithm.jpg'
                   alt='Soul Extract Circadian Algorithm album'
                   style={{ width: '100%', maxWidth: '400px' }}
                 />
