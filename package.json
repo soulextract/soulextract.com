@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "express": "^4.16.4",
     "gatsby": "^2.3.24",
+    "gatsby-plugin-google-analytics": "^2.0.18",
     "gatsby-plugin-jss": "^2.0.7",
     "gatsby-plugin-layout": "^1.0.14",
     "gatsby-plugin-manifest": "^2.0.29",

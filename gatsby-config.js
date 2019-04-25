@@ -25,6 +25,12 @@ module.exports = {
       options: {
         component: require.resolve(`./src/layouts/Template`)
       }
+    },
+    {
+      resolve: 'gatsby-plugin-google-analytics',
+      options: {
+        trackingId: 'UA-64916263-1'
+      }
     }
   ]
 };
