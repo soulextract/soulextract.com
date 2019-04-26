@@ -59,6 +59,9 @@ class Component extends React.PureComponent {
 
       sounds.click.play();
 
+      // TODO: Add support to recognize when the URL ends with / is the same
+      // URL as the one without it.
+
       const { pathname, search } = window.location;
       const isSame = pathname + search === href;
       const isExternalURL = checkURLExternal.test(href);

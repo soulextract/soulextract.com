@@ -36,6 +36,7 @@ const styles = theme => ({
   },
   image: {
     flex: 1,
+    border: '1px solid ' + rgba(theme.color.secondary.dark, 0.125),
     backgroundColor: '#000',
     backgroundImage: `url(${iconURL})`,
     backgroundSize: 'cover',

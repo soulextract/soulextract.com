@@ -87,9 +87,9 @@ class Music extends React.Component {
               </Fader>
               <Fader className={classes.albumFrame}>
                 <iframe
-                  src='https://open.spotify.com/embed/album/4xLepvKZqUkktVJkWmmgqX'
+                  src='https://open.spotify.com/embed/album/11GtV6Ku65tT4HaAQEQruk'
                   width='100%'
-                  height='530'
+                  height='930'
                   frameBorder='0'
                   allowtransparency='true' // eslint-disable-line react/no-unknown-property
                   allow='encrypted-media'

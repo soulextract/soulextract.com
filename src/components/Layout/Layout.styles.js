@@ -1,3 +1,5 @@
+import { rgba } from 'polished';
+
 const styles = theme => ({
   '@global': {
     '*, *:before, *:after': {
@@ -67,8 +69,15 @@ const styles = theme => ({
     img: {
       display: 'block',
       margin: [0, 'auto', 20],
+      border: '1px solid ' + rgba(theme.color.secondary.dark, 0.25),
       maxWidth: '100%',
-      verticalAlign: 'top'
+      minHeight: 1,
+      verticalAlign: 'top',
+      transition: 'border 250ms ease-out',
+
+      '&:hover': {
+        border: '1px solid ' + rgba(theme.color.secondary.main, 0.25)
+      }
     },
     blockquote: {
       position: 'relative',
