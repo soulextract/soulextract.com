@@ -58,7 +58,10 @@ class Component extends React.Component {
   render () {
     const { show, enterShow, enterAnimationShow } = this.state;
     const { location, classes, layout, background, children } = this.props;
-    const isURLIndex = location.pathname === '/';
+
+    const isURLContent = ['/news', '/music', '/charity', '/about'].find(path => {
+      return location.pathname.indexOf(path) === 0;
+    });
 
     return (
       <Layout {...layout}>
@@ -66,7 +69,7 @@ class Component extends React.Component {
           {...background}
           animation={{ show, ...background.animation }}
         >
-          {isURLIndex ? children : <App>{children}</App>}
+          {isURLContent ? <App>{children}</App> : children}
 
           {!show && (
             <div className={classes.enterOverlay}>

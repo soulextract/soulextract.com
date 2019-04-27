@@ -17,6 +17,7 @@ const styles = theme => ({
     height: '100%'
   },
   path: {
+    fill: 'none',
     stroke: rgba(theme.color.primary.dark, 0.5),
     strokeWidth: 2,
     vectorEffect: 'non-scaling-stroke'

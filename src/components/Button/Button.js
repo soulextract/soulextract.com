@@ -77,7 +77,10 @@ class Component extends React.Component {
             <path className={classes.path} d='M100,100 L0,100 L0,0' />
           </svg>
         </div>
-        <div className={classes.main}>
+        <div
+          className={classes.main}
+          onMouseEnter={() => sounds.hover && sounds.hover.play()}
+        >
           <Text
             audio={audio}
             animation={{ animate: energy.animate }}
