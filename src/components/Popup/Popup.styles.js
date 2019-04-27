@@ -4,44 +4,43 @@ const styles = theme => ({
   root: {
     position: 'relative',
     display: 'inline-block',
-    backgroundColor: '#000000',
     userSelect: 'none'
   },
   frame: {
     position: 'absolute',
+    width: '100%',
+    height: '100%'
+  },
+  svg: {
     display: 'block',
     width: '100%',
     height: '100%'
   },
-  line: {
+  path: {
     stroke: rgba(theme.color.primary.dark, 0.5),
     strokeWidth: 2,
     vectorEffect: 'non-scaling-stroke'
   },
   main: {
-    position: 'relative'
-  },
-  message: {
+    position: 'relative',
     padding: 20
   },
+  message: {
+    marginBottom: 20,
+    color: theme.color.text.main,
+    textAlign: 'center'
+  },
   options: {
-    textAlign: 'right'
+    textAlign: 'center'
   },
   option: {
-    display: 'inline-block',
-    margin: 0,
-    border: '1px solid ' + rgba(theme.color.primary.dark, 0.5),
-    outline: 'none',
-    padding: [8, 16],
-    textTransform: 'uppercase',
-    lineHeight: 1,
-    fontSize: 14,
-    color: theme.color.text.main,
-    backgroundColor: '#000000',
-    cursor: 'pointer',
+    display: 'inline-block'
+  },
 
-    '&:hover, &:focus': {
-      backgroundColor: '#222222'
+  '@media screen and (min-width: 480px)': {
+    main: {
+      position: 'relative',
+      padding: [20, 40]
     }
   }
 });

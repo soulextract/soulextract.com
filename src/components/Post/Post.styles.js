@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   info: {
     flex: 1,
-    color: theme.color.primary.main,
+    color: theme.color.text.main,
     wordBreak: 'break-word'
   },
   title: {

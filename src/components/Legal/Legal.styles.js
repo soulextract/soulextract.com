@@ -2,7 +2,7 @@ const styles = theme => ({
   root: {
     display: 'block',
     margin: 0,
-    padding: 6,
+    padding: 8,
     fontSize: 14,
     userSelect: 'none',
     whiteSpace: 'nowrap',
