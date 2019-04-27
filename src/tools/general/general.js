@@ -20,4 +20,17 @@ const getRandomCharacters = (length, characters) => {
   return string;
 };
 
-export { isFn, isNumber, getRandomNumber, getRandomCharacters };
+function getPathLength (path) {
+  const length = path.getTotalLength();
+  const actualWidth = path.getBoundingClientRect().width;
+  const realWidth = path.getBBox().width;
+
+  // TODO: This calculation only works if the scale is done by
+  // width and height equally.
+
+  const scale = actualWidth / realWidth || 1;
+
+  return length * scale;
+}
+
+export { isFn, isNumber, getRandomNumber, getRandomCharacters, getPathLength };
