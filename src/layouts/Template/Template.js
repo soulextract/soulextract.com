@@ -27,16 +27,36 @@ class Component extends React.Component {
     super(...arguments);
 
     this.state = {
-      show: false
+      show: false,
+      enterShow: false,
+
+      // Initially enter element is animation shown.
+      enterAnimationShow: true
     };
   }
 
+  componentDidMount () {
+    const { theme } = this.props;
+
+    setTimeout(
+      () => this.setState({ enterShow: true }),
+      theme.animation.time
+    );
+  }
+
   onEnter = () => {
-    this.setState({ show: true });
+    const { theme } = this.props;
+
+    this.setState({ enterAnimationShow: false });
+
+    setTimeout(
+      () => this.setState({ show: true }),
+      theme.animation.time + theme.animation.stagger
+    );
   }
 
   render () {
-    const { show } = this.state;
+    const { show, enterShow, enterAnimationShow } = this.state;
     const { location, classes, layout, background, children } = this.props;
     const isURLIndex = location.pathname === '/';
 
@@ -47,16 +67,20 @@ class Component extends React.Component {
           animation={{ show, ...background.animation }}
         >
           {isURLIndex ? children : <App>{children}</App>}
+
           {!show && (
             <div className={classes.enterOverlay}>
-              <Popup
-                className={classes.enterElement}
-                audio={{ silent: true }}
-                animation={{ animate: false }}
-                message='SoulExtract.com uses sounds.'
-                option='ENTER'
-                onOption={this.onEnter}
-              />
+              {enterShow && (
+                <Popup
+                  className={classes.enterElement}
+                  ref={ref => (this.enterElement = ref)}
+                  audio={{ silent: true }}
+                  animation={{ independent: true, show: enterAnimationShow }}
+                  message='SoulExtract.com uses sounds.'
+                  option='Enter'
+                  onOption={this.onEnter}
+                />
+              )}
             </div>
           )}
         </Background>

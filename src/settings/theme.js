@@ -22,10 +22,10 @@ module.exports = {
       light: '#feec67'
     },
     heading: {
-      main: '#f0f0f0'
+      main: '#eeeeee'
     },
     text: {
-      main: '#dddddd'
+      main: '#cccccc'
     },
     link: {
       dark: '#55cbd0',
