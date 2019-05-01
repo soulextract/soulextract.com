@@ -20,10 +20,21 @@ const styles = theme => ({
     '&:hover, &:focus': {
       color: theme.color.tertiary.main,
 
+      '& $background': {
+        backgroundColor: rgba(theme.color.tertiary.main, 0.125)
+      },
       '& $path': {
         stroke: rgba(theme.color.tertiary.dark, 0.5)
       }
     }
+  },
+  background: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: rgba(theme.color.secondary.main, 0.125),
+    transition: 'background 250ms ease-out',
+    opacity: ({ energy }) => energy.animate ? 0 : 1
   },
   frame: {
     position: 'absolute',

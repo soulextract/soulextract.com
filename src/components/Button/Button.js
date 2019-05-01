@@ -27,11 +27,18 @@ class Component extends React.Component {
       opacity: 1,
       strokeDasharray: getPathLength
     });
+    anime.set(this.backgroundElement, { opacity: 1 });
 
     anime({
       targets: paths,
       strokeDashoffset: [getPathLength, 0],
       easing: 'linear',
+      duration: energy.duration.enter
+    });
+    anime({
+      targets: this.backgroundElement,
+      easing: 'linear',
+      opacity: [0, 1],
       duration: energy.duration.enter
     });
   }
@@ -45,6 +52,12 @@ class Component extends React.Component {
       strokeDashoffset: [0, getPathLength],
       easing: 'linear',
       duration: energy.duration.exit
+    });
+    anime({
+      targets: this.backgroundElement,
+      easing: 'linear',
+      opacity: [1, 0],
+      duration: energy.duration.enter
     });
   }
 
@@ -65,6 +78,10 @@ class Component extends React.Component {
         className={cx(classes.root, className)}
         {...etc}
       >
+        <div
+          className={classes.background}
+          ref={ref => (this.backgroundElement = ref)}
+        />
         <div className={classes.frame}>
           <svg
             className={classes.svg}
