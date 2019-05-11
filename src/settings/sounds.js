@@ -1,6 +1,6 @@
 module.exports = {
   settings: {
-    volume: 0.5
+    volume: 0.3
   },
   players: {
     logo: {
@@ -23,7 +23,7 @@ module.exports = {
     },
     hover: {
       src: ['/sounds/hover.mp3'],
-      volume: 0.25
+      volume: 0.15
     },
     click: {
       src: ['/sounds/click.mp3']
