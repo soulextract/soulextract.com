@@ -4,7 +4,7 @@
 module.exports = [
   {
     title: 'April 14, 2019',
-    message: `Where are my superheroes? Right there reading this... YOU! 🤘🦸🤘. Thank you for being awesome!
+    message: `Where are my superheroes?? Right there reading this... YOU! 🤘🦸🤘. Thank you for being awesome!
 
 "HOLY SCHNIKES! 'SUPERHEROES' HAS OVER 100K PLAYS ON SPOTIFY!! YOU ARE MY 'SUPERHEROES'!"`,
     image: '/images/filaments.jpg',
