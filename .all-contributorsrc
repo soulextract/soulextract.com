@@ -1,0 +1,36 @@
+{
+  "projectName": "soulextract.com",
+  "projectOwner": "soulextract",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "romelperez",
+      "name": "Romel Pérez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1393135?v=4",
+      "profile": "https://RomelPerez.com",
+      "contributions": [
+        "projectManagement",
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "mario211226",
+      "name": "mario211226",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/26547973?v=4",
+      "profile": "https://github.com/mario211226",
+      "contributions": [
+        "design",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

@@ -24,14 +24,11 @@ The website was powered by the **[Arwes](https://arwes.dev)** project.
 
 ## Contributors
 
-<!-- Contributors START
-Romel_Perez romelperez https://romelperez.com code doc test
-Mario Ordoñez mario211226 https://github.com/mario211226 design ideas
-Contributors END -->
-<!-- Contributors table START -->
-| [<img src="https://avatars.githubusercontent.com/romelperez?s=100" width="100" alt="Romel Perez" /><br /><sub>Romel Perez</sub>](https://romelperez.com)<br />💻 📖 :warning: | [<img src="https://avatars.githubusercontent.com/mario211226?s=100" width="100" alt="Mario Ordoñez" /><br /><sub>Mario Ordoñez</sub>](https://github.com/mario211226)<br /> :art: :thinking:  |
-| :---: | :---: |
-<!-- Contributors table END -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://RomelPerez.com"><img src="https://avatars2.githubusercontent.com/u/1393135?v=4" width="100px;" alt="Romel Pérez"/><br /><sub><b>Romel Pérez</b></sub></a><br /><a href="#projectManagement-romelperez" title="Project Management">📆</a> <a href="https://github.com/soulextract/soulextract.com/commits?author=romelperez" title="Code">💻</a> <a href="https://github.com/soulextract/soulextract.com/commits?author=romelperez" title="Tests">⚠️</a></td><td align="center"><a href="https://github.com/mario211226"><img src="https://avatars2.githubusercontent.com/u/26547973?v=4" width="100px;" alt="mario211226"/><br /><sub><b>mario211226</b></sub></a><br /><a href="#design-mario211226" title="Design">🎨</a> <a href="#ideas-mario211226" title="Ideas, Planning, & Feedback">🤔</a></td></tr></table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors)
 specification.
