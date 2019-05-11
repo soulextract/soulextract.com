@@ -7,7 +7,8 @@ module.exports = {
       src: ['/sounds/logo.mp3']
     },
     start: {
-      src: ['/sounds/start.mp3']
+      src: ['/sounds/start.mp3'],
+      volume: 0.15
     },
     typing: {
       src: ['/sounds/typing.mp3']
@@ -22,8 +23,7 @@ module.exports = {
       src: ['/sounds/expand.mp3']
     },
     hover: {
-      src: ['/sounds/hover.mp3'],
-      volume: 0.15
+      src: ['/sounds/hover.mp3']
     },
     click: {
       src: ['/sounds/click.mp3']
