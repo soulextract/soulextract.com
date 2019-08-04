@@ -100,8 +100,8 @@ class Music extends React.Component {
               <Fader className={classes.albumCover}>
                 <Link href='https://fanlink.to/_samsara' target='filaments'>
                   <img
-                    alt='Soul Extract Filaments album cover'
-                    src='/images/filaments.jpg'
+                    alt='Soul Extract Samsara album cover'
+                    src='/images/Soul_Extract_Samsara.jpg'
                   />
                 </Link>
               </Fader>
