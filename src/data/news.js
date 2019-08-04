@@ -3,6 +3,61 @@
 
 module.exports = [
   {
+    title: 'August 1, 2019',
+    message: `'Samsara' is now available on the spaceuntravel YouTube channel, Spotify, FiXT store, and Bandcamp.
+
+Everywhere tomorrow!
+
+https://youtu.be/ZejKbNjWsx0
+
+https://fanlink.to/_samsara
+
+@spaceuntravel first reached out to me many years ago to post my music on his channel and I am eternally grateful to him for that exposure as well as having this premiere there as well. Thank you brother!`,	
+    link: 'https://www.facebook.com/watch/?v=1251531378341913'
+  },
+  {
+    title: 'July 4, 2019',
+    message: `HUGE thanks to Comaduster for obliterating 'Roentgen' with his sonic arsenal and turning it into something AMAZING!
+
+Available via Spotify and the FiXT store today, and everywhere tomorrow.
+
+https://fanlink.to/RCRemix
+
+Hope you guys enjoy!`,	
+    link: 'https://www.facebook.com/watch/?v=1179392722268229'
+  },
+  {
+    title: 'June 10, 2019',
+    message: `Who's ready for another remix?! @raizermusic does not disappoint with this heavy re-envisioned masterpiece that gives this track a second half-life! 🤘👨‍🚀🤘 https://youtu.be/nIEUawJsCmY`,	
+    link: 'https://www.facebook.com/watch/?v=2305049083146792'
+  },
+  {
+    title: 'May 17, 2019',
+    message: `Oh yeah!!! The amazing Entropy Zero strikes again, dropping a nuclear bomb on 'Project Terraform' and here is the fallout! Premieres Monday, May 20th on the FiXT youtube channel: https://www.youtube.com/watch?v=Ggl7nJPSrRE`,	
+    link: 'https://www.facebook.com/watch/?v=2230638257198802'
+  },
+  {
+    title: 'May 7, 2019',
+    message: `Helix lyric video is live on the FiXT YouTube channel!
+
+https://youtu.be/uLbq6iPFu5M`,	
+    link: 'https://www.facebook.com/watch/?v=300608927520652'
+  },
+  {
+    title: 'April 9, 2019',
+    message: `Any producers out there, go check this out!
+
+#Repost @fixtmusic
+• • • • • •
+Introducing...the FiXT: Remix Stems Store!
+
+Get unprecedented access to high quality audio stems from your favorite FiXT artists! Hear songs for the first time all over again, from the inside out.
+
+Learn More & Shop Now at:
+https://fixtstore.com/stems`,
+    link: 'https://fixtstore.com/stems'
+  },
+  {
     title: 'April 14, 2019',
     message: `Where are my superheroes?? Right there reading this... YOU! 🤘🦸🤘. Thank you for being awesome!
 
