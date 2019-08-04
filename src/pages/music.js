@@ -96,6 +96,26 @@ class Music extends React.Component {
                 />
               </Fader>
             </div>
+			<div className={classes.album}>
+              <Fader className={classes.albumCover}>
+                <Link href='https://fanlink.to/_samsara' target='filaments'>
+                  <img
+                    alt='Soul Extract Filaments album cover'
+                    src='/images/filaments.jpg'
+                  />
+                </Link>
+              </Fader>
+              <Fader className={classes.albumFrame}>
+                <iframe
+                  src='https://open.spotify.com/embed/album/0ngNDxEbVNh3EUHu205YyW'
+                  width='100%'
+                  height='930'
+                  frameBorder='0'
+                  allowtransparency='true' // eslint-disable-line react/no-unknown-property
+                  allow='encrypted-media'
+                />
+              </Fader>
+            </div>
           </div>
         </Secuence>
       </Main>
